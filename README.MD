@@ -13,6 +13,14 @@ https://dbdiagram.io/d/62733e857f945876b6bb6479
 ### relationships
 #### one-to-one
 #### one-to-many
+>"As stated in the JPA specification under section 2.9, it's a good practice to mark the many-to-one side as the owning side."
+https://www.baeldung.com/hibernate-one-to-many#:~:text=As%20stated%20in%20the%20JPA%20specification%20under%20section%202.9%2C%20it%27s%20a%20good%20practice%20to%20mark%20the%C2%A0many%2Dto%2Done%20side%C2%A0as%20the%20owning%20side.
+#### many-to-one
+>https://dzone.com/tutorials/java/hibernate/hibernate-example/hibernate-mapping-many-to-one-using-annotations-1.html
+#### bidirectional @OneToMany
+>https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/
+
+>https://www.youtube.com/watch?v=tciSOIQngig
 #### many-to-many
 
 
