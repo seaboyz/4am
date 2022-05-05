@@ -4,6 +4,11 @@
 Add `hibernate.cfg.xml` to `/backend/src/main/resources`
 [A Note About P2](https://github.com/220328-Java-Full-Stack-AWS/Curriculum-Notes/blob/main/P2.md)
 ![](./images/Screen%20Shot%202022-05-04%20at%209.14.08%20PM.png)
+
+
+#### database diagram
+https://dbdiagram.io/d/62733e857f945876b6bb6479
+![](images/db-diagram.png)
 ## Executive Summary
 The E-Commerce Single-Page Application will allow consumers to browse, search, and buy products. Users will be able to browse our catelog of products, or search for a specific item, and add these to a cart. Users can register accounts which includes a profile. There are a number of stretch goals to choose from. Please update this text to summarize additional features. This text is fairly generic, your project will be unique, this text should be re-written to reflect your final deliverable.
 
