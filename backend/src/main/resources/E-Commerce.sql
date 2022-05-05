@@ -7,8 +7,8 @@ CREATE TABLE "user" (
   "last_name" varchar,
   "email_address" varchar,
   "phone_number" varchar,
-  "role_id" int,
-  "created_at" timestamp DEFAULT (now())
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp
 );
 
 CREATE TABLE "role" (
@@ -16,9 +16,30 @@ CREATE TABLE "role" (
   "role" varchar
 );
 
+CREATE TABLE "user_role" (
+  "id" SERIAL PRIMARY KEY,
+  "user_id" int,
+  "role_id" int
+);
+
 CREATE TABLE "user_address" (
   "id" SERIAL PRIMARY KEY,
   "user_id" int,
+  "address_line_1" varchar,
+  "address_line_2" varchar,
+  "address_line_3" varchar,
+  "address_line_4" varchar,
+  "city" varchar,
+  "state" varchar,
+  "country" varchar,
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp
+);
+
+CREATE TABLE "shipping_address" (
+  "id" SERIAL PRIMARY KEY,
+  "user_id" int,
+  "recipient_name" varchar,
   "address_line_1" varchar,
   "address_line_2" varchar,
   "address_line_3" varchar,
@@ -38,6 +59,7 @@ CREATE TABLE "cart" (
 );
 
 CREATE TABLE "cart_item" (
+  "id" SERIAL PRIMARY KEY,
   "product_id" int,
   "cart_id" int,
   "quantity" int,
@@ -51,6 +73,7 @@ CREATE TABLE "order" (
   "details" varchar,
   "payment_id" int,
   "order_status_code" int,
+  "shipping_address_id" int,
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp
 );
@@ -96,14 +119,19 @@ CREATE TABLE "category" (
 
 CREATE TABLE "inventory" (
   "id" SERIAL PRIMARY KEY,
+  "product_id" int,
   "quantity" int,
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp
 );
 
-ALTER TABLE "user" ADD FOREIGN KEY ("role_id") REFERENCES "role" ("id");
+ALTER TABLE "user_role" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
+
+ALTER TABLE "user_role" ADD FOREIGN KEY ("role_id") REFERENCES "role" ("id");
 
 ALTER TABLE "user_address" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
+
+ALTER TABLE "shipping_address" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
 
 ALTER TABLE "cart" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
 
@@ -117,12 +145,12 @@ ALTER TABLE "order" ADD FOREIGN KEY ("payment_id") REFERENCES "payment" ("id");
 
 ALTER TABLE "order" ADD FOREIGN KEY ("order_status_code") REFERENCES "order_status_code" ("id");
 
+ALTER TABLE "order" ADD FOREIGN KEY ("shipping_address_id") REFERENCES "shipping_address" ("id");
+
 ALTER TABLE "order_item" ADD FOREIGN KEY ("order_id") REFERENCES "order" ("id");
 
 ALTER TABLE "order_item" ADD FOREIGN KEY ("product_id") REFERENCES "product" ("id");
 
-ALTER TABLE "product" ADD FOREIGN KEY ("inventory_id") REFERENCES "inventory" ("id");
-
 ALTER TABLE "product" ADD FOREIGN KEY ("category_id") REFERENCES "category" ("id");
 
-ALTER TABLE "payment" ADD FOREIGN KEY ("amount") REFERENCES "payment" ("id");
+ALTER TABLE "inventory" ADD FOREIGN KEY ("product_id") REFERENCES "product" ("id");
