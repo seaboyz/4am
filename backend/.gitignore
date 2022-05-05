@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### spring-boot ###
+application.properties
+
+### hibernate ###
+hibernate.cfg.xml
