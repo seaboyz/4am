@@ -12,6 +12,8 @@ https://dbdiagram.io/d/62733e857f945876b6bb6479
 
 ### relationships
 #### one-to-one
+- `one user has one cart`
+- `one user has one address` 
 #### one-to-many
 >"As stated in the JPA specification under section 2.9, it's a good practice to mark the many-to-one side as the owning side."
 https://www.baeldung.com/hibernate-one-to-many#:~:text=As%20stated%20in%20the%20JPA%20specification%20under%20section%202.9%2C%20it%27s%20a%20good%20practice%20to%20mark%20the%C2%A0many%2Dto%2Done%20side%C2%A0as%20the%20owning%20side.
@@ -22,6 +24,9 @@ https://www.baeldung.com/hibernate-one-to-many#:~:text=As%20stated%20in%20the%20
 
 >https://www.youtube.com/watch?v=tciSOIQngig
 #### many-to-many
+- `cart` and `product`
+  `does one cart has many product?`
+  `does one product has many carts?`
 
 
 ## Executive Summary
