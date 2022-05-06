@@ -14,7 +14,10 @@ public class EcommerceApplication {
 
 		// configure the database
 		Configuration config = new Configuration();
-		config.configure("hibernate.cfg.xml");
+
+		// if no configuration file is found, use the default
+		// config.configure("hibernate.cfg.xml");
+		config.configure();
 
 		// build the session factory
 		SessionFactory sessionFactory = config.buildSessionFactory();
