@@ -10,6 +10,14 @@ Add `hibernate.cfg.xml` to `/backend/src/main/resources`
 https://dbdiagram.io/d/62733e857f945876b6bb6479
 ![](images/db-diagram.png)
 
+#### value object vs entity object
+- value object: has no meaning without other object (address,cart)
+![](images/Screen%20Shot%202022-05-07%20at%205.37.34%20AM.png)
+- entity object: can exist independently (user, order, product)
+- edge case: think about a order can be created by a guest(without register as a user)
+- so the order has to be independent from user
+
+
 ### relationships
 #### one-to-one
 - `one user has one cart`
