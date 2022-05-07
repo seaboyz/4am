@@ -32,8 +32,15 @@ Add `hibernate.cfg.xml` to `/backend/src/main/resources`
 ![](./images/database/Screen%20Shot%202022-05-07%20at%2011.19.10%20AM.png)
 <hr>
 
-### user role enum
+#### user role enum
 >https://www.youtube.com/watch?v=mT6I11cVXCs&list=PL50BZOuKafAYFT_F4Yris5Vj2ApwzUfmR&index=8
+
+
+### user and address
+|Table|Primary Key|Related Table & It's Primary Key|Foreign Key to Related Tables|
+|---|---|---|---|
+|users|id|
+|address|id|users|user_id|
 
 ### customer frontend input choice
 ![](./images/database/Screen%20Shot%202022-05-07%20at%2011.25.11%20AM.png)
