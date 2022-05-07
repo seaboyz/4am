@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter // getters and setters for all fields
 @NoArgsConstructor // default constructor
 @AllArgsConstructor // constructor with @NonNull parameters
-public class ShippingAddress {
+public class Address {
 
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // use traditional generator
@@ -31,8 +31,8 @@ public class ShippingAddress {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "full_name")
-    private @NonNull String fullName;
+    @Column(name = "name")
+    private @NonNull String name;
 
     @Column(name = "phone_number")
     private @NonNull String phone;

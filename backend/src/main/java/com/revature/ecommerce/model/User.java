@@ -41,9 +41,9 @@ class User {
     private @NonNull String phoneNumber;
 
     @OneToMany(mappedBy = "user")
-    private List<ShippingAddress> addresses;
+    private List<Address> addresses;
 
-    public void addAddress(ShippingAddress address) {
+    public void addAddress(Address address) {
         this.addresses.add(address);
         address.setUser(this);
 

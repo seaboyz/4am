@@ -17,30 +17,18 @@ Add `hibernate.cfg.xml` to `/backend/src/main/resources`
 * pay attention with reserved database keywords.
 * use underscore for merged words `first_name`
 
-#### ERD - Entity-Relationship Diagram
+### ERD - Entity-Relationship Diagram
 <iframe
   src="https://dbdiagram.io/d/62733e857f945876b6bb6479"
   style="width:100%; height:100%;"
 ></iframe>
 
-|Table|Primary Key|Related Table & It's Primary Key|Foreign Key to Related Tables|
-|---|---|---|---|
-|users|id|
-|user_rolos|id|users|user_id|
-|user_rolos|id|roles|role_id|
-|rolos|id|
-![](./images/database/Screen%20Shot%202022-05-07%20at%2011.19.10%20AM.png)
-<hr>
-
-#### user role enum
->https://www.youtube.com/watch?v=mT6I11cVXCs&list=PL50BZOuKafAYFT_F4Yris5Vj2ApwzUfmR&index=8
+#### Entities
+##### User
+##### ShippingAddress
 
 
-### user and address
-|Table|Primary Key|Related Table & It's Primary Key|Foreign Key to Related Tables|
-|---|---|---|---|
-|users|id|
-|address|id|users|user_id|
+
 
 ### customer frontend input choice
 ![](./images/database/Screen%20Shot%202022-05-07%20at%2011.25.11%20AM.png)
@@ -53,7 +41,6 @@ A much better approach is to limit the choices the customer can make to only tho
 * The two Tables are linked by the OrderID (which in most cases would be an Autonumber field in Access or an Identify field in SQL 7). 
 * The Orders Table has a One-to-Many Relationship to the OrderDetails Table (one Order can have many OrderDetails)
 
-### order table
 
 
 #### value object vs entity object
