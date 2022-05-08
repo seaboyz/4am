@@ -57,6 +57,7 @@ A much better approach is to limit the choices the customer can make to only tho
 - `one user has one cart`
 - `one user has one address` 
 #### one-to-many
+* always add foreign key at the many side.
 >"As stated in the JPA specification under section 2.9, it's a good practice to mark the many-to-one side as the owning side."
 https://www.baeldung.com/hibernate-one-to-many#:~:text=As%20stated%20in%20the%20JPA%20specification%20under%20section%202.9%2C%20it%27s%20a%20good%20practice%20to%20mark%20the%C2%A0many%2Dto%2Done%20side%C2%A0as%20the%20owning%20side.
 #### many-to-one
