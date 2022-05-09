@@ -27,9 +27,6 @@ Add `hibernate.cfg.xml` to `/backend/src/main/resources`
 ##### User
 ##### ShippingAddress
 
-
-
-
 ### customer frontend input choice
 ![](./images/database/Screen%20Shot%202022-05-07%20at%2011.25.11%20AM.png)
 #### ✅  instead let customer type , only radio or dropdown options are allowed
@@ -40,41 +37,6 @@ A much better approach is to limit the choices the customer can make to only tho
 * the actual product information for each order (quantity, size color, ProductID, etc.) are stored in a separate OrderDetails Table. 
 * The two Tables are linked by the OrderID (which in most cases would be an Autonumber field in Access or an Identify field in SQL 7). 
 * The Orders Table has a One-to-Many Relationship to the OrderDetails Table (one Order can have many OrderDetails)
-
-
-
-#### value object vs entity object
-- Entity object is an object of our plain old java class(POJO) Model/Business class, which needs to be persisted in a database using Hibernate, while Value Type object is an object of another class but it is stored as a part of Entity object within a database table.
-- value object: has no meaning without other object (address,cart)
-![](images/database/Screen%20Shot%202022-05-07%20at%205.37.34%20AM.png)
-- entity object: can exist independently (user, order, product)
-- edge case: think about a order can be created by a guest(without register as a user)
-- so the order has to be independent from user
-
-
-### relationships
-#### one-to-one
-- `one user has one cart`
-- `one user has one address` 
-#### one-to-many
->"As stated in the JPA specification under section 2.9, it's a good practice to mark the many-to-one side as the owning side."
-https://www.baeldung.com/hibernate-one-to-many#:~:text=As%20stated%20in%20the%20JPA%20specification%20under%20section%202.9%2C%20it%27s%20a%20good%20practice%20to%20mark%20the%C2%A0many%2Dto%2Done%20side%C2%A0as%20the%20owning%20side.
-#### many-to-one
->https://dzone.com/tutorials/java/hibernate/hibernate-example/hibernate-mapping-many-to-one-using-annotations-1.html
-##### bidirectional @OneToMany @ManyToOne
-* one book has many reviews
-* many reviews belongs to one book
-![](images/database/Screen%20Shot%202022-05-07%20at%2012.42.35%20PM.png)
-![](./images/database/Screen%20Shot%202022-05-07%20at%2012.41.51%20PM.png)
-![](images/database/Screen%20Shot%202022-05-07%20at%2012.46.53%20PM.png)
->https://vladmihalcea.com/the-best-way-to-map-a-onetomany-association-with-jpa-and-hibernate/
-
->https://www.youtube.com/watch?v=tciSOIQngig
-#### many-to-many
-- `cart` and `product`
-  `does one cart has many product?`
-  `does one product has many carts?`
-
 
 ## Executive Summary
 The E-Commerce Single-Page Application will allow consumers to browse, search, and buy products. Users will be able to browse our catelog of products, or search for a specific item, and add these to a cart. Users can register accounts which includes a profile. There are a number of stretch goals to choose from. Please update this text to summarize additional features. This text is fairly generic, your project will be unique, this text should be re-written to reflect your final deliverable.
