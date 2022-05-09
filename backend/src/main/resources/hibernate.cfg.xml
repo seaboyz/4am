@@ -1,0 +1,27 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="connection.driver.class">org.postgresql.Driver</property>
+        <property name="connection.url">jdbc:postgresql://training-postgres.ckbqjaef5nqv.us-east-2.rds.amazonaws.com:5432/test?schemaName=public</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">R3vatur3!</property>
+        <!-- JDBC connectin pool (use the built-in) -->
+
+        <!-- <property name="connection.pool_size">1</property> -->
+        <!-- Echo all executed sql to stdout -->
+        <property name="show_sql">true</property>
+
+        <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
+
+        <!-- Drop and re-create the database  -->
+        <property name="hibernate.hbm2ddl.auto">create</property>
+
+        <!-- Names the annotated entity class -->
+        <mapping class="com.revature.ecommerce.model.User" />
+
+        <!-- <mapping class="com.revature.ecommerce.model.Address" /> -->
+
+    </session-factory>
+</hibernate-configuration>
