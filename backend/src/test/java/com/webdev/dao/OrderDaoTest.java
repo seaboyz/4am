@@ -12,7 +12,7 @@ import com.webdev.model.Order;
 import com.webdev.model.OrderItem;
 import com.webdev.model.Product;
 import com.webdev.model.ShippingAddress;
-import com.webdev.utils.HibernateUtil;
+import com.webdev.utils.TestUtil;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,7 +34,7 @@ public class OrderDaoTest {
 
     @BeforeAll
     public static void setUp() {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        sessionFactory = TestUtil.getSessionFactory();
         orderDao = new OrderDao(sessionFactory);
     }
 

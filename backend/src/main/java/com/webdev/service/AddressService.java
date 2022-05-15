@@ -10,10 +10,11 @@ public class AddressService {
     private AddressDao addressDao;
     private CustomerService customerService;
 
-    public AddressService(AddressDao addressDao) {
+    public AddressService(AddressDao addressDao, CustomerService customerService) {
         this.addressDao = addressDao;
+        this.customerService = customerService;
     }
-    
+
     public void addAddressToCustomer(Integer customerId, ShippingAddress shippingAddress) {
 
         Customer customer = customerService.getCustomerById(customerId);
@@ -22,9 +23,6 @@ public class AddressService {
 
         address.setCustomer(customer);
         addressDao.add(address);
-        
 
-    
-        
     }
 }

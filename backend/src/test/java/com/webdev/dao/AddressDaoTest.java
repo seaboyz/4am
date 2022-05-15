@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Optional;
 
 import com.webdev.model.Address;
-import com.webdev.utils.HibernateUtil;
+import com.webdev.utils.TestUtil;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,7 +22,7 @@ public class AddressDaoTest {
 
     @BeforeAll
     public static void setUpBeforeAllTests() {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        sessionFactory = TestUtil.getSessionFactory();
         System.out.println("SessionFactory created.");
         addressDao = new AddressDao(sessionFactory);
     }

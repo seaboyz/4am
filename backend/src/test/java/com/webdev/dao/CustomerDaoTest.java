@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Optional;
 
 import com.webdev.model.Customer;
-import com.webdev.utils.HibernateUtil;
+import com.webdev.utils.TestUtil;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,7 +22,7 @@ public class CustomerDaoTest {
 
     @BeforeAll
     public static void setUpBeforeAllTests() {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        sessionFactory = TestUtil.getSessionFactory();
         System.out.println("SessionFactory created.");
         customerDao = new CustomerDao(sessionFactory);
     }
@@ -36,7 +36,6 @@ public class CustomerDaoTest {
     public void closeSession() {
         if (session != null)
             session.close();
-        System.out.println("Session closed\n");
 
         // remove all customers from the database
         session = sessionFactory.openSession();

@@ -4,40 +4,35 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 public class StandardTests {
 
-    @BeforeAll
-    public static void setUpBeforeClass() throws Exception {
-    }
+  @BeforeAll
+  public static void init() throws Exception {
+  }
 
-    @BeforeEach
-    public void setUp() throws Exception {
-    }
+  @BeforeEach
+  public void setUp() throws Exception {
+  }
 
-    @Test
-    void successTest() {
-        assert (true);
-    }
+  @AfterEach
+  public void tearDown() throws Exception {
+  }
 
-    // @Test
-    // public void test() {
-    // fail("Not yet implemented");
-    // }
+  @AfterAll
+  void destory() {
+    assert (true);
+  }
 
-    // @Test
-    // @Disabled("for demonstration purposes")
-    // void skippedTest() {
-    // // not executed
-    // }
+  // @Test
+  // public void test() {
+  // fail("Not yet implemented");
+  // }
 
-    @AfterEach
-    public void tearDown() throws Exception {
-    }
-
-    @AfterAll
-    public static void tearDownAfterClass() throws Exception {
-    }
+  // @Test
+  // @Disabled("for demonstration purposes")
+  // void skippedTest() {
+  // // not executed
+  // }
 
 }
