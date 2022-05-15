@@ -1,5 +1,6 @@
 package com.webdev.dao;
 
+import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
@@ -8,6 +9,8 @@ import com.google.gson.Gson;
 import com.webdev.model.Product;
 import com.webdev.utils.TestUtil;
 
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsEqual;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -125,6 +128,8 @@ public class ProductDaoTest {
         assertEquals(
                 2,
                 productDao.getAll().size());
+
+        
 
     }
 
