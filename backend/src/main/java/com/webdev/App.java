@@ -8,7 +8,7 @@ import com.webdev.model.Order;
 import com.webdev.model.OrderItem;
 import com.webdev.model.Product;
 import com.webdev.model.ShippingAddress;
-import com.webdev.utils.TestUtil;
+import com.webdev.utils.HibernateUtil;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,7 +16,7 @@ import org.hibernate.SessionFactory;
 public class App {
 	public static void main(String[] args) {
 
-		SessionFactory sessionFactory = TestUtil.getSessionFactory();
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
 		Session session = sessionFactory.openSession();
 
