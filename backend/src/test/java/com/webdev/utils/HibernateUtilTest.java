@@ -23,7 +23,6 @@ public class HibernateUtilTest {
     @BeforeAll
     public static void setUpBeforeAllTests() throws Exception {
         sessionFactory = TestUtil.getSessionFactory();
-        System.out.println("SessionFactory created.");
     }
 
     @BeforeEach
@@ -35,7 +34,6 @@ public class HibernateUtilTest {
     public void closeSession() {
         if (session != null)
             session.close();
-        System.out.println("Session closed\n");
 
         // remove all customers from the database
         session = sessionFactory.openSession();

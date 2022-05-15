@@ -36,7 +36,6 @@ public class CustomerDaoTest {
     public void closeSession() {
         if (session != null)
             session.close();
-        System.out.println("Session closed\n");
 
         // remove all customers from the database
         session = sessionFactory.openSession();
