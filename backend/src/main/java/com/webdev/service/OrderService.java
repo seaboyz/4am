@@ -22,6 +22,7 @@ public class OrderService {
         this.orderDao = orderDao;
         this.customerService = customerService;
         this.productService = productService;
+        this.addressService = addressService;
     }
 
     // what is the minimum information needed to create an order?
@@ -30,14 +31,16 @@ public class OrderService {
     // 3. Product(id)
     // 4. Quantity(int)
 
-    public Integer placeAOrder(Integer customerId, ShippingAddress shippingAddress,
-            HashMap<Integer, Integer> products) {
+    public Integer placeAOrder(
+            Integer customerId,
+            ShippingAddress shippingAddress,
+            HashMap<Integer, Integer> itemList) {
 
         Customer customer = customerService.getCustomerById(customerId);
 
         Set<OrderItem> orderItemList = new HashSet<>();
 
-        products.forEach((productId, quantity) -> {
+        itemList.forEach((productId, quantity) -> {
             Product product = productService.getProductById(productId);
             orderItemList.add(new OrderItem(product, quantity));
         });
