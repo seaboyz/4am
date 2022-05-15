@@ -21,17 +21,17 @@ public class HibernateUtilTest {
     private Session session;
 
     @BeforeAll
-    public static void setUpBeforeAllTests() throws Exception {
+    public static void init() throws Exception {
         sessionFactory = TestUtil.getSessionFactory();
     }
 
     @BeforeEach
-    public void openSession() {
+    public void setUp() throws Exception {
         session = sessionFactory.openSession();
-    }  
+    }
 
-    @AfterEach   
-    public void closeSession() {
+    @AfterEach
+    public void tearDown() throws Exception {
         if (session != null)
             session.close();
 
@@ -39,13 +39,12 @@ public class HibernateUtilTest {
         session = sessionFactory.openSession();
         session.beginTransaction();
         session.createQuery("delete from Customer").executeUpdate();
-
         session.getTransaction().commit();
         session.close();
     }
 
     @AfterAll
-    public static void tearDownAfterClass() throws Exception {
+    public static void destory() throws Exception {
         if (sessionFactory != null) {
             sessionFactory.close();
             System.out.println("SessionFactory destoryed.");
@@ -125,8 +124,6 @@ public class HibernateUtilTest {
         assertEquals("username2", updatCustomer.getUsername());
 
     }
-
-  
 
     @Test
     public void testList() {

@@ -1,10 +1,15 @@
 package com.webdev.utils;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.net.URL;
+import java.util.Map;
 import java.util.Properties;
 
+import com.google.gson.Gson;
 import com.webdev.model.Address;
 import com.webdev.model.CartItem;
 import com.webdev.model.Customer;
@@ -55,5 +60,25 @@ public class TestUtil {
             properties.load(inputStream);
         }
         return properties;
+    }
+
+    public static void loadUsers() {
+        String absPath = new File("").getAbsolutePath();
+        String jsonFilePath = absPath + "/src/test/resources/users.json";
+        System.out.println(jsonFilePath);
+        try {
+            Gson gson = new Gson();
+            Reader reader = new FileReader(jsonFilePath);
+            Map<?, ?> map = gson.fromJson(reader, Map.class);
+
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                System.out.println(entry.getKey() + " : " + entry.getValue());
+            }
+
+            reader.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
