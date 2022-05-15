@@ -1,5 +1,8 @@
 # Project 2 - E-Commerce SPA
 
+### ERD
+![](/images/database/Screen%20Shot%202022-05-15%20at%204.56.54%20AM.png)
+
 ## NOTE
 Add `hibernate.cfg.xml` to `/backend/src/main/resources`
 [A Note About P2](https://github.com/220328-Java-Full-Stack-AWS/Curriculum-Notes/blob/main/P2.md)
