@@ -11,6 +11,10 @@ import com.webdev.model.OrderItem;
 import com.webdev.model.Product;
 import com.webdev.model.ShippingAddress;
 
+// 1. service can only access dao
+// 2. service prefer to access its own dao
+// 3. if there is a service for a the dao you can use the service instead of the dao directly
+
 public class OrderService {
     private OrderDao orderDao;
     private CustomerService customerService;
