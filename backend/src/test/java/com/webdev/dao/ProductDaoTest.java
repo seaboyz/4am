@@ -4,9 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
 
-import com.webdev.dao.ProductDao;
 import com.webdev.model.Product;
-import com.webdev.utils.HibernateUtil;
+import com.webdev.utils.TestUtil;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,7 +22,7 @@ public class ProductDaoTest {
 
     @BeforeAll
     public static void setUpBeforeAllTests() {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        sessionFactory = TestUtil.getSessionFactory();
         System.out.println("SessionFactory created.");
         productDao = new ProductDao(sessionFactory);
 

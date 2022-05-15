@@ -18,7 +18,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 // progratic configure hibernate session factory and session
-public class HibernateTestUtil {
+public class TestUtil {
     private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {

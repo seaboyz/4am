@@ -22,7 +22,7 @@ public class HibernateUtilTest {
 
     @BeforeAll
     public static void setUpBeforeAllTests() throws Exception {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        sessionFactory = TestUtil.getSessionFactory();
         System.out.println("SessionFactory created.");
     }
 
