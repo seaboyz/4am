@@ -21,8 +21,14 @@ Add `hibernate.cfg.xml` to `/backend/src/main/resources`
 * use underscore for merged words `first_name`
 
 ### ERD - Entity-Relationship Diagram
-<iframe
+* full-version
+<!-- <iframe
   src="https://dbdiagram.io/d/62733e857f945876b6bb6479"
+  style="width:100%; height:100%;"
+></iframe> -->
+* simplified
+<iframe
+  src="https://dbdiagram.io/d/627428457f945876b6c46bf3"
   style="width:100%; height:100%;"
 ></iframe>
 
