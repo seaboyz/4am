@@ -3,6 +3,7 @@ package com.webdev;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// Right now, spring-boot knows nothing about hibernate
 @SpringBootApplication
 public class App {
 	public static void main(String[] args) {
