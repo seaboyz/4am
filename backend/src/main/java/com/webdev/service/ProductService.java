@@ -1,5 +1,6 @@
 package com.webdev.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -21,5 +22,9 @@ public class ProductService {
         }
 
         return product.get();
+    }
+
+    public List<Product> getAllProducts() {
+        return productDao.getAll();
     }
 }
