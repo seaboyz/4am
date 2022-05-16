@@ -145,7 +145,12 @@ public class OrderServiceTest {
                 shippingAddress,
                 orderList);
 
+        customer = customerService.getCustomerById(customerId);
+
         assertEquals(1, orderId);
+
+
+        assertEquals(1,customer.getAddresses().size());
 
     }
 

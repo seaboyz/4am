@@ -61,6 +61,9 @@ public class CustomerDao implements Dao<Customer> {
         customerToUpdate.setEmail(customer.getEmail());
         customerToUpdate.setPassword(customer.getPassword());
         customerToUpdate.setPhoneNumber(customer.getPhoneNumber());
+        if (customer.getAddresses().size() != customerToUpdate.getAddresses().size()) {
+            customerToUpdate.setAddresses(customer.getAddresses());
+        }
 
         session.merge(customerToUpdate);
 

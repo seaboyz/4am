@@ -93,7 +93,7 @@ public class App {
 				shippingAddress,
 				orderList);
 
-		System.out.println("orderId: " + orderId);
+		System.out.println(customer.getAddresses().size());
 
 	}
 }

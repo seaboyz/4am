@@ -51,7 +51,8 @@ public class OrderService {
 
         Order order = new Order(customer, shippingAddress, orderItemList);
 
-        addressService.addAddressToCustomer(customerId, shippingAddress);
+        // addressService.addAddressToCustomer(customerId, shippingAddress);
+        customerService.addAddress(customerId, shippingAddress);
 
         Integer orderId = orderDao.add(order);
 
