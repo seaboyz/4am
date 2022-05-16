@@ -48,10 +48,13 @@ public class CustomerDao implements Dao<Customer> {
         return customers;
     }
 
+    // TODO: should get be transaction aware?
+    // TODO: should update() depend on get()?
     @Override
     public Customer update(Customer customer) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+
 
         Customer customerToUpdate = session.get(Customer.class, customer.getId());
 
