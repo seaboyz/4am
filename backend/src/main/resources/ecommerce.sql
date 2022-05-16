@@ -1,5 +1,5 @@
-drop database if exists qianggao_p2;
-create database qianggao_p2;
+DROP DATABASE IF EXISTS qianggao_p2;
+CREATE DATABASE qianggao_p2;
 
 SELECT * FROM customers;
 
