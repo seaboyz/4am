@@ -51,13 +51,7 @@ public class OrderService {
 
         Order order = new Order(customer, shippingAddress, orderItemList);
 
-        // note: instead of adding customer to the address, we can add the address the
-        // customer;
-        // because the customer has a one-to-many relationship with the address, and has
-        // cascade.all
-        // so the address will be added to the customer automatically
-
-        //// addressService.addAddressToCustomer(customerId, shippingAddress);
+        // addressService.addAddressToCustomer(customerId, shippingAddress);
         customerService.addAddress(customerId, shippingAddress);
 
         Integer orderId = orderDao.add(order);
