@@ -1,6 +1,8 @@
 package com.webdev.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -35,13 +37,13 @@ public class Customer {
 
     // when save the customer, if there are any unsaved addresses, save them
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Address> addresses = new HashSet<Address>();
+    private List<Address> addresses = new ArrayList<Address>();
 
-    public Set<Address> getAddresses() {
+    public List<Address> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(Set<Address> addresses) {
+    public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
     }
 
