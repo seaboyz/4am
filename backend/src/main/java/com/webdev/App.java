@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class App {
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);
-		System.out.println("Executed main App.java");
+		System.out.println("***Executed main App.java***");
 
 		// SessionFactory sessionFactory = TestUtil.getSessionFactory();
 		// Session session = sessionFactory.openSession();
