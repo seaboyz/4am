@@ -5,6 +5,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+// TODO: Turn session factory into a singleton
 public class HibernateUtil {
 	public static SessionFactory getSessionFactory() {
 		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
