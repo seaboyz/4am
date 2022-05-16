@@ -3,6 +3,8 @@ package com.webdev.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -59,5 +61,17 @@ public class ProductServiceTest {
                 product, Product.class),
                 gson.toJson(productFromDb, Product.class));
 
+    }
+
+    @Test
+    void testGetAllProducts() {
+        List<Product> products = new ArrayList<>();
+
+        products.add(product);
+        when(productDao.getAll()).thenReturn(products);
+
+        List<Product> allProducts = productService.getAllProducts();
+
+        assertEquals(1, allProducts.size());
     }
 }
