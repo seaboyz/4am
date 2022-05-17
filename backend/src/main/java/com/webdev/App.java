@@ -1,12 +1,8 @@
 package com.webdev;
 
-import javax.persistence.EntityManager;
-
 import com.webdev.dao.CustomerDao;
 import com.webdev.model.Customer;
 
-import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
