@@ -14,44 +14,44 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CustomerDao implements Dao<Customer> {
 
-    @Autowired
     private EntityManager entityManager;
+
+    private Session currentSession;
+
+    @Autowired
+    public CustomerDao(EntityManager entityManager) {
+        this.entityManager = entityManager;
+        this.currentSession = entityManager.unwrap(Session.class);
+    }
 
     @Override
     public Customer add(Customer customer) {
 
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
+        currentSession = entityManager.unwrap(Session.class);
         currentSession.save(customer);
-        currentSession.getTransaction().commit();
         currentSession.close();
         return customer;
     }
 
     @Override
     public Optional<Customer> get(Integer id) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
+        currentSession = entityManager.unwrap(Session.class);
         Optional<Customer> customer = Optional.ofNullable(currentSession.get(Customer.class, id));
-        currentSession.getTransaction().commit();
         currentSession.close();
         return customer;
     }
 
     @Override
     public List<Customer> getAll() {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
+        currentSession = entityManager.unwrap(Session.class);
         List<Customer> customers = currentSession.createQuery("from Customer", Customer.class).list();
-
-        currentSession.getTransaction().commit();
-
+        currentSession.close();
         return customers;
     }
 
     @Override
     public Customer update(Customer customer) {
-        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
 
         Customer customerToUpdate = currentSession.get(Customer.class, customer.getId());
@@ -67,28 +67,22 @@ public class CustomerDao implements Dao<Customer> {
         }
 
         currentSession.merge(customerToUpdate);
-
         currentSession.getTransaction().commit();
         currentSession.close();
+
         return customerToUpdate;
     }
 
     @Override
     public void delete(Integer id) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
+        currentSession = entityManager.unwrap(Session.class);
         Customer customer = currentSession.get(Customer.class, id);
         currentSession.delete(customer);
-        currentSession.getTransaction().commit();
-        currentSession.close();
     }
 
     @Override
     public void delete(Customer customer) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
+        currentSession = entityManager.unwrap(Session.class);
         currentSession.delete(customer);
-        currentSession.getTransaction().commit();
-        currentSession.close();
     }
 }
