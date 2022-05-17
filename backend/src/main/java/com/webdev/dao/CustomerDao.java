@@ -3,62 +3,60 @@ package com.webdev.dao;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+
 import com.webdev.model.Customer;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class CustomerDao implements Dao<Customer> {
 
-    private SessionFactory sessionFactory;
-
-    public CustomerDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public Customer add(Customer customer) {
 
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(customer);
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        currentSession.save(customer);
+        currentSession.getTransaction().commit();
+        currentSession.close();
         return customer;
     }
 
     @Override
     public Optional<Customer> get(Integer id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Optional<Customer> customer = Optional.ofNullable(session.get(Customer.class, id));
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        Optional<Customer> customer = Optional.ofNullable(currentSession.get(Customer.class, id));
+        currentSession.getTransaction().commit();
+        currentSession.close();
         return customer;
     }
 
     @Override
     public List<Customer> getAll() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List<Customer> customers = session.createQuery("from Customer", Customer.class).list();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        List<Customer> customers = currentSession.createQuery("from Customer", Customer.class).list();
 
-        session.getTransaction().commit();
+        currentSession.getTransaction().commit();
 
         return customers;
     }
 
-    // TODO: should get be transaction aware?
-    // TODO: should update() depend on get()?
     @Override
     public Customer update(Customer customer) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
 
+        Customer customerToUpdate = currentSession.get(Customer.class, customer.getId());
 
-        Customer customerToUpdate = session.get(Customer.class, customer.getId());
-
-        session.evict(customerToUpdate);
+        currentSession.evict(customerToUpdate);
 
         customerToUpdate.setUsername(customer.getUsername());
         customerToUpdate.setEmail(customer.getEmail());
@@ -68,29 +66,29 @@ public class CustomerDao implements Dao<Customer> {
             customerToUpdate.setAddresses(customer.getAddresses());
         }
 
-        session.merge(customerToUpdate);
+        currentSession.merge(customerToUpdate);
 
-        session.getTransaction().commit();
-        session.close();
+        currentSession.getTransaction().commit();
+        currentSession.close();
         return customerToUpdate;
     }
 
     @Override
     public void delete(Integer id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Customer customer = session.get(Customer.class, id);
-        session.delete(customer);
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        Customer customer = currentSession.get(Customer.class, id);
+        currentSession.delete(customer);
+        currentSession.getTransaction().commit();
+        currentSession.close();
     }
 
     @Override
     public void delete(Customer customer) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.delete(customer);
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        currentSession.delete(customer);
+        currentSession.getTransaction().commit();
+        currentSession.close();
     }
 }

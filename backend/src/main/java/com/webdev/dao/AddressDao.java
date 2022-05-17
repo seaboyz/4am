@@ -3,58 +3,59 @@ package com.webdev.dao;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+
 import com.webdev.model.Address;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class AddressDao implements Dao<Address> {
-    private SessionFactory sessionFactory;
-
-    public AddressDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+   @Autowired
+   private EntityManager entityManager;
 
     @Override
     public Address add(Address address) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(address);
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        currentSession.save(address);
+        currentSession.getTransaction().commit();
+        currentSession.close();
         return address;
     }
 
     @Override
     public Optional<Address> get(Integer id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Optional<Address> address = Optional.ofNullable(session.get(Address.class, id));
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        Optional<Address> address = Optional.ofNullable(currentSession.get(Address.class, id));
+        currentSession.getTransaction().commit();
+        currentSession.close();
         return address;
     }
 
     @Override
     public List<Address> getAll() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List<Address> addresses = session.createQuery("from Address", Address.class).list();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        List<Address> addresses = currentSession.createQuery("from Address", Address.class).list();
 
-        session.getTransaction().commit();
-        session.close();
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         return addresses;
     }
 
     @Override
     public Address update(Address address) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
 
-        Address addressToUpdate = session.get(Address.class, address.getId());
+        Address addressToUpdate = currentSession.get(Address.class, address.getId());
 
-        session.evict(addressToUpdate);
+        currentSession.evict(addressToUpdate);
 
         addressToUpdate.setFirstName(address.getFirstName());
         addressToUpdate.setLastName(address.getLastName());
@@ -65,31 +66,31 @@ public class AddressDao implements Dao<Address> {
         addressToUpdate.setZip(address.getZip());
         addressToUpdate.setCountry(address.getCountry());
 
-        session.merge(addressToUpdate);
+        currentSession.merge(addressToUpdate);
 
-        session.getTransaction().commit();
-        session.close();
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         return addressToUpdate;
     }
 
     @Override
     public void delete(Integer id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Address address = session.get(Address.class, id);
-        session.delete(address);
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        Address address = currentSession.get(Address.class, id);
+        currentSession.delete(address);
+        currentSession.getTransaction().commit();
+        currentSession.close();
     }
 
     @Override
     public void delete(Address address) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.delete(address);
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        currentSession.delete(address);
+        currentSession.getTransaction().commit();
+        currentSession.close();
     }
 
 }

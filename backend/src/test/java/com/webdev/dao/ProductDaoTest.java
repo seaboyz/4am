@@ -4,34 +4,42 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+
 import com.google.gson.Gson;
 import com.webdev.model.Product;
-import com.webdev.utils.TestUtil;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class ProductDaoTest {
-    private static SessionFactory sessionFactory;
-    private static ProductDao productDao;
-    private static Product product;
-    private static Product newProduct;
-    private static Gson gson;
-    private Session session;
+    @Autowired
+    static EntityManager entityManager;
+
+    @Autowired
+    static ProductDao productDao;
+
+    Session currentSession;
+
+    Gson gson = new Gson();
+
+    Product product;
+
+    Product newProduct;
 
     @BeforeAll
     public static void init() {
-        gson = new Gson();
-        // progratic configure hibernate session factory and session
-        sessionFactory = TestUtil.getSessionFactory();
-        // init productDao
-        productDao = new ProductDao(sessionFactory);
 
+    }
+
+    @BeforeEach
+    public void setUp() {
         // create 2 products
         product = new Product(
                 "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
@@ -45,48 +53,30 @@ public class ProductDaoTest {
                 22.3,
                 "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
                 "men's clothing");
-    }
 
-    @BeforeEach
-    public void setUp() {
-        // pre-inserted data and make sure the session is closed before each test
-        session = sessionFactory.openSession();
-        session.save(product);
-        session.beginTransaction();
-        session.save(product);
-        session.getTransaction().commit();
-        session.close();
+        // pre-inserted data and make sure the currentSession is closed before each test
+        currentSession = entityManager.unwrap(Session.class);
+        currentSession.save(product);
+        currentSession.beginTransaction();
+        currentSession.save(product);
+        currentSession.getTransaction().commit();
+
     }
 
     @AfterEach
     public void closeSession() {
-        // clear data after each test and close session
-        if (session != null)
-            session.close();
-
-        // remove all customers from the database
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.createQuery("delete from Product").executeUpdate();
-
-        session.getTransaction().commit();
-        session.close();
+        currentSession.close();
     }
 
-    @AfterAll
-    public static void destory() {
-        // close session factory
-        sessionFactory.close();
-    }
+
 
     @Test
     void testAdd() {
 
         productDao.add(newProduct);
 
-        // open a new session
-        session = sessionFactory.openSession();
-        Product productFromDb = session.get(Product.class, newProduct.getId());
+
+        Product productFromDb = currentSession.get(Product.class, newProduct.getId());
         // check if the product was added
         // use json to compare the product
         assertEquals(
@@ -95,7 +85,7 @@ public class ProductDaoTest {
         // check how many products are in the database, should be 2
         assertEquals(
                 2,
-                session.createQuery("from Product").list().size());
+                currentSession.createQuery("from Product").list().size());
 
     }
 
@@ -115,18 +105,15 @@ public class ProductDaoTest {
     @Test
     void testGetAll() {
         // save a new product
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(newProduct);
-        session.getTransaction().commit();
-        session.close();
+        currentSession.beginTransaction();
+        currentSession.save(newProduct);
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         // get all products
         assertEquals(
                 2,
                 productDao.getAll().size());
-
-        
 
     }
 
@@ -137,30 +124,30 @@ public class ProductDaoTest {
 
         productDao.delete(id);
 
-        // open a new session
-        session = sessionFactory.openSession();
-        Product productFromDb = session.get(Product.class, id);
+        // open a new currentSession
+        currentSession = entityManager.unwrap(Session.class);
+        Product productFromDb = currentSession.get(Product.class, id);
         assertEquals(
                 null,
                 productFromDb);
         assertEquals(
                 0,
-                session.createQuery("from Product").list().size());
+                currentSession.createQuery("from Product").list().size());
 
     }
 
     @Test
     void testDelete2() {
         productDao.delete(product);
-        // open a new session
-        session = sessionFactory.openSession();
-        Product productFromDb = session.get(Product.class, product.getId());
+        // open a new currentSession
+        currentSession = entityManager.unwrap(Session.class);
+        Product productFromDb = currentSession.get(Product.class, product.getId());
         assertEquals(
                 null,
                 productFromDb);
         assertEquals(
                 0,
-                session.createQuery("from Product").list().size());
+                currentSession.createQuery("from Product").list().size());
     }
 
     @Test
@@ -169,9 +156,9 @@ public class ProductDaoTest {
 
         productDao.update(product);
 
-        // open a new session
-        session = sessionFactory.openSession();
-        Product productFromDb = session.get(Product.class, product.getId());
+        // open a new currentSession
+        currentSession = entityManager.unwrap(Session.class);
+        Product productFromDb = currentSession.get(Product.class, product.getId());
         assertEquals(
                 gson.toJson(product, Product.class),
                 gson.toJson(productFromDb, Product.class));

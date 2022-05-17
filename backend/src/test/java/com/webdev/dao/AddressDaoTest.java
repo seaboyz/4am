@@ -5,46 +5,42 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+
 import com.webdev.model.Address;
-import com.webdev.utils.TestUtil;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class AddressDaoTest {
-    private static SessionFactory sessionFactory;
-    private Session session;
-    private static AddressDao addressDao;
+    @Autowired
+    private static EntityManager entityManager;
 
-    @BeforeAll
-    public static void setUpBeforeAllTests() {
-        sessionFactory = TestUtil.getSessionFactory();
-        System.out.println("SessionFactory created.");
-        addressDao = new AddressDao(sessionFactory);
-    }
+    @Autowired
+    private static AddressDao addressDao;
+    
+    private Session currentSession;
 
     @BeforeEach
-    public void openSession() {
-        session = sessionFactory.openSession();
+    public void init() {
+        currentSession = entityManager.unwrap(Session.class);
     }
 
     @AfterEach
-    public void closeSession() {
-        if (session != null)
-            session.close();
-        System.out.println("Session closed\n");
+    public void tear() {
+        if (currentSession != null)
+            currentSession.close();
+    }
 
-        // remove all customers from the database
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.createQuery("delete from Address").executeUpdate();
-
-        session.getTransaction().commit();
-        session.close();
+    @AfterEach
+    public void tearDown() {
+        if (currentSession != null)
+            currentSession.close();
     }
 
     @Test
@@ -60,11 +56,11 @@ public class AddressDaoTest {
                 "country");
 
         addressDao.add(address);
-        // session is closed in userdao.add()
+        // currentSession is closed in userdao.add()
 
         // check if the address was added to the database
-        session = sessionFactory.openSession();
-        Address addressFromDb = session.get(Address.class, address.getId());
+        currentSession = entityManager.unwrap(Session.class);
+        Address addressFromDb = currentSession.get(Address.class, address.getId());
         assertEquals(address.toString(), addressFromDb.toString());
     }
 
@@ -80,11 +76,11 @@ public class AddressDaoTest {
                 "zip",
                 "country");
 
-        session.beginTransaction();
-        session.save(address);
-        session.getTransaction().commit();
-        session.close();
-        // session is closed in userdao.add()
+        currentSession.beginTransaction();
+        currentSession.save(address);
+        currentSession.getTransaction().commit();
+        currentSession.close();
+        // currentSession is closed in userdao.add()
 
         // check if the address was added to the database
         Optional<Address> addressFromDb = addressDao.get(address.getId());
@@ -114,14 +110,14 @@ public class AddressDaoTest {
                 "zip2",
                 "country2");
 
-        session.beginTransaction();
-        session.save(address1);
-        session.save(address2);
-        session.getTransaction().commit();
-        session.close();
-        // session is closed in userdao.add()
+        currentSession.beginTransaction();
+        currentSession.save(address1);
+        currentSession.save(address2);
+        currentSession.getTransaction().commit();
+        currentSession.close();
+        // currentSession is closed in userdao.add()
 
-        // start a new session
+        // start a new currentSession
         assertEquals(2, addressDao.getAll().size());
 
     }
@@ -138,10 +134,11 @@ public class AddressDaoTest {
                 "state",
                 "zip",
                 "country");
-        session.beginTransaction();
-        session.save(address);
-        session.getTransaction().commit();
-        session.close();
+
+        currentSession.beginTransaction();
+        currentSession.save(address);
+        currentSession.getTransaction().commit();
+        currentSession.close();
         // address is detached
 
         // update the address
@@ -154,16 +151,15 @@ public class AddressDaoTest {
         address.setZip("12345");
         address.setCountry("USA");
 
-
         // update the address in the database
         addressDao.update(address);
-        // session is closed in userdao.update()
+        // currentSession is closed in userdao.update()
 
         // check if the address was updated in the database
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        Address addressFromDb = session.get(Address.class, address.getId());
-        session.getTransaction().commit();
+        currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        Address addressFromDb = currentSession.get(Address.class, address.getId());
+        currentSession.getTransaction().commit();
 
         assertEquals(address.toString(), addressFromDb.toString());
 
@@ -181,15 +177,15 @@ public class AddressDaoTest {
                 "zip",
                 "country");
 
-        session.beginTransaction();
-        session.save(address);
-        session.getTransaction().commit();
-        session.close();
-        // session is closed in userdao.add()
+        currentSession.beginTransaction();
+        currentSession.save(address);
+        currentSession.getTransaction().commit();
+        currentSession.close();
+        // currentSession is closed in userdao.add()
 
         // delete the address
         addressDao.delete(address);
-        // session is closed in userdao.delete()
+        // currentSession is closed in userdao.delete()
 
         // check if the address was deleted from the database
         Optional<Address> addressFromDb = addressDao.get(address.getId());
@@ -210,11 +206,11 @@ public class AddressDaoTest {
                 "country");
 
         addressDao.add(address);
-        // session is closed in userdao.add()
+        // currentSession is closed in userdao.add()
 
         // delete the address
         addressDao.delete(address);
-        // session is closed in userdao.delete()
+        // currentSession is closed in userdao.delete()
 
         // check if the address was deleted from the database
         Optional<Address> addressFromDb = addressDao.get(address.getId());

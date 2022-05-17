@@ -5,45 +5,36 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+
 import com.webdev.model.Customer;
-import com.webdev.utils.TestUtil;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class CustomerDaoTest {
-    private static SessionFactory sessionFactory;
-    private Session session;
+    @Autowired
+    private static EntityManager entityManager;
+
+    @Autowired
     private static CustomerDao customerDao;
 
-    @BeforeAll
-    public static void setUpBeforeAllTests() {
-        sessionFactory = TestUtil.getSessionFactory();
-        System.out.println("SessionFactory created.");
-        customerDao = new CustomerDao(sessionFactory);
-    }
+    private Session currentSession;
 
     @BeforeEach
-    public void openSession() {
-        session = sessionFactory.openSession();
+    public void init() {
+        currentSession = entityManager.unwrap(Session.class);
     }
 
     @AfterEach
-    public void closeSession() {
-        if (session != null)
-            session.close();
-
-        // remove all customers from the database
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.createQuery("delete from Customer").executeUpdate();
-
-        session.getTransaction().commit();
-        session.close();
+    public void tear() {
+        if (currentSession != null)
+            currentSession.close();
     }
 
     @Test
@@ -55,11 +46,10 @@ public class CustomerDaoTest {
                 "phoneNumber");
 
         customerDao.add(customer);
-        // session is closed in userdao.add()
+        // currentSession is closed in userdao.add()
 
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        Customer savedCustomer = session.get(Customer.class, customer.getId());
+        currentSession.beginTransaction();
+        Customer savedCustomer = currentSession.get(Customer.class, customer.getId());
 
         assertEquals(customer.getUsername(), savedCustomer.getUsername());
     }
@@ -71,10 +61,10 @@ public class CustomerDaoTest {
                 "email",
                 "password",
                 "phoneNumber");
-        session.beginTransaction();
-        session.save(customer);
-        session.getTransaction().commit();
-        session.close();
+        currentSession.beginTransaction();
+        currentSession.save(customer);
+        currentSession.getTransaction().commit();
+        currentSession.close();
         // then customer becomes detached
 
         assertEquals(customer.getUsername(), customerDao.get(customer.getId()).get().getUsername());
@@ -88,23 +78,23 @@ public class CustomerDaoTest {
                 "email1",
                 "password",
                 "phoneNumber");
-        session.beginTransaction();
-        session.save(customer1);
-        session.getTransaction().commit();
-        session.close();
+        currentSession.beginTransaction();
+        currentSession.save(customer1);
+        currentSession.getTransaction().commit();
+        currentSession.close();
         // then customer becomes detached
 
-        // start a new session
-        session = sessionFactory.openSession();
+        // start a new currentSession
+        currentSession = entityManager.unwrap(Session.class);
         Customer customer2 = new Customer(
                 "username2",
                 "email2",
                 "password",
                 "phoneNumber");
-        session.beginTransaction();
-        session.save(customer2);
-        session.getTransaction().commit();
-        session.close();
+        currentSession.beginTransaction();
+        currentSession.save(customer2);
+        currentSession.getTransaction().commit();
+        currentSession.close();
         // then customer becomes detached
 
         assertEquals(2, customerDao.getAll().size());
@@ -118,22 +108,22 @@ public class CustomerDaoTest {
                 "email1",
                 "password",
                 "phoneNumber");
-        session.beginTransaction();
-        session.save(customer);
-        session.getTransaction().commit();
-        session.close();
+        currentSession.beginTransaction();
+        currentSession.save(customer);
+        currentSession.getTransaction().commit();
+        currentSession.close();
         // then customer becomes detached
 
         customer.setUsername("username2");
 
         customerDao.update(customer);
 
-        // start a new session
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        Customer updatCustomer = session.get(Customer.class, customer.getId());
-        session.getTransaction().commit();
-        session.close();
+        // start a new currentSession
+        currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        Customer updatCustomer = currentSession.get(Customer.class, customer.getId());
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         assertEquals("username2", updatCustomer.getUsername());
 
@@ -146,20 +136,20 @@ public class CustomerDaoTest {
                 "email1",
                 "password",
                 "phoneNumber");
-        session.beginTransaction();
-        session.save(customer);
-        session.getTransaction().commit();
-        session.close();
+        currentSession.beginTransaction();
+        currentSession.save(customer);
+        currentSession.getTransaction().commit();
+        currentSession.close();
         // then customer becomes detached
 
         customerDao.delete(customer);
 
-        // start a new session
-        session = sessionFactory.openSession();
-        session.beginTransaction();
+        // start a new currentSession
+        currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
         Optional<Customer> deletedCustomer = customerDao.get(customer.getId());
-        session.getTransaction().commit();
-        session.close();
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         assertTrue(!deletedCustomer.isPresent());
     }

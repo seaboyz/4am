@@ -22,7 +22,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-// TODO: Turn session factory into a singleton
 // progratic configure hibernate session factory and session
 public class TestUtil {
     private static SessionFactory sessionFactory;

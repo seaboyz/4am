@@ -39,3 +39,6 @@ A much better approach is to limit the choices the customer can make to only tho
 * The two Tables are linked by the OrderID 
 * The Orders Table has a One-to-Many Relationship to the OrderDetails Table (one Order can have many OrderDetails)
 
+#### @Transactional
+![](/backend/images/spring/Screen%20Shot%202022-05-17%20at%203.36.48%20AM.png)
+

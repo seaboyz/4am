@@ -3,58 +3,59 @@ package com.webdev.dao;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+
 import com.webdev.model.Product;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ProductDao implements Dao<Product> {
-    private SessionFactory sessionFactory;
-
-    public ProductDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public Product add(Product product) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(product);
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        currentSession.save(product);
+        currentSession.getTransaction().commit();
+        currentSession.close();
         return product;
     }
 
     @Override
     public Optional<Product> get(Integer id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Optional<Product> product = Optional.ofNullable(session.get(Product.class, id));
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        Optional<Product> product = Optional.ofNullable(currentSession.get(Product.class, id));
+        currentSession.getTransaction().commit();
+        currentSession.close();
         return product;
     }
 
     @Override
     public List<Product> getAll() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List<Product> products = session.createQuery("from Product", Product.class).list();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        List<Product> products = currentSession.createQuery("from Product", Product.class).list();
 
-        session.getTransaction().commit();
-        session.close();
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         return products;
     }
 
     @Override
     public Product update(Product product) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
 
-        Product productToUpdate = session.get(Product.class, product.getId());
+        Product productToUpdate = currentSession.get(Product.class, product.getId());
 
-        session.evict(productToUpdate);
+        currentSession.evict(productToUpdate);
 
         productToUpdate.setName(product.getName());
         productToUpdate.setDescription(product.getDescription());
@@ -62,10 +63,10 @@ public class ProductDao implements Dao<Product> {
         productToUpdate.setImage(product.getImage());
         productToUpdate.setCategory(product.getCategory());
 
-        session.merge(productToUpdate);
+        currentSession.merge(productToUpdate);
 
-        session.getTransaction().commit();
-        session.close();
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         return productToUpdate;
 
@@ -73,20 +74,20 @@ public class ProductDao implements Dao<Product> {
 
     @Override
     public void delete(Integer id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Product productToDelete = session.get(Product.class, id);
-        session.delete(productToDelete);
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        Product productToDelete = currentSession.get(Product.class, id);
+        currentSession.delete(productToDelete);
+        currentSession.getTransaction().commit();
+        currentSession.close();
     }
 
     @Override
     public void delete(Product product) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.delete(product);
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        currentSession.delete(product);
+        currentSession.getTransaction().commit();
+        currentSession.close();
     }
 }

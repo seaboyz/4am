@@ -1,10 +1,5 @@
 package com.webdev;
 
-import java.util.List;
-
-import com.google.gson.Gson;
-import com.webdev.model.Customer;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -2,35 +2,36 @@ package com.webdev.dao;
 
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+
 import com.webdev.model.Order;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class OrderDao {
-    private SessionFactory sessionFactory;
-
-    public OrderDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @Autowired
+    private EntityManager entityManager;
 
     // add a new order
     public Integer add(Order order) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Integer id = (Integer) session.save(order);
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        Integer id = (Integer) currentSession.save(order);
+        currentSession.getTransaction().commit();
+        currentSession.close();
         return id;
     }
 
     // get a order by id
     public Optional<Order> get(Integer id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Optional<Order> order = Optional.ofNullable(session.get(Order.class, id));
-        session.getTransaction().commit();
-        session.close();
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        Optional<Order> order = Optional.ofNullable(currentSession.get(Order.class, id));
+        currentSession.getTransaction().commit();
+        currentSession.close();
         return order;
     }
 

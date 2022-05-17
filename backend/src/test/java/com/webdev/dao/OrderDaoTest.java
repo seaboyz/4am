@@ -7,42 +7,41 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+
 import com.webdev.model.Customer;
 import com.webdev.model.Order;
 import com.webdev.model.OrderItem;
 import com.webdev.model.Product;
 import com.webdev.model.ShippingAddress;
-import com.webdev.utils.TestUtil;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class OrderDaoTest {
-    private static SessionFactory sessionFactory;
-    private Session session;
-    private static OrderDao orderDao;
-    private Customer customer;
-    private ShippingAddress shippingAddress;
-    private Product product;
-    private OrderItem orderItem;
-    private Order order;
 
-    @BeforeAll
-    public static void setUp() {
-        sessionFactory = TestUtil.getSessionFactory();
-        orderDao = new OrderDao(sessionFactory);
-    }
+    @Autowired
+    private EntityManager entityManager;
+
+    @Autowired
+    static OrderDao orderDao;
+
+    Session currentSession;
+    Customer customer;
+    ShippingAddress shippingAddress;
+    Product product;
+    OrderItem orderItem;
+    Order order;
 
     @BeforeEach
-    public void init() {
-        if (session == null) {
-            session = sessionFactory.openSession();
-        }
+    void init() {
+
         customer = new Customer(
                 "johnd",
                 "john@gmail.com",
@@ -72,30 +71,31 @@ public class OrderDaoTest {
 
         order = new Order(customer, shippingAddress, orderItemList);
 
-        session.beginTransaction();
-        session.save(product);
-        session.save(customer);
-        session.save(order);
+        currentSession = entityManager.unwrap(Session.class);
+
+        currentSession.beginTransaction();
+        currentSession.save(product);
+        currentSession.save(customer);
+        currentSession.save(order);
         // the orderItemList is saved automatically, because the cascade type is ALL
-        session.getTransaction().commit();
-        session.close();
+        currentSession.getTransaction().commit();
 
     }
 
     @AfterEach
-    public void tearDown() {
-        if (session != null) {
-            session.close();
+    void tearDown() {
+        if (currentSession != null) {
+            currentSession.close();
         }
         // clean up the database
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.createQuery("delete from OrderItem").executeUpdate();
-        session.createQuery("delete from Order").executeUpdate();
-        session.createQuery("delete from Customer").executeUpdate();
-        session.createQuery("delete from Product").executeUpdate();
-        session.getTransaction().commit();
-        session.close();
+        currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        currentSession.createQuery("delete from OrderItem").executeUpdate();
+        currentSession.createQuery("delete from Order").executeUpdate();
+        currentSession.createQuery("delete from Customer").executeUpdate();
+        currentSession.createQuery("delete from Product").executeUpdate();
+        currentSession.getTransaction().commit();
+        currentSession.close();
     }
 
     @Test
@@ -124,13 +124,13 @@ public class OrderDaoTest {
         OrderItem orderItem = new OrderItem(product, 1);
 
         // save orderItem
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(product);
-        session.save(orderItem);
-        session.save(customer);
-        session.getTransaction().commit();
-        session.close();
+        currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        currentSession.save(product);
+        currentSession.save(orderItem);
+        currentSession.save(customer);
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         Set<OrderItem> orderItemList = new HashSet<>();
 
@@ -141,21 +141,21 @@ public class OrderDaoTest {
         orderDao.add(order);
 
         // check if the order is saved
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        Order savedOrder = session.get(Order.class, order.getId());
-        session.getTransaction().commit();
-        session.close();
+        currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        Order savedOrder = currentSession.get(Order.class, order.getId());
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         assert savedOrder != null;
 
-        session = sessionFactory.openSession();
-        session.beginTransaction();
+        currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
         // get all the orders
-        Query<Order> query = session.createQuery("from Order", Order.class);
+        Query<Order> query = currentSession.createQuery("from Order", Order.class);
         List<Order> orderList = query.getResultList();
-        session.getTransaction().commit();
-        session.close();
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         assertEquals(2, orderList.size());
 
