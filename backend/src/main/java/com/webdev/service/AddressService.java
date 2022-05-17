@@ -6,15 +6,19 @@ import com.webdev.model.Customer;
 import com.webdev.model.ShippingAddress;
 import com.webdev.utils.AddressConverter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
 public class AddressService {
+    @Autowired
     private AddressDao addressDao;
+
+    @Autowired
     private CustomerService customerService;
 
-    public AddressService(AddressDao addressDao, CustomerService customerService) {
-        this.addressDao = addressDao;
-        this.customerService = customerService;
-    }
-
+    @Transactional
     public void addAddressToCustomer(Integer customerId, ShippingAddress shippingAddress) {
 
         Customer customer = customerService.getCustomerById(customerId);
@@ -23,8 +27,6 @@ public class AddressService {
 
         address.setCustomer(customer);
         addressDao.add(address);
-
-        
 
     }
 }

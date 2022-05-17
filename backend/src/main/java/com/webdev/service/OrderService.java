@@ -11,23 +11,22 @@ import com.webdev.model.OrderItem;
 import com.webdev.model.Product;
 import com.webdev.model.ShippingAddress;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 // 1. service can only access dao
 // 2. service prefer to access its own dao
 // 3. if there is a service for a the dao you can use the service instead of the dao directly
-
+@Service
 public class OrderService {
+    @Autowired
     private OrderDao orderDao;
-    private CustomerService customerService;
-    private ProductService productService;
-    private AddressService addressService;
 
-    public OrderService(OrderDao orderDao, CustomerService customerService, ProductService productService,
-            AddressService addressService) {
-        this.orderDao = orderDao;
-        this.customerService = customerService;
-        this.productService = productService;
-        this.addressService = addressService;
-    }
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private ProductService productService;
 
     // what is the minimum information needed to create an order?
     // 1. Customer(id)
@@ -52,7 +51,7 @@ public class OrderService {
         Order order = new Order(customer, shippingAddress, orderItemList);
 
         // addressService.addAddressToCustomer(customerId, shippingAddress);
-        customerService.addAddress(customerId, shippingAddress);
+        customerService.addAddressToCustomer(customerId, shippingAddress);
 
         Integer orderId = orderDao.add(order);
 
