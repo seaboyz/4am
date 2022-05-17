@@ -1,5 +1,8 @@
 package com.webdev.service;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import com.webdev.dao.AddressDao;
 import com.webdev.model.Address;
 import com.webdev.model.Customer;
@@ -21,7 +24,13 @@ public class AddressService {
     @Transactional
     public void addAddressToCustomer(Integer customerId, ShippingAddress shippingAddress) {
 
-        Customer customer = customerService.getCustomerById(customerId);
+        Optional<Customer> optionalCustomer = customerService.getCustomerById(customerId);
+
+        if (!optionalCustomer.isPresent()) {
+            throw new NoSuchElementException("Customer not found");
+        }
+
+        Customer customer = optionalCustomer.get();
 
         Address address = AddressConverter.shippingAddressToAddress(shippingAddress);
 

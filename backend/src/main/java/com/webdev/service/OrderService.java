@@ -2,6 +2,8 @@ package com.webdev.service;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Set;
 
 import com.webdev.dao.OrderDao;
@@ -39,7 +41,12 @@ public class OrderService {
             ShippingAddress shippingAddress,
             HashMap<Integer, Integer> itemList) {
 
-        Customer customer = customerService.getCustomerById(customerId);
+        Optional<Customer> optionalCustomer = customerService.getCustomerById(customerId);
+        if (!optionalCustomer.isPresent()) {
+            throw new NoSuchElementException("Customer not found");
+        }
+
+        Customer customer = optionalCustomer.get();
 
         Set<OrderItem> orderItemList = new HashSet<>();
 

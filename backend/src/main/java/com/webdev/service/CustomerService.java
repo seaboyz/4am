@@ -29,24 +29,29 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer getCustomerById(Integer id) {
-        Optional<Customer> customer = customerDao.get(id);
+    public Optional<Customer> getCustomerById(Integer id) {
+        return customerDao.get(id);
 
-        if (!customer.isPresent()) {
-            throw new NoSuchElementException("Customer not found with id: " + id);
-        }
-
-        return customer.get();
     }
 
     @Transactional
+    public Optional<Customer> getCustomerByEmail(String email) {
+        return customerDao.getbyEmail(email);
+    }
+
+
+    @Transactional
     public void addAddressToCustomer(Integer customerId, ShippingAddress shippingAddress) {
-        Customer customer = getCustomerById(customerId);
+        Optional<Customer> optionalCustomer = getCustomerById(customerId);
+        if (!optionalCustomer.isPresent()) {
+            return;
+        }
+
+        // TODO: abstract the following code into dao layer
+        Customer customer = optionalCustomer.get();
 
         Address address = AddressConverter.shippingAddressToAddress(shippingAddress);
 
-        address.setCustomer(customer);
-        customer.getAddresses().add(address);
-        customerDao.update(customer);
+        customerDao.addAddress(customer, address);
     }
 }
