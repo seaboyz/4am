@@ -1,10 +1,7 @@
 package com.webdev.controller;
 
-import com.webdev.dao.CustomerDao;
 import com.webdev.model.Customer;
-import com.webdev.utils.TestUtil;
 
-import org.hibernate.SessionFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
