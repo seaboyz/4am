@@ -16,8 +16,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CustomerService {
 
-    @Autowired
     private CustomerDao customerDao;
+
+    @Autowired
+    public CustomerService(CustomerDao customerDao) {
+        this.customerDao = customerDao;
+    }
+
+    @Transactional
+    public Customer createCustomer(Customer customer) {
+        return customerDao.add(customer);
+    }
 
     @Transactional
     public Customer getCustomerById(Integer id) {
