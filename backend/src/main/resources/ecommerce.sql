@@ -11,7 +11,7 @@ DELETE FROM orders;
 DELETE FROM products;
 
 INSERT INTO customers (email, password, phone_number, username)
-VALUES ('john@gmail.com', '1-570-236-7033',  'm38rmF$', 'johnd');
+VALUES ('john@gmail.com','m38rmF$', '1-570-236-7033', 'johnd');
 
 
 
