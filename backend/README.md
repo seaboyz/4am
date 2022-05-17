@@ -45,3 +45,7 @@ A much better approach is to limit the choices the customer can make to only tho
 #### Start Class
 ![](images/spring/Screen%20Shot%202022-05-17%20at%208.02.43%20AM.png)
 ?? is this equivalent to SpringBootServletInitializer ??
+
+| id  | email          | password       | phone_number | username |
+| --- | -------------- | -------------- | ------------ | -------- |
+| 2   | john@gmail.com | 1-570-236-7033 | m38rmF$      | johnd    |

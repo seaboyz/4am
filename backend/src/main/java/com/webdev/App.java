@@ -19,15 +19,15 @@ public class App {
 
 		context.start();
 
-		CustomerDao customerDao = context.getBean(CustomerDao.class);
+		// CustomerDao customerDao = context.getBean(CustomerDao.class);
 
-		Customer customer = new Customer(
-				"johnd",
-				"john@gmail.com",
-				"m38rmF$",
-				"1-570-236-7033");
-		
-		customerDao.add(customer);
+		// Customer customer = new Customer(
+		// 		"johnd",
+		// 		"john@gmail.com",
+		// 		"m38rmF$",
+		// 		"1-570-236-7033");
+
+		// customerDao.add(customer);
 
 	}
 
