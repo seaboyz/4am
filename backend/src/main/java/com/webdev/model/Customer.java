@@ -29,7 +29,7 @@ public class Customer {
     private String email;
 
     @Column(nullable = false)
-    private String password;
+    private transient String password;
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
