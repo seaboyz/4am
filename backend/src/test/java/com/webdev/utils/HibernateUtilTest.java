@@ -5,29 +5,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import com.webdev.model.Customer;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@Disabled
+@SpringBootTest
 public class HibernateUtilTest {
-    private static SessionFactory sessionFactory;
+    @Autowired
+    EntityManager entityManager;
     private Session session;
-
-    @BeforeAll
-    public static void init() throws Exception {
-        sessionFactory = TestUtil.getSessionFactory();
-    }
 
     @BeforeEach
     public void setUp() throws Exception {
-        session = sessionFactory.openSession();
+        session = entityManager.unwrap(Session.class);
     }
 
     @AfterEach
@@ -36,19 +36,11 @@ public class HibernateUtilTest {
             session.close();
 
         // remove all customers from the database
-        session = sessionFactory.openSession();
+        session = entityManager.unwrap(Session.class);
         session.beginTransaction();
         session.createQuery("delete from Customer").executeUpdate();
         session.getTransaction().commit();
         session.close();
-    }
-
-    @AfterAll
-    public static void destory() throws Exception {
-        if (sessionFactory != null) {
-            sessionFactory.close();
-            System.out.println("SessionFactory destoryed.");
-        }
     }
 
     @Test
@@ -84,7 +76,7 @@ public class HibernateUtilTest {
 
         // start a new session
         // get customer from database
-        session = sessionFactory.openSession();
+        session = entityManager.unwrap(Session.class);
         session.beginTransaction();
         Customer getCustomer = session.get(Customer.class, customer.getId());
 
@@ -107,7 +99,7 @@ public class HibernateUtilTest {
 
         // start a new session
         // update customer
-        session = sessionFactory.openSession();
+        session = entityManager.unwrap(Session.class);
         session.beginTransaction();
         customer.setUsername("username2");
         session.update(customer);
@@ -117,7 +109,7 @@ public class HibernateUtilTest {
 
         // start a new session
         // get customer from database
-        session = sessionFactory.openSession();
+        session = entityManager.unwrap(Session.class);
         session.beginTransaction();
         Customer updatCustomer = session.get(Customer.class, customer.getId());
 
@@ -139,7 +131,7 @@ public class HibernateUtilTest {
         // then customer becomes detached
 
         // start a new session
-        session = sessionFactory.openSession();
+        session = entityManager.unwrap(Session.class);
         Customer customer2 = new Customer(
                 "username2",
                 "email2",
@@ -152,7 +144,7 @@ public class HibernateUtilTest {
         // then customer becomes detached
 
         // start a new session
-        session = sessionFactory.openSession();
+        session = entityManager.unwrap(Session.class);
         session.beginTransaction();
         Query<Customer> query = session.createQuery("from Customer", Customer.class);
         List<Customer> customers = query.getResultList();
@@ -174,14 +166,14 @@ public class HibernateUtilTest {
         // then customer becomes detached
 
         // start a new session
-        session = sessionFactory.openSession();
+        session = entityManager.unwrap(Session.class);
         session.beginTransaction();
         session.delete(customer1);
         session.getTransaction().commit();
         session.close();
 
         // start a new session
-        session = sessionFactory.openSession();
+        session = entityManager.unwrap(Session.class);
         session.beginTransaction();
 
         Customer deletedCustomer = session.get(Customer.class, customer1.getId());

@@ -50,7 +50,7 @@ public class CustomerDaoTest {
         customerDao.add(customer);
         // currentSession is closed in userdao.add()
 
-        currentSession.beginTransaction();
+        // currentSession.beginTransaction();
         Customer savedCustomer = currentSession.get(Customer.class, customer.getId());
 
         assertEquals(customer.getUsername(), savedCustomer.getUsername());
@@ -63,7 +63,7 @@ public class CustomerDaoTest {
                 "email",
                 "password",
                 "phoneNumber");
-        currentSession.beginTransaction();
+        // currentSession.beginTransaction();
         currentSession.save(customer);
         currentSession.getTransaction().commit();
         currentSession.close();
@@ -80,7 +80,7 @@ public class CustomerDaoTest {
                 "email1",
                 "password",
                 "phoneNumber");
-        currentSession.beginTransaction();
+        // currentSession.beginTransaction();
         currentSession.save(customer1);
         currentSession.getTransaction().commit();
         currentSession.close();
@@ -93,7 +93,7 @@ public class CustomerDaoTest {
                 "email2",
                 "password",
                 "phoneNumber");
-        currentSession.beginTransaction();
+        // currentSession.beginTransaction();
         currentSession.save(customer2);
         currentSession.getTransaction().commit();
         currentSession.close();
@@ -110,7 +110,7 @@ public class CustomerDaoTest {
                 "email1",
                 "password",
                 "phoneNumber");
-        currentSession.beginTransaction();
+        // currentSession.beginTransaction();
         currentSession.save(customer);
         currentSession.getTransaction().commit();
         currentSession.close();
@@ -122,7 +122,7 @@ public class CustomerDaoTest {
 
         // start a new currentSession
         currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
+        // currentSession.beginTransaction();
         Customer updatCustomer = currentSession.get(Customer.class, customer.getId());
         currentSession.getTransaction().commit();
         currentSession.close();
@@ -138,7 +138,7 @@ public class CustomerDaoTest {
                 "email1",
                 "password",
                 "phoneNumber");
-        currentSession.beginTransaction();
+        // currentSession.beginTransaction();
         currentSession.save(customer);
         currentSession.getTransaction().commit();
         currentSession.close();
@@ -148,7 +148,7 @@ public class CustomerDaoTest {
 
         // start a new currentSession
         currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
+        // currentSession.beginTransaction();
         Optional<Customer> deletedCustomer = customerDao.get(customer.getId());
         currentSession.getTransaction().commit();
         currentSession.close();

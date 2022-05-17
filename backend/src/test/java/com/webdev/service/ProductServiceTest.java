@@ -21,7 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
+@Disabled
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
@@ -45,7 +45,6 @@ public class ProductServiceTest {
                 "men's clothing");
         product.setId(1);
     }
-
 
     @Disabled
     @Test
