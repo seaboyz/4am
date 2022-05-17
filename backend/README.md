@@ -42,3 +42,6 @@ A much better approach is to limit the choices the customer can make to only tho
 #### @Transactional
 ![](/backend/images/spring/Screen%20Shot%202022-05-17%20at%203.36.48%20AM.png)
 
+#### Start Class
+![](images/spring/Screen%20Shot%202022-05-17%20at%208.02.43%20AM.png)
+?? is this equivalent to SpringBootServletInitializer ??
