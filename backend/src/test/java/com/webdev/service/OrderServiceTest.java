@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -93,11 +94,11 @@ public class OrderServiceTest {
                                 shippingAddress,
                                 orderList);
 
-                customer = customerService.getCustomerById(customerId);
+                Optional<Customer> optionalCustomer = customerService.getCustomerById(customerId);
 
                 assertEquals(1, orderId);
 
-                assertEquals(1, customer.getAddresses().size());
+                assertEquals(1, optionalCustomer.get().getOrders().size());
 
         }
 

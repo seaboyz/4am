@@ -1,6 +1,7 @@
 package com.webdev.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
@@ -80,9 +81,9 @@ public class AddressServiceTest {
 
         assert (addresses.size() == 1);
 
-        customer = customerService.getCustomerById(customer.getId());
+        Optional<Customer> optionalCustomer = customerService.getCustomerById(customer.getId());
 
-        assert (customer.getAddresses().size() == 1);
+        assert (optionalCustomer.get().getAddresses().size() == 1);
 
     }
 }

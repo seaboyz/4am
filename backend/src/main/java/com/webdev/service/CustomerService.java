@@ -1,6 +1,5 @@
 package com.webdev.service;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.webdev.dao.CustomerDao;
@@ -39,7 +38,6 @@ public class CustomerService {
         return customerDao.getbyEmail(email);
     }
 
-
     @Transactional
     public void addAddressToCustomer(Integer customerId, ShippingAddress shippingAddress) {
         Optional<Customer> optionalCustomer = getCustomerById(customerId);
@@ -47,7 +45,6 @@ public class CustomerService {
             return;
         }
 
-        // TODO: abstract the following code into dao layer
         Customer customer = optionalCustomer.get();
 
         Address address = AddressConverter.shippingAddressToAddress(shippingAddress);
