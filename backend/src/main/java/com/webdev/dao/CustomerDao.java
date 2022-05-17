@@ -25,12 +25,15 @@ public class CustomerDao {
         this.currentSession = entityManager.unwrap(Session.class);
     }
 
-    public Customer add(Customer customer) {
+    public Optional<Customer> add(Customer customer) {
 
         currentSession = entityManager.unwrap(Session.class);
         currentSession.save(customer);
         currentSession.close();
-        return customer;
+        if (customer.getId() == null) {
+            return Optional.empty();
+        }
+        return Optional.of(customer);
     }
 
     public Optional<Customer> get(Integer id) {

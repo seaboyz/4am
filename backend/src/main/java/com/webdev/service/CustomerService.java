@@ -1,5 +1,6 @@
 package com.webdev.service;
 
+import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.Optional;
 
 import com.webdev.dao.CustomerDao;
@@ -23,8 +24,14 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer createCustomer(Customer customer) {
+    public Optional<Customer> createCustomer(Customer customer) {
+        Optional<Customer> optionalCustomer = customerDao.getbyEmail(customer.getEmail());
+        if (optionalCustomer.isPresent()) {
+            throw new IllegalArgumentException("Customer with email " + customer.getEmail() + " already exists");
+        }
+
         return customerDao.add(customer);
+
     }
 
     @Transactional
