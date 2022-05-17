@@ -20,14 +20,7 @@ public class App {
 
 	@RequestMapping("/")
 	public String index() {
-		Customer customer = new Customer(
-				"johnd",
-				"john@gmail.com",
-				"m38rmF$",
-				"-570-236-7033");
-
-		Gson gson = new Gson();
-		return gson.toJson(customer, Customer.class);
+		return "Greetings from Spring Boot!";
 	}
 
 }
