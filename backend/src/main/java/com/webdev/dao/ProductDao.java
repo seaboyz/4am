@@ -12,11 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ProductDao implements Dao<Product> {
+public class ProductDao {
     @Autowired
     private EntityManager entityManager;
 
-    @Override
     public Product add(Product product) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
@@ -26,7 +25,6 @@ public class ProductDao implements Dao<Product> {
         return product;
     }
 
-    @Override
     public Optional<Product> get(Integer id) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
@@ -36,7 +34,6 @@ public class ProductDao implements Dao<Product> {
         return product;
     }
 
-    @Override
     public List<Product> getAll() {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
@@ -48,7 +45,6 @@ public class ProductDao implements Dao<Product> {
         return products;
     }
 
-    @Override
     public Product update(Product product) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
@@ -72,7 +68,6 @@ public class ProductDao implements Dao<Product> {
 
     }
 
-    @Override
     public void delete(Integer id) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
@@ -82,7 +77,6 @@ public class ProductDao implements Dao<Product> {
         currentSession.close();
     }
 
-    @Override
     public void delete(Product product) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();

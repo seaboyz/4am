@@ -12,11 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AddressDao implements Dao<Address> {
+public class AddressDao {
    @Autowired
    private EntityManager entityManager;
 
-    @Override
     public Address add(Address address) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
@@ -26,7 +25,6 @@ public class AddressDao implements Dao<Address> {
         return address;
     }
 
-    @Override
     public Optional<Address> get(Integer id) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
@@ -36,7 +34,6 @@ public class AddressDao implements Dao<Address> {
         return address;
     }
 
-    @Override
     public List<Address> getAll() {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
@@ -48,7 +45,6 @@ public class AddressDao implements Dao<Address> {
         return addresses;
     }
 
-    @Override
     public Address update(Address address) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
@@ -74,7 +70,6 @@ public class AddressDao implements Dao<Address> {
         return addressToUpdate;
     }
 
-    @Override
     public void delete(Integer id) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
@@ -84,7 +79,6 @@ public class AddressDao implements Dao<Address> {
         currentSession.close();
     }
 
-    @Override
     public void delete(Address address) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CustomerDao implements Dao<Customer> {
+public class CustomerDao  {
 
     private EntityManager entityManager;
 
@@ -24,7 +24,6 @@ public class CustomerDao implements Dao<Customer> {
         this.currentSession = entityManager.unwrap(Session.class);
     }
 
-    @Override
     public Customer add(Customer customer) {
 
         currentSession = entityManager.unwrap(Session.class);
@@ -33,7 +32,6 @@ public class CustomerDao implements Dao<Customer> {
         return customer;
     }
 
-    @Override
     public Optional<Customer> get(Integer id) {
         currentSession = entityManager.unwrap(Session.class);
         Optional<Customer> customer = Optional.ofNullable(currentSession.get(Customer.class, id));
@@ -41,7 +39,6 @@ public class CustomerDao implements Dao<Customer> {
         return customer;
     }
 
-    @Override
     public List<Customer> getAll() {
         currentSession = entityManager.unwrap(Session.class);
         List<Customer> customers = currentSession.createQuery("from Customer", Customer.class).list();
@@ -49,7 +46,6 @@ public class CustomerDao implements Dao<Customer> {
         return customers;
     }
 
-    @Override
     public Customer update(Customer customer) {
         currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
@@ -73,14 +69,12 @@ public class CustomerDao implements Dao<Customer> {
         return customerToUpdate;
     }
 
-    @Override
     public void delete(Integer id) {
         currentSession = entityManager.unwrap(Session.class);
         Customer customer = currentSession.get(Customer.class, id);
         currentSession.delete(customer);
     }
 
-    @Override
     public void delete(Customer customer) {
         currentSession = entityManager.unwrap(Session.class);
         currentSession.delete(customer);
