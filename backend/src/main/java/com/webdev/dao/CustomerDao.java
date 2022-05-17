@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
+import com.webdev.model.Address;
 import com.webdev.model.Customer;
 
 import org.hibernate.Session;
@@ -12,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CustomerDao  {
+public class CustomerDao {
 
     private EntityManager entityManager;
 
@@ -41,7 +42,9 @@ public class CustomerDao  {
 
     public Optional<Customer> getbyEmail(String email) {
         currentSession = entityManager.unwrap(Session.class);
-        Optional<Customer> customer = Optional.ofNullable(currentSession.createQuery("from Customer where email = :email", Customer.class).setParameter("email", email).getSingleResult());
+        Optional<Customer> customer = Optional
+                .ofNullable(currentSession.createQuery("from Customer where email = :email", Customer.class)
+                        .setParameter("email", email).getSingleResult());
         currentSession.close();
         return customer;
     }
@@ -85,5 +88,16 @@ public class CustomerDao  {
     public void delete(Customer customer) {
         currentSession = entityManager.unwrap(Session.class);
         currentSession.delete(customer);
+    }
+
+    public void addAddress(Customer customer, Address address) {
+        currentSession = entityManager.unwrap(Session.class);
+        currentSession.beginTransaction();
+        // manually add address to database, so trun off the cascade in the customer entity
+        currentSession.save(address);
+        customer.getAddresses().add(address);
+        currentSession.merge(customer);
+        currentSession.getTransaction().commit();
+        currentSession.close();
     }
 }
