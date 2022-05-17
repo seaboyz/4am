@@ -1,5 +1,10 @@
 package com.webdev;
 
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.webdev.model.Customer;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +20,14 @@ public class App {
 
 	@RequestMapping("/")
 	public String index() {
-		return "Hello World!";
-	}
+		Customer customer = new Customer(
+				"johnd",
+				"john@gmail.com",
+				"m38rmF$",
+				"-570-236-7033");
 
+		Gson gson = new Gson();
+		return gson.toJson(customer, Customer.class);
+	}
 
 }
