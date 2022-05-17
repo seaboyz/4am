@@ -39,6 +39,13 @@ public class CustomerDao  {
         return customer;
     }
 
+    public Optional<Customer> getbyEmail(String email) {
+        currentSession = entityManager.unwrap(Session.class);
+        Optional<Customer> customer = Optional.ofNullable(currentSession.createQuery("from Customer where email = :email", Customer.class).setParameter("email", email).getSingleResult());
+        currentSession.close();
+        return customer;
+    }
+
     public List<Customer> getAll() {
         currentSession = entityManager.unwrap(Session.class);
         List<Customer> customers = currentSession.createQuery("from Customer", Customer.class).list();
