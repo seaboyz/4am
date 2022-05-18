@@ -39,13 +39,18 @@ public class AuthController {
         if (!customer.isPresent()) {
             return new ResponseEntity<String>(email + ": NOT FOUND", HttpStatus.NOT_FOUND);
         }
-        
+
         if (!customer.get().getPassword().equals(password)) {
             return new ResponseEntity<String>("Email and password not match", HttpStatus.UNAUTHORIZED);
         }
 
+        Customer customerObj = customer.get();
+        customerObj.setPassword(null);
+        customerObj.setOrders(null);
+        customerObj.setAddresses(null);
+        customerObj.setCartItems(null);
         Gson gson = new Gson();
-        String json = gson.toJson(customer.get(), Customer.class);
+        String json = gson.toJson(customerObj, Customer.class);
 
         return new ResponseEntity<String>(json, HttpStatus.OK);
 
