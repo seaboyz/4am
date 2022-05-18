@@ -6,7 +6,7 @@
         <property name="connection.username">postgres</property>
         <property name="connection.password">R3vatur3!</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
-        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
         <property name="show_sql">true</property>
 
         <mapping class="com.webdev.model.Customer" />
