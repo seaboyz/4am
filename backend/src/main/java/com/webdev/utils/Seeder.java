@@ -16,7 +16,31 @@ import org.hibernate.SessionFactory;
 
 import com.webdev.model.Customer;
 
-public class Seeder<E> {
+public class Seeder {
+
+    public static void main(String[] args) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+
+        // get all customers
+        List<Customer> customers = session.createQuery("from Customer", Customer.class).getResultList();
+
+        
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        gsonBuilder.setPrettyPrinting();
+
+        Gson gson = gsonBuilder.create();
+
+        String json = gson.toJson(customers);
+
+        System.out.println(json);
+
+        session.close();
+        sessionFactory.close();
+
+    }
 
     public static void loadCustomerFromFile() {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -75,16 +99,4 @@ public class Seeder<E> {
         sessionFactory.close();
     }
 
-    public String listToJson(List<E> list) {
-
-        // read all customers from database
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-
-        Gson gson = gsonBuilder.create();
-
-        String json = gson.toJson(list);
-
-        return json;
-    }
 }
