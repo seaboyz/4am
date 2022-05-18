@@ -1,6 +1,6 @@
 package com.webdev.service;
 
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 
 import com.webdev.model.Customer;
 
@@ -17,23 +17,24 @@ public class AuthSerivice {
         this.customerService = customerService;
     }
 
-    @Transactional
-    public Customer login(String email, String password) {
-        Optional<Customer> optionalCustomer = customerService.getCustomerByEmail(email);
-        if (!optionalCustomer.isPresent()) {
-            throw new IllegalArgumentException("No customer with email " + email);
+    @Transactional(readOnly = true)
+    public Customer login(String email, String password) throws EntityNotFoundException {
+        if (email == null || password == null) {
+            throw new IllegalArgumentException("Email or password cannot be null");
         }
 
-        Customer customer = optionalCustomer.get();
+        Customer customer = customerService.getCustomerByEmail(email);
+
         if (!customer.getPassword().equals(password)) {
             throw new IllegalArgumentException("Wrong password");
         }
 
         return customer;
+
     }
 
     @Transactional
-    public Optional<Customer> register(Customer customer) {
+    public Customer register(Customer customer) {
         return customerService.createCustomer(customer);
     }
 

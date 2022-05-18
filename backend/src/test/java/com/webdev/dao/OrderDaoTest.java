@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 
+import com.google.gson.Gson;
 import com.webdev.model.Customer;
 import com.webdev.model.Order;
 import com.webdev.model.OrderItem;
@@ -166,12 +166,11 @@ public class OrderDaoTest {
     @Test
     void testGet() {
 
-        Optional<Order> orderFromDb = orderDao.get(order.getId());
+        Order orderFromDb = orderDao.get(order.getId());
 
-        assertEquals(order.getId(), orderFromDb.get().getId());
-        assertEquals(order.getCustomer().getId(), orderFromDb.get().getCustomer().getId());
-        assertEquals(order.getShippingAddress().toString(), orderFromDb.get().getShippingAddress().toString());
-        assertEquals(order.getTotal(), orderFromDb.get().getTotal());
+        Gson gson = new Gson();
+
+        assertEquals(gson.toJson(order, Order.class), gson.toJson(orderFromDb, Order.class));
 
     }
 
