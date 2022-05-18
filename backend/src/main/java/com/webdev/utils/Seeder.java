@@ -2,22 +2,23 @@ package com.webdev.utils;
 
 import java.io.File;
 import java.io.FileReader;
+import java.lang.reflect.Field;
+import java.util.List;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
+import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.webdev.model.Customer;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-public class Seeder {
-    public static void main(String[] args) {
-        loadCustomer();
-    }
+import com.webdev.model.Customer;
 
-    public static void loadCustomer() {
+public class Seeder<E> {
+
+    public static void loadCustomerFromFile() {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -43,6 +44,19 @@ public class Seeder {
                 }
             };
 
+            // convert fildname phone to phoneNumber
+            FieldNamingStrategy phoneToPhoneNumber = new FieldNamingStrategy() {
+                @Override
+                public String translateName(Field f) {
+                    if (f.getName().equals("phoneNumber")) {
+                        return "phone";
+                    }
+                    return f.getName();
+                }
+            };
+
+            gsonBuilder.setFieldNamingStrategy(phoneToPhoneNumber);
+
             gsonBuilder.addDeserializationExclusionStrategy(excludeId);
 
             Gson gson = gsonBuilder.create();
@@ -59,5 +73,18 @@ public class Seeder {
         session.getTransaction().commit();
         session.close();
         sessionFactory.close();
+    }
+
+    public String listToJson(List<E> list) {
+
+        // read all customers from database
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        Gson gson = gsonBuilder.create();
+
+        String json = gson.toJson(list);
+
+        return json;
     }
 }
