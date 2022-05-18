@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 import com.webdev.model.Address;
 import com.webdev.model.Customer;
@@ -45,11 +46,20 @@ public class CustomerDao {
 
     public Optional<Customer> getbyEmail(String email) {
         currentSession = entityManager.unwrap(Session.class);
-        Optional<Customer> customer = Optional
-                .ofNullable(currentSession.createQuery("from Customer where email = :email", Customer.class)
-                        .setParameter("email", email).getSingleResult());
-        currentSession.close();
-        return customer;
+        // Optional<Customer> customer = Optional
+        //         .ofNullable(currentSession.createQuery("from Customer where email = :email", Customer.class)
+        //                 .setParameter("email", email).getSingleResult());
+        // currentSession.close();
+        // return customer;
+        try {
+            Customer customerFromDb = currentSession.createQuery("from Customer where email = :email", Customer.class)
+                    .setParameter("email", email).getSingleResult();
+            return Optional.of(customerFromDb);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        } finally {
+            currentSession.close();
+        }
     }
 
     public List<Customer> getAll() {

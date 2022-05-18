@@ -13,7 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class AuthController {
@@ -53,7 +56,15 @@ public class AuthController {
         String json = gson.toJson(customerObj, Customer.class);
 
         return new ResponseEntity<String>(json, HttpStatus.OK);
-
     }
 
+    @PostMapping(value = "/auth/register")
+    public ResponseEntity<String> postMethodName(@RequestBody Customer customer) {
+        try {
+            customerService.createCustomer(customer);
+            return new ResponseEntity<String>("Customer created", HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

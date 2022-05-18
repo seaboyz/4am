@@ -24,9 +24,10 @@ public class CustomerService {
 
     @Transactional
     public Optional<Customer> createCustomer(Customer customer) {
+        
         Optional<Customer> optionalCustomer = customerDao.getbyEmail(customer.getEmail());
         if (optionalCustomer.isPresent()) {
-            throw new IllegalArgumentException("Customer with email " + customer.getEmail() + " already exists");
+            throw new IllegalArgumentException("Customer already exists");
         }
 
         return customerDao.add(customer);
