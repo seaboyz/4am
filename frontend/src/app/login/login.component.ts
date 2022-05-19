@@ -24,13 +24,11 @@ export class LoginComponent implements OnInit
 
   login(email: string, password: string): void
   {
-    const success = this.authService.login(email, password);
-
-    if (success) {
-      alert("Welcome!")
-    } else {
-      alert("Email and Password not match!")
-    }
-
+    this.authService.login(email, password).subscribe(
+      data =>
+      {
+        console.log(data);
+      }
+    )
   }
 }
