@@ -13,6 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+
 
 @Entity()
 @Table(name = "customers")
@@ -23,15 +26,19 @@ public class Customer {
     private Integer id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "Username is required")
     private String username;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "Email is required")
     private String email;
 
     @Column(nullable = false)
+    @NotBlank(message = "Password is required")
     private String password;
 
     @Column(name = "phone_number", nullable = false)
+    @NotBlank(message = "Phone number is required")
     private String phoneNumber;
 
     // when save the customer, if there are any unsaved addresses, save them

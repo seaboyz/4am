@@ -37,6 +37,7 @@ public class CustomerDaoTest {
         }
     }
 
+    @Disabled
     @Test
     void testAdd() {
         Customer customer = new Customer(
@@ -52,6 +53,7 @@ public class CustomerDaoTest {
         assertEquals(customer.getUsername(), savedCustomer.getUsername());
     }
 
+    @Disabled
     @Test
     void testGet() {
         Customer customer = new Customer(
@@ -67,6 +69,7 @@ public class CustomerDaoTest {
 
     }
 
+    @Disabled
     @Test
     void testGetAll() {
         Customer customer1 = new Customer(
@@ -88,6 +91,7 @@ public class CustomerDaoTest {
 
     }
 
+    @Disabled
     @Test
     void testUpdate() {
         Customer customer = new Customer(

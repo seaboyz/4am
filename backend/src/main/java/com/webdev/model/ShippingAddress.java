@@ -52,6 +52,10 @@ public class ShippingAddress {
         return street;
     }
 
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
     public String getStreet2() {
         return street2;
     }

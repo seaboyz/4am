@@ -7,7 +7,6 @@ import com.webdev.dao.CustomerDao;
 import com.webdev.model.Address;
 import com.webdev.model.Customer;
 import com.webdev.model.ShippingAddress;
-import com.webdev.utils.AddressConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CustomerService {
 
-    private CustomerDao customerDao;
+    private final CustomerDao customerDao;
 
     @Autowired
     public CustomerService(CustomerDao customerDao) {
@@ -40,12 +39,23 @@ public class CustomerService {
     }
 
     @Transactional
-    public void addAddressToCustomer(Integer customerId, ShippingAddress shippingAddress)
+    public Customer addAddressToCustomer(
+            Integer customerId,
+            ShippingAddress shippingAddress)
             throws EntityNotFoundException {
-        Customer customer = getCustomerById(customerId);
 
-        Address address = AddressConverter.shippingAddressToAddress(shippingAddress);
+        Customer customer = customerDao.get(customerId);
 
-        customerDao.addAddress(customer, address);
+        Address address = new Address(
+                shippingAddress.getFirstName(),
+                shippingAddress.getLastName(),
+                shippingAddress.getStreet(),
+                shippingAddress.getStreet2(),
+                shippingAddress.getCity(),
+                shippingAddress.getState(),
+                shippingAddress.getZip(),
+                shippingAddress.getCountry());
+
+        return customerDao.addAddress(customer, address);
     }
 }

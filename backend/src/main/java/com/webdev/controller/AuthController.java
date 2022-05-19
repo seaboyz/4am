@@ -5,6 +5,7 @@ import java.util.Base64;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
+import javax.validation.Valid;
 
 import com.google.gson.Gson;
 import com.webdev.model.Customer;
@@ -62,10 +63,11 @@ public class AuthController {
     }
 
     @PostMapping(value = "/auth/register")
-    public ResponseEntity<String> postMethodName(@RequestBody Customer customer) {
+    public ResponseEntity<String> postMethodName(
+            @RequestBody @Valid Customer customer) {
         try {
             customerService.createCustomer(customer);
-            return new ResponseEntity<String>("Customer created", HttpStatus.OK);
+            return new ResponseEntity<String>("Customer created", HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

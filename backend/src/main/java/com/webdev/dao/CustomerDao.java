@@ -87,7 +87,7 @@ public class CustomerDao {
         currentSession.delete(customer);
     }
 
-    public void addAddress(Customer customer, Address address) {
+    public Customer addAddress(Customer customer, Address address) {
         currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
         // manually add address to database, so trun off the cascade in the customer entity
@@ -95,5 +95,7 @@ public class CustomerDao {
         customer.getAddresses().add(address);
         currentSession.merge(customer);
         currentSession.getTransaction().commit();
+
+        return customer;
     }
 }
