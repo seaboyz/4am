@@ -1,0 +1,159 @@
+/* _________________________ */
+/* Reset                     */
+/* _________________________ */
+
+/* Box sizing */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* Reset margins */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+picture {
+	margin: 0;
+}
+
+/* Reset link underline */
+a {
+	text-decoration: none;
+}
+
+/* set up the body */
+body {
+	line-height: 1.5;
+	min-height: 100vh;
+}
+
+/* make images easier to work with */
+img,
+picture {
+	max-width: 100%;
+	display: block;
+}
+
+/* make forms easier to work with */
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+/* remove animations for people who;ve utrned them off */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* _________________________ */
+/* Page specific             */
+/* _________________________ */
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic);
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+header {
+	min-height: 100vh;
+	background-image: url(//unsplash.it/1000/1000);
+	background-size: cover;
+	background-color: #777;
+	background-blend-mode: multiply;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1rem;
+}
+nav {
+	background-color: #111;
+	padding: 1rem;
+	position: sticky;
+	top: 0;
+	transition: background-color 400ms ease-in-out;
+}
+
+nav.active {
+	background-color: #fff;
+}
+
+.container {
+	max-width: 960px;
+	margin: 0 auto;
+}
+
+.flex {
+	display: flex;
+	align-items: center;
+}
+
+.logo a {
+	font-size: 24px;
+	color: #fff;
+}
+
+nav a {
+	color: #fff;
+}
+
+nav.active a {
+	color: #000;
+}
+
+nav li:first-of-type a {
+	color: #c0392b;
+}
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	gap: 1.5rem;
+	margin-left: auto;
+}
+
+.hero {
+	text-align: center;
+	color: #fff;
+	height: 100%;
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+
+	flex-direction: column;
+}
+
+.hero h1 {
+	font-size: 48px;
+	font-weight: 400;
+}
+
+.hero p {
+	font-size: 20px;
+}
+
+main {
+	padding: 1rem;
+}
+
+main .container {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
