@@ -1,7 +1,5 @@
 <div class="register-page">
     <mat-card class="mat-elevation-z12">
-        <mat-card-title style="text-align:center;">Register</mat-card-title>
-
         <mat-card-content>
             <form action="">
                 <mat-form-field>
@@ -10,11 +8,12 @@
                         placeholder="User Name"
                         required
                         name="username"
+                        #username="ngModel"
+                        ngModel
                         (input)="onUsernameChange($event)"
                     >
+                    <mat-error *ngIf="username.invalid">User name is required</mat-error>
                     <mat-icon matSuffix>perm_identity</mat-icon>
-
-
                 </mat-form-field>
                 <mat-form-field>
                     <input
@@ -65,18 +64,15 @@
                     <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
                 <button
+                    [disabled]="username.errors || email.errors ||password.errors && repassword.errors"
                     mat-raised-button
                     color="primary"
-                    class="login-button"
+                    class="register-button "
+                    style="text-transform: uppercase;letter-spacing: 2px;"
                 >
-                    Sign Up
+                    Create your account
                 </button>
             </form>
         </mat-card-content>
-
-
-
-
-
     </mat-card>
 </div>

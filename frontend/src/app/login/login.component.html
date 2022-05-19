@@ -1,52 +1,52 @@
 <div class="login-page">
     <mat-card class="mat-elevation-z12">
-        <mat-card-title style="text-align:center;">SignIn</mat-card-title>
-
-
-            <mat-card-content>
-                <form action="">
-                    <mat-form-field>
-                        <input
-                            matInput
-                            placeholder="Email"
-                            required
-                            name="email"
-                            (input)="onEmailChange($event)"
-                        >
-                        <mat-icon matSuffix>email</mat-icon>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input
-                            matInput
-                            placeholder="Password"
-                            type="password"
-                            required
-                            minlength="6"
-                            name="password"
-                            (input)="onPasswordChange($event)"
-                        >
-                        <mat-icon matSuffix>lock</mat-icon>
-                    </mat-form-field>
-                    <mat-checkbox>Remember Me!</mat-checkbox>
-                    <button
-                        mat-raised-button
-                        color="primary"
-                        class="login-button"
-                        (click)="login()"
+        <mat-card-content>
+            <form action="">
+                <mat-form-field >
+                    <input
+                        matInput
+                        placeholder="Email"
+                        required
+                        name="email"
+                        #email="ngModel"
+                        ngModel
+                        (input)="onEmailChange($event)"
                     >
-                        Sign In
-                    </button>
-
-                    <button
-                        mat-raised-button
-                        class="login-button"
+                    <mat-error *ngIf="email.invalid">Email is required</mat-error>
+                    <mat-icon matSuffix>email</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Password"
+                        type="password"
+                        required
+                        minlength="6"
+                        name="password"
+                        #password="ngModel"
+                        ngModel
+                        (input)="onPasswordChange($event)"
                     >
-                        Login with Google
-                    </button>
-                </form>
-            </mat-card-content>
-
-        
-
+                    <mat-error *ngIf="password.errors && password.errors['required']">
+                        Password is required
+                    </mat-error>
+                    <mat-error *ngIf="password.errors && password.errors['minlength']">
+                        Password must be of length 6
+                    </mat-error>
+                    <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+                <mat-checkbox style="opacity:0.5 ;">Remember Me!</mat-checkbox>
+                <button
+                [disabled]=" email.errors ||password.errors"
+                mat-raised-button
+                    mat-raised-button
+                    class="login-button"
+                    (click)="login()"
+                    style="text-transform: uppercase;letter-spacing: 2px;"
+                >
+                    Sign In
+                </button>
+            </form>
+        </mat-card-content>
     </mat-card>
 </div>
