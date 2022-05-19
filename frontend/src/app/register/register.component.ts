@@ -8,8 +8,11 @@ import { AuthService } from "../services/auth.service";
 })
 export class RegisterComponent implements OnInit
 {
-  email = "";
-  password = "";
+  #username = "";
+  #email = "";
+  #password = "";
+  #repassword = "";
+
 
   constructor(private authService: AuthService)
   {
@@ -20,25 +23,12 @@ export class RegisterComponent implements OnInit
   {
   }
 
-  onEmailChange(event: Event): void
+
+
+  register(username: string, email: string, password: string): void
   {
-    this.email = (<HTMLInputElement>event.target).value;
-  }
+    this.authService.register(username, email, password);
 
-  onPasswordChange(event: Event): void
-  {
-    this.password = (<HTMLInputElement>event.target).value;
-
-  }
-
-  onUsernameChange(event: Event)
-  {
-
-  }
-
-  login(): void
-  {
-    this.authService.login(this.email, this.password);
   }
 
 }

@@ -10,11 +10,16 @@ export class AuthService
 
   login(email: string, password: string)
   {
-    if (email === 'test@test.com' && password === '123456') {
+    if (email == 'test@test.com' && password == '123456') {
       localStorage.setItem('username', email);
       return true;
     }
     alert('Login Failed');
     return false;
+  }
+
+  register(username: string, email: string, password: string)
+  {
+    console.log(username, email, password)
   }
 }

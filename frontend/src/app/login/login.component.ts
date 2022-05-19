@@ -8,8 +8,8 @@ import { AuthService } from "../services/auth.service";
 })
 export class LoginComponent implements OnInit
 {
-  email = "";
-  password = "";
+  #email = "";
+  #password = "";
 
   constructor(private authService: AuthService)
   {
@@ -20,29 +20,17 @@ export class LoginComponent implements OnInit
   {
   }
 
-  onEmailChange(event: Event): void
+
+
+  login(email: string, password: string): void
   {
-    this.email = (<HTMLInputElement>event.target).value;
-  }
+    const success = this.authService.login(email, password);
 
-  onPasswordChange(event: Event): void
-  {
-    this.password = (<HTMLInputElement>event.target).value;
-
-  }
-
-
-  login(): void
-  {
-    const success = this.authService.login(this.email, this.password);
-
-    if(success){
+    if (success) {
       alert("Welcome!")
-    }else{
+    } else {
       alert("Email and Password not match!")
     }
-    
 
   }
-
 }

@@ -2,7 +2,7 @@
     <mat-card class="mat-elevation-z12">
         <mat-card-content>
             <form action="">
-                <mat-form-field >
+                <mat-form-field>
                     <input
                         matInput
                         placeholder="Email"
@@ -10,7 +10,6 @@
                         name="email"
                         #email="ngModel"
                         ngModel
-                        (input)="onEmailChange($event)"
                     >
                     <mat-error *ngIf="email.invalid">Email is required</mat-error>
                     <mat-icon matSuffix>email</mat-icon>
@@ -25,7 +24,6 @@
                         name="password"
                         #password="ngModel"
                         ngModel
-                        (input)="onPasswordChange($event)"
                     >
                     <mat-error *ngIf="password.errors && password.errors['required']">
                         Password is required
@@ -37,11 +35,11 @@
                 </mat-form-field>
                 <mat-checkbox style="opacity:0.5 ;">Remember Me!</mat-checkbox>
                 <button
-                [disabled]=" email.errors ||password.errors"
-                mat-raised-button
+                    [disabled]=" email.errors ||password.errors"
+                    mat-raised-button
                     mat-raised-button
                     class="login-button"
-                    (click)="login()"
+                    (click)="login(email.value,password.value)"
                     style="text-transform: uppercase;letter-spacing: 2px;"
                 >
                     Sign In
