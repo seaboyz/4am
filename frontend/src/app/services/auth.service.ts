@@ -1,4 +1,12 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
+import { Observable } from "rxjs";
+
+const AUTH_API = 'http://localhost:8080/api/auth/';
+
+const httpOptions = {
+  headers: { 'Content-Type': 'application/json' }
+};
 
 @Injectable({
   providedIn: 'root'
@@ -6,20 +14,15 @@ import { Injectable } from '@angular/core';
 export class AuthService
 {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  login(email: string, password: string)
+  login(email: string, password: string): Observable<any>
   {
-    if (email == 'test@test.com' && password == '123456') {
-      localStorage.setItem('username', email);
-      return true;
-    }
-    alert('Login Failed');
-    return false;
+    return this.http.post(AUTH_API + 'login', { email, password }, httpOptions);
   }
 
   register(username: string, email: string, password: string)
   {
-    console.log(username, email, password)
+    return this.http.post(AUTH_API + 'register', { username, email, password }, httpOptions);
   }
 }

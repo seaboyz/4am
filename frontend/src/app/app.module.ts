@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from "@angular/router";
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from "./register/register.component";
+import { HttpClientModule } from "@angular/common/http";
 
 
 
@@ -28,6 +29,7 @@ import { RegisterComponent } from "./register/register.component";
     HomeComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
