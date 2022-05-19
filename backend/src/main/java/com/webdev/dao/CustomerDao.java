@@ -1,9 +1,9 @@
 package com.webdev.dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 
 import com.webdev.model.Address;
@@ -26,46 +26,31 @@ public class CustomerDao {
         this.currentSession = entityManager.unwrap(Session.class);
     }
 
-    public Optional<Customer> add(Customer customer) {
-
+    public Customer add(Customer customer) {
         currentSession = entityManager.unwrap(Session.class);
         currentSession.save(customer);
-        currentSession.close();
-        if (customer.getId() == null) {
-            return Optional.empty();
-        }
-        return Optional.of(customer);
-    }
-
-    public Optional<Customer> get(Integer id) {
-        currentSession = entityManager.unwrap(Session.class);
-        Optional<Customer> customer = Optional.ofNullable(currentSession.get(Customer.class, id));
-        currentSession.close();
         return customer;
     }
 
-    public Optional<Customer> getbyEmail(String email) {
+    public Customer get(Integer id) throws EntityNotFoundException {
         currentSession = entityManager.unwrap(Session.class);
-        // Optional<Customer> customer = Optional
-        //         .ofNullable(currentSession.createQuery("from Customer where email = :email", Customer.class)
-        //                 .setParameter("email", email).getSingleResult());
-        // currentSession.close();
-        // return customer;
-        try {
-            Customer customerFromDb = currentSession.createQuery("from Customer where email = :email", Customer.class)
-                    .setParameter("email", email).getSingleResult();
-            return Optional.of(customerFromDb);
-        } catch (NoResultException e) {
-            return Optional.empty();
-        } finally {
-            currentSession.close();
-        }
+        return currentSession.get(Customer.class, id);
+
+    }
+
+    public Customer getbyEmail(String email) throws NoResultException {
+        currentSession = entityManager.unwrap(Session.class);
+
+        Customer customerFromDb = currentSession
+                .createQuery("from Customer where email = :email", Customer.class)
+                .setParameter("email", email).getSingleResult();
+
+        return customerFromDb;
     }
 
     public List<Customer> getAll() {
         currentSession = entityManager.unwrap(Session.class);
         List<Customer> customers = currentSession.createQuery("from Customer", Customer.class).list();
-        currentSession.close();
         return customers;
     }
 
@@ -87,7 +72,6 @@ public class CustomerDao {
 
         currentSession.merge(customerToUpdate);
         currentSession.getTransaction().commit();
-        currentSession.close();
 
         return customerToUpdate;
     }
@@ -111,6 +95,5 @@ public class CustomerDao {
         customer.getAddresses().add(address);
         currentSession.merge(customer);
         currentSession.getTransaction().commit();
-        currentSession.close();
     }
 }

@@ -1,6 +1,7 @@
 package com.webdev.service;
 
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 
 import com.webdev.dao.CustomerDao;
 import com.webdev.model.Address;
@@ -23,36 +24,25 @@ public class CustomerService {
     }
 
     @Transactional
-    public Optional<Customer> createCustomer(Customer customer) {
-        
-        Optional<Customer> optionalCustomer = customerDao.getbyEmail(customer.getEmail());
-        if (optionalCustomer.isPresent()) {
-            throw new IllegalArgumentException("Customer already exists");
-        }
-
+    public Customer createCustomer(Customer customer) {
         return customerDao.add(customer);
 
     }
 
-    @Transactional
-    public Optional<Customer> getCustomerById(Integer id) {
+    @Transactional(readOnly = true)
+    public Customer getCustomerById(Integer id) throws EntityNotFoundException {
         return customerDao.get(id);
-
     }
 
-    @Transactional
-    public Optional<Customer> getCustomerByEmail(String email) {
+    @Transactional(readOnly = true)
+    public Customer getCustomerByEmail(String email) throws EntityNotFoundException, NoResultException {
         return customerDao.getbyEmail(email);
     }
 
     @Transactional
-    public void addAddressToCustomer(Integer customerId, ShippingAddress shippingAddress) {
-        Optional<Customer> optionalCustomer = getCustomerById(customerId);
-        if (!optionalCustomer.isPresent()) {
-            return;
-        }
-
-        Customer customer = optionalCustomer.get();
+    public void addAddressToCustomer(Integer customerId, ShippingAddress shippingAddress)
+            throws EntityNotFoundException {
+        Customer customer = getCustomerById(customerId);
 
         Address address = AddressConverter.shippingAddressToAddress(shippingAddress);
 

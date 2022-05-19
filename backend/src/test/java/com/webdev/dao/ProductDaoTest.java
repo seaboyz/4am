@@ -2,8 +2,6 @@ package com.webdev.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Optional;
-
 import javax.persistence.EntityManager;
 
 import com.google.gson.Gson;
@@ -87,11 +85,11 @@ public class ProductDaoTest {
 
 		Integer id = product.getId();
 
-		Optional<Product> productFromDb = productDao.get(id);
+		Product productFromDb = productDao.get(id);
 
 		assertEquals(
 				gson.toJson(product, Product.class),
-				gson.toJson(productFromDb.get(), Product.class));
+				gson.toJson(productFromDb, Product.class));
 
 	}
 

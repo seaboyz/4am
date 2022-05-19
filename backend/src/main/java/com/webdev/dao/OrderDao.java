@@ -1,8 +1,7 @@
 package com.webdev.dao;
 
-import java.util.Optional;
-
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 
 import com.webdev.model.Order;
 
@@ -18,21 +17,15 @@ public class OrderDao {
     // add a new order
     public Integer add(Order order) {
         Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-        Integer id = (Integer) currentSession.save(order);
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        return id;
+        return (Integer) currentSession.save(order);
+
     }
 
     // get a order by id
-    public Optional<Order> get(Integer id) {
+    public Order get(Integer id) throws EntityNotFoundException {
         Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-        Optional<Order> order = Optional.ofNullable(currentSession.get(Order.class, id));
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        return order;
+        return currentSession.get(Order.class, id);
+
     }
 
 }

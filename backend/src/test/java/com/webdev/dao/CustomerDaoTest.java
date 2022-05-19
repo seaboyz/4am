@@ -3,8 +3,6 @@ package com.webdev.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Optional;
-
 import javax.persistence.EntityManager;
 
 import com.webdev.model.Customer;
@@ -65,7 +63,7 @@ public class CustomerDaoTest {
         currentSession.save(customer);
         currentSession.close();
 
-        assertEquals(customer.getUsername(), customerDao.get(customer.getId()).get().getUsername());
+        assertEquals(customer.getUsername(), customerDao.get(customer.getId()).getUsername());
 
     }
 
@@ -131,9 +129,9 @@ public class CustomerDaoTest {
         // start a new currentSession
         currentSession = entityManager.unwrap(Session.class);
         // currentSession.beginTransaction();
-        Optional<Customer> deletedCustomer = customerDao.get(customer.getId());
+        Customer deletedCustomer = customerDao.get(customer.getId());
         currentSession.close();
 
-        assertTrue(!deletedCustomer.isPresent());
+        assertTrue(deletedCustomer.getId() == null);
     }
 }

@@ -1,7 +1,5 @@
 package com.webdev.controller;
 
-import java.util.Optional;
-
 import com.google.gson.Gson;
 import com.webdev.model.Customer;
 import com.webdev.service.CustomerService;
@@ -27,14 +25,12 @@ public class CustomerController {
     public String getCustomersById(@PathVariable String id) {
         Integer customerId = Integer.parseInt(id);
 
-        Optional<Customer> customerFromDb = customerService.getCustomerById(customerId);
+        Customer customerFromDb = customerService.getCustomerById(customerId);
 
         Gson gson = new Gson();
 
         return gson.toJson(customerFromDb, Customer.class);
 
     }
-
-  
 
 }
