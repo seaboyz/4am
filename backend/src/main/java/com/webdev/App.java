@@ -14,6 +14,7 @@ public class App {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(App.class, args);
 
+		// This is a bit of a hack, but it works.
 		context.start();
 
 		// CustomerDao customerDao = context.getBean(CustomerDao.class);
