@@ -51,12 +51,14 @@ public class AuthControllerTest {
 		Customer newCustomer = new Customer(
 				"test",
 				"test@test.com",
-				"123456");
+				"123456",
+                "555-555-5555");
 
 		Customer registeredCustomer = new Customer(
 				"test",
 				"test@test.com",
-				"123456");
+				"123456",
+                "555-555-5555");
 		registeredCustomer.setId(1);
 
 		when(customerService.createCustomer(newCustomer)).thenReturn(registeredCustomer);

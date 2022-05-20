@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthSerivice {
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     @Transactional(readOnly = true)
     public Customer login(String email, String password) throws EntityNotFoundException {

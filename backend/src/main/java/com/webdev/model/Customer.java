@@ -69,7 +69,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String username, String email, String password) {
+    public Customer(String username, String email, String password, String phoneNumber) {
         this.username = username;
         this.email = email;
         this.password = password;

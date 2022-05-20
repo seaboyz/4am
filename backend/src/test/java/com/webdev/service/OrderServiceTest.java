@@ -62,7 +62,8 @@ public class OrderServiceTest {
                                 "38301",
                                 "USA");
 
-                Customer customer = new Customer("johnd", "john@gmail.com", "m38rmF");
+                Customer customer = new Customer("johnd", "john@gmail.com", "m38rmF",
+                "555-555-5555");
 
                 OrderItem orderItem1 = new OrderItem(product1, 1);
                 OrderItem orderItem2 = new OrderItem(product2, 2);

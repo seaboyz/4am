@@ -47,7 +47,8 @@ public class OrderDaoTest {
         customer = new Customer(
                 "johnd",
                 "john@gmail.com",
-                "m38rmF$");
+                "m38rmF$",
+                "555-555-5555");
         shippingAddress = new ShippingAddress(
                 "john",
                 "doe",
@@ -104,7 +105,8 @@ public class OrderDaoTest {
         Customer customer = new Customer(
                 "mor_2314",
                 "morrison@gmail.com",
-                "83r5^_");
+                "83r5^_",
+                "555-555-5555");
         ShippingAddress shippingAddress = new ShippingAddress(
                 "david",
                 "morrison",
