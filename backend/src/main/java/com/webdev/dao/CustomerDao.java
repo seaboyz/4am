@@ -10,7 +10,6 @@ import com.webdev.model.Address;
 import com.webdev.model.Customer;
 
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomerDao {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public Customer add(Customer customer) {
 

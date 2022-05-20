@@ -12,12 +12,11 @@ import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
 
-
 @Repository
 @RequiredArgsConstructor
 public class AddressDao {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public Address add(Address address) {
         Session currentSession = entityManager.unwrap(Session.class);

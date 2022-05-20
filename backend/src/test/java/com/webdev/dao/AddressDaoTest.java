@@ -12,35 +12,28 @@ import com.webdev.model.Address;
 import org.hibernate.Session;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@Disabled
 @SpringBootTest
 public class AddressDaoTest {
-    @Autowired
-    private static EntityManager entityManager;
 
     @Autowired
-    private static AddressDao addressDao;
-    
+    private EntityManager entityManager;
+
+    private AddressDao addressDao;
+
     private Session currentSession;
 
     @BeforeEach
     public void init() {
+        addressDao = new AddressDao(entityManager);
         currentSession = entityManager.unwrap(Session.class);
     }
 
     @AfterEach
     public void tear() {
-        if (currentSession != null)
-            currentSession.close();
-    }
-
-    @AfterEach
-    public void tearDown() {
         if (currentSession != null)
             currentSession.close();
     }
@@ -58,9 +51,7 @@ public class AddressDaoTest {
                 "country");
 
         addressDao.add(address);
-        // currentSession is closed in userdao.add()
 
-        // check if the address was added to the database
         currentSession = entityManager.unwrap(Session.class);
         Address addressFromDb = currentSession.get(Address.class, address.getId());
         assertEquals(address.toString(), addressFromDb.toString());
@@ -78,13 +69,8 @@ public class AddressDaoTest {
                 "zip",
                 "country");
 
-        currentSession.beginTransaction();
         currentSession.save(address);
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        // currentSession is closed in userdao.add()
 
-        // check if the address was added to the database
         Optional<Address> addressFromDb = addressDao.get(address.getId());
         assertTrue(addressFromDb.isPresent());
         assertEquals(address.toString(), addressFromDb.get().toString());
@@ -112,21 +98,15 @@ public class AddressDaoTest {
                 "zip2",
                 "country2");
 
-        currentSession.beginTransaction();
         currentSession.save(address1);
         currentSession.save(address2);
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        // currentSession is closed in userdao.add()
-
-        // start a new currentSession
         assertEquals(2, addressDao.getAll().size());
 
     }
 
     @Test
     void testUpdate() {
-        // create a new address
+
         Address address = new Address(
                 "firstname",
                 "lastname",
@@ -136,14 +116,9 @@ public class AddressDaoTest {
                 "state",
                 "zip",
                 "country");
-
-        currentSession.beginTransaction();
         currentSession.save(address);
-        currentSession.getTransaction().commit();
         currentSession.close();
-        // address is detached
 
-        // update the address
         address.setFirstName("john");
         address.setLastName("doe");
         address.setStreet("123 main st");
@@ -153,15 +128,8 @@ public class AddressDaoTest {
         address.setZip("12345");
         address.setCountry("USA");
 
-        // update the address in the database
-        addressDao.update(address);
-        // currentSession is closed in userdao.update()
-
-        // check if the address was updated in the database
         currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
         Address addressFromDb = currentSession.get(Address.class, address.getId());
-        currentSession.getTransaction().commit();
 
         assertEquals(address.toString(), addressFromDb.toString());
 
