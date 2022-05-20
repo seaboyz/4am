@@ -4,9 +4,7 @@ import { Observable } from "rxjs";
 
 const AUTH_API = 'http://localhost:8080/auth/';
 
-const httpOptions = {
-  headers: { 'Content-Type': 'application/json' }
-};
+
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +29,10 @@ export class AuthService
 
   register(username: string, email: string, password: string)
   {
+    const httpOptions = {
+      headers: { 'Content-Type': 'application/json' }
+    };
+
     return this.http.post(AUTH_API + 'register', { username, email, password }, httpOptions);
   }
 }
