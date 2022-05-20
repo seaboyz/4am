@@ -21,51 +21,50 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(AuthController.class)
 public class AuthControllerTest {
-    @MockBean
-    private CustomerService customerService;
-    @Autowired
-    private MockMvc mockMvc;
+        @MockBean
+        private CustomerService customerService;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Disabled
-    @Test
-    void testLogin() throws Exception {
-        Customer customer = new Customer();
-        customer.setId(1);
-        customer.setEmail("test@test.com");
-        customer.setUsername("test");
-        customer.setPassword("123456");
-        customer.setPhoneNumber("123456789");
+        @Disabled
+        @Test
+        void testLogin() throws Exception {
+                Customer customer = new Customer();
+                customer.setId(1);
+                customer.setEmail("test@test.com");
+                customer.setUsername("test");
+                customer.setPassword("123456");
+                customer.setPhoneNumber("123456789");
 
-        when(customerService.getCustomerByEmail("test@test.com")).thenReturn(customer);
+                when(customerService.getCustomerByEmail("test@test.com")).thenReturn(customer);
 
-        mockMvc.perform(get("/auth/login")
-                .header("Authorization",
-                        "Basic " + Base64.getEncoder().encodeToString("test:123456".getBytes())))
-                .andExpect(status().isOk());
+                mockMvc.perform(get("/auth/login")
+                                .header("Authorization",
+                                                "Basic " + Base64.getEncoder()
+                                                                .encodeToString("test:123456".getBytes())))
+                                .andExpect(status().isOk());
 
-    }
+        }
 
-    @Test
-    void testRegister() throws Exception {
-        Customer newCustomer = new Customer(
-                "test",
-                "test@test.com",
-                "123456",
-                "123456789");
+        @Test
+        void testRegister() throws Exception {
+                Customer newCustomer = new Customer(
+                                "test",
+                                "test@test.com",
+                                "123456");
 
-        Customer registeredCustomer = new Customer(
-                "test",
-                "test@test.com",
-                "123456",
-                "123456789");
-        registeredCustomer.setId(1);
+                Customer registeredCustomer = new Customer(
+                                "test",
+                                "test@test.com",
+                                "123456");
+                registeredCustomer.setId(1);
 
-        when(customerService.createCustomer(newCustomer)).thenReturn(registeredCustomer);
+                when(customerService.createCustomer(newCustomer)).thenReturn(registeredCustomer);
 
-        mockMvc.perform(post("/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new Gson().toJson(newCustomer)))
-                .andExpect(status().isCreated());
+                mockMvc.perform(post("/auth/register")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(new Gson().toJson(newCustomer)))
+                                .andExpect(status().isCreated());
 
-    }
+        }
 }

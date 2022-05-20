@@ -50,8 +50,7 @@ public class HibernateUtilTest {
         Customer customer1 = new Customer(
                 "username1",
                 "email1",
-                "password",
-                "phoneNumber");
+                "password");
 
         Integer id = (Integer) session.save(customer1);
 
@@ -66,8 +65,7 @@ public class HibernateUtilTest {
         Customer customer = new Customer(
                 "username1",
                 "email1",
-                "password",
-                "phoneNumber");
+                "password");
         session.beginTransaction();
         session.save(customer);
         session.getTransaction().commit();
@@ -89,8 +87,7 @@ public class HibernateUtilTest {
         Customer customer = new Customer(
                 "username1",
                 "email1",
-                "password",
-                "phoneNumber");
+                "password");
         session.beginTransaction();
         session.save(customer);
         session.getTransaction().commit();
@@ -122,8 +119,7 @@ public class HibernateUtilTest {
         Customer customer1 = new Customer(
                 "username1",
                 "email1",
-                "password",
-                "phoneNumber");
+                "password");
         session.beginTransaction();
         session.save(customer1);
         session.getTransaction().commit();
@@ -135,8 +131,7 @@ public class HibernateUtilTest {
         Customer customer2 = new Customer(
                 "username2",
                 "email2",
-                "password",
-                "phoneNumber");
+                "password");
         session.beginTransaction();
         session.save(customer2);
         session.getTransaction().commit();
@@ -157,8 +152,7 @@ public class HibernateUtilTest {
         Customer customer1 = new Customer(
                 "username1",
                 "email1",
-                "password",
-                "phoneNumber");
+                "password");
         session.beginTransaction();
         session.save(customer1);
         session.getTransaction().commit();

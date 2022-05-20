@@ -15,8 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-
-
 @Entity()
 @Table(name = "customers")
 public class Customer {
@@ -37,8 +35,7 @@ public class Customer {
     @NotBlank(message = "Password is required")
     private String password;
 
-    @Column(name = "phone_number", nullable = false)
-    @NotBlank(message = "Phone number is required")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     // when save the customer, if there are any unsaved addresses, save them
@@ -72,11 +69,10 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String username, String email, String password, String phoneNumber) {
+    public Customer(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.phoneNumber = phoneNumber;
     }
 
     public Integer getId() {

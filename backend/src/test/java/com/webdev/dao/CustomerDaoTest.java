@@ -32,8 +32,7 @@ public class CustomerDaoTest {
         customer1 = new Customer(
                 "username1",
                 "email1",
-                "password1",
-                "phoneNumber1");
+                "password1");
     }
 
     @AfterEach
@@ -61,8 +60,7 @@ public class CustomerDaoTest {
         Customer customer2 = new Customer(
                 "username2",
                 "email2",
-                "password",
-                "phoneNumber");
+                "password");
 
         currentSession.save(customer2);
 
