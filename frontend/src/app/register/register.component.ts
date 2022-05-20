@@ -28,8 +28,12 @@ export class RegisterComponent implements OnInit
 
   register(username: string, email: string, password: string, phoneNumber: string): void
   {
-    this.authService.register(username, email, password, phoneNumber);
-
+    this.authService.register(username, email, password, phoneNumber).subscribe(
+      data =>
+      {
+        console.log(data);
+      }
+    );
   }
 
 }

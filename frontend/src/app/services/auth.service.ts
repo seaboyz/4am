@@ -29,10 +29,11 @@ export class AuthService
 
   register(username: string, email: string, password: string, phoneNumber: string): Observable<any>
   {
+    console.log(username, email, password, phoneNumber);
     const httpOptions = {
       headers: { 'Content-Type': 'application/json' }
     };
 
-    return this.http.post(AUTH_API + 'register', { username, email, password }, httpOptions);
+    return this.http.post(AUTH_API + 'register', { username, email, password, phoneNumber }, httpOptions);
   }
 }

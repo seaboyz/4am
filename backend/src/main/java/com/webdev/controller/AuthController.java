@@ -30,7 +30,7 @@ public class AuthController {
         this.customerService = customerService;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @GetMapping(value = "/auth/login")
     public ResponseEntity<String> login(@RequestHeader("Authorization") String auth) {
 
@@ -64,9 +64,11 @@ public class AuthController {
         return new ResponseEntity<String>(json, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(value = "/auth/register")
     public ResponseEntity<String> postMethodName(
-            @RequestBody @Valid Customer customer) {
+            @RequestBody Customer customer) {
+        System.out.println(customer);
         try {
             customerService.createCustomer(customer);
             return new ResponseEntity<String>("Customer created", HttpStatus.CREATED);
