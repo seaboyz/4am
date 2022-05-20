@@ -1,5 +1,6 @@
 package com.webdev.service;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
@@ -85,7 +86,7 @@ public class OrderServiceTest {
 
 		when(orderDao.add(order)).thenReturn(1);
 
-		when(customerService.addAddressToCustomer(1, shippingAddress)).thenReturn(customer);
+		doNothing().when(customerService).addAddressToCustomer(1, shippingAddress);
 
 		HashMap<Integer, Integer> itemList = new HashMap<>();
 		itemList.put(1, 1);

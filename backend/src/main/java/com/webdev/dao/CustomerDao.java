@@ -85,5 +85,6 @@ public class CustomerDao {
         currentSession.getTransaction().commit();
 
         return customer;
+
     }
 }

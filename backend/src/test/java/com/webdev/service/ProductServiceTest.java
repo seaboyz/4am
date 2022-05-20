@@ -12,20 +12,17 @@ import com.webdev.dao.ProductDao;
 import com.webdev.model.Product;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@Disabled
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
-    @Autowired
-    ProductService productService;
+
+    private ProductService productService;
 
     Gson gson = new Gson();
 
@@ -36,6 +33,8 @@ public class ProductServiceTest {
 
     @BeforeEach
     public void setUp() {
+        productService = new ProductService(productDao);
+
         product = new Product(
                 "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
                 "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
@@ -45,7 +44,7 @@ public class ProductServiceTest {
         product.setId(1);
     }
 
-    @Disabled
+
     @Test
     void testGetProductById() throws NoSuchElementException {
         when(productDao.get(1)).thenReturn(product);

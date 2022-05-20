@@ -1,7 +1,5 @@
 package com.webdev.service;
 
-import javax.persistence.EntityNotFoundException;
-
 import com.webdev.model.Customer;
 
 import org.springframework.stereotype.Service;

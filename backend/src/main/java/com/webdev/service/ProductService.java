@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private ProductDao productDao;
+    private final ProductDao productDao;
 
     @Transactional
     public Product getProductById(Integer id) throws NoSuchElementException {
