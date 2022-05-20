@@ -50,7 +50,7 @@
                 <mat-form-field>
                     <input
                         matInput
-                        placeholder="Password"
+                        placeholder="Re-Enter Password"
                         type="password"
                         required
                         minlength="6"
@@ -63,13 +63,29 @@
                     </mat-error>
                     <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Phone Number"
+                        type="number"
+                        required
+                        minlength="10"
+                        name="phoneNumber"
+                        ngModel
+                        #phoneNumber="ngModel"
+                    >
+                    <mat-error *ngIf="phoneNumber.invalid">
+                        Re-Enter Password is required
+                    </mat-error>
+                    <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
                 <button
                     [disabled]="username.errors || email.errors ||password.errors && repassword.errors"
                     mat-raised-button
                     color="primary"
                     class="register-button "
                     style="text-transform: uppercase;letter-spacing: 2px;"
-                    (click)="register(username.value,email.value,password.value)"
+                    (click)="register(username.value,email.value,password.value,phoneNumber.value)"
                 >
                     Create your account
                 </button>

@@ -12,6 +12,7 @@ export class RegisterComponent implements OnInit
   #email = "";
   #password = "";
   #repassword = "";
+  #PhoneNumber = "";
 
 
   constructor(private authService: AuthService)
@@ -25,9 +26,9 @@ export class RegisterComponent implements OnInit
 
 
 
-  register(username: string, email: string, password: string): void
+  register(username: string, email: string, password: string, phoneNumber: string): void
   {
-    this.authService.register(username, email, password);
+    this.authService.register(username, email, password, phoneNumber);
 
   }
 
