@@ -13,45 +13,46 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class CustomerDao {
 
-    private Session currentSession;
-
-    @Autowired
-    public CustomerDao(EntityManager entityManager) {
-        this.currentSession = entityManager.unwrap(Session.class);
-    }
+    private EntityManager entityManager;
 
     public Customer add(Customer customer) {
-        currentSession.save(customer);
+
+        entityManager.unwrap(Session.class).save(customer);
         return customer;
     }
 
     public Customer get(Integer id) throws EntityNotFoundException {
 
-        return currentSession.get(Customer.class, id);
+        return entityManager.unwrap(Session.class).get(Customer.class, id);
 
     }
 
     public Customer getbyEmail(String email) throws NoResultException {
 
-        Customer customerFromDb = currentSession
+        return entityManager.unwrap(Session.class)
                 .createQuery("from Customer where email = :email", Customer.class)
                 .setParameter("email", email).getSingleResult();
 
-        return customerFromDb;
     }
 
     public List<Customer> getAll() {
 
-        List<Customer> customers = currentSession.createQuery("from Customer", Customer.class).list();
-        return customers;
+        return entityManager.unwrap(Session.class)
+                .createQuery("from Customer", Customer.class).list();
+
     }
 
     public Customer update(Customer customer) {
 
-        Customer customerToUpdate = currentSession.get(Customer.class, customer.getId());
+        Customer customerToUpdate = entityManager
+                .unwrap(Session.class)
+                .get(Customer.class, customer.getId());
 
         customerToUpdate.setUsername(customer.getUsername());
         customerToUpdate.setEmail(customer.getEmail());
@@ -66,23 +67,20 @@ public class CustomerDao {
 
     public void delete(Integer id) {
 
-        Customer customer = currentSession.get(Customer.class, id);
-        currentSession.delete(customer);
+        entityManager.unwrap(Session.class).unwrap(Session.class).delete(get(id));
+
     }
 
     public void delete(Customer customer) {
 
-        currentSession.delete(customer);
+        entityManager.unwrap(Session.class).delete(customer);
     }
 
     public Customer addAddress(Customer customer, Address address) {
 
-        // currentSession.beginTransaction();
-        // manually add address to database, so trun off the cascade in the customer entity
-        currentSession.save(address);
         customer.getAddresses().add(address);
-        currentSession.merge(customer);
-        currentSession.getTransaction().commit();
+
+        entityManager.unwrap(Session.class).save(customer);
 
         return customer;
 

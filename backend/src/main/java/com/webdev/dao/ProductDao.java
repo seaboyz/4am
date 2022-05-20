@@ -8,13 +8,15 @@ import javax.persistence.EntityNotFoundException;
 import com.webdev.model.Product;
 
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class ProductDao {
-    @Autowired
-    private EntityManager entityManager;
+
+    private final EntityManager entityManager;
 
     public Product add(Product product) {
         Session currentSession = entityManager.unwrap(Session.class);

@@ -8,12 +8,15 @@ import javax.persistence.EntityManager;
 import com.webdev.model.Address;
 
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import lombok.RequiredArgsConstructor;
+
+
 @Repository
+@RequiredArgsConstructor
 public class AddressDao {
-    @Autowired
+
     private EntityManager entityManager;
 
     public Address add(Address address) {

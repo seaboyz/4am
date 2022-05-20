@@ -6,13 +6,15 @@ import javax.persistence.EntityNotFoundException;
 import com.webdev.model.Order;
 
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class OrderDao {
-    @Autowired
-    private EntityManager entityManager;
+
+    private final EntityManager entityManager;
 
     // add a new order
     public Integer add(Order order) {

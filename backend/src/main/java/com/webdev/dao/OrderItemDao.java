@@ -7,14 +7,15 @@ import javax.persistence.EntityManager;
 import com.webdev.model.OrderItem;
 
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class OrderItemDao {
 
-    @Autowired
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public OrderItem add(OrderItem orderItem) {
         Session currentSession = entityManager.unwrap(Session.class);
