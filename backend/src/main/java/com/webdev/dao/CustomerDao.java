@@ -11,6 +11,7 @@ import com.webdev.model.Customer;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class CustomerDao {
@@ -18,11 +19,13 @@ public class CustomerDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Transactional
     public Customer add(Customer customer) {
         sessionFactory.getCurrentSession().save(customer);
         return customer;
     }
 
+    @Transactional(readOnly = true)
     public Customer get(Integer id) throws EntityNotFoundException {
 
         return sessionFactory.getCurrentSession().get(Customer.class, id);
@@ -38,6 +41,7 @@ public class CustomerDao {
         return customerFromDb;
     }
 
+    @Transactional(readOnly = true)
     public List<Customer> getAll() {
 
         List<Customer> customers = sessionFactory.getCurrentSession().createQuery("from Customer", Customer.class)
@@ -60,6 +64,7 @@ public class CustomerDao {
         return customerToUpdate;
     }
 
+    @Transactional
     public void delete(Integer id) {
 
         Customer customer = sessionFactory.getCurrentSession().get(Customer.class, id);
@@ -71,6 +76,7 @@ public class CustomerDao {
         sessionFactory.getCurrentSession().delete(customer);
     }
 
+    @Transactional
     public Customer addAddress(Customer customer, Address address) {
 
         // sessionFactory.getCurrentSession().beginTransaction();
