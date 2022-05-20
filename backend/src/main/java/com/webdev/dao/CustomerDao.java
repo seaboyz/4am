@@ -2,41 +2,38 @@ package com.webdev.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 
 import com.webdev.model.Address;
 import com.webdev.model.Customer;
 
-import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class CustomerDao {
 
-    private Session currentSession;
-
     @Autowired
-    public CustomerDao(EntityManager entityManager) {
-        this.currentSession = entityManager.unwrap(Session.class);
-    }
+    private SessionFactory sessionFactory;
 
     public Customer add(Customer customer) {
-        currentSession.save(customer);
+        sessionFactory.getCurrentSession().save(customer);
         return customer;
     }
 
     public Customer get(Integer id) throws EntityNotFoundException {
 
-        return currentSession.get(Customer.class, id);
+        return sessionFactory.getCurrentSession().get(Customer.class, id);
 
     }
 
     public Customer getbyEmail(String email) throws NoResultException {
 
-        Customer customerFromDb = currentSession
+        Customer customerFromDb = sessionFactory.getCurrentSession()
                 .createQuery("from Customer where email = :email", Customer.class)
                 .setParameter("email", email).getSingleResult();
 
@@ -45,13 +42,14 @@ public class CustomerDao {
 
     public List<Customer> getAll() {
 
-        List<Customer> customers = currentSession.createQuery("from Customer", Customer.class).list();
+        List<Customer> customers = sessionFactory.getCurrentSession().createQuery("from Customer", Customer.class)
+                .list();
         return customers;
     }
 
     public Customer update(Customer customer) {
 
-        Customer customerToUpdate = currentSession.get(Customer.class, customer.getId());
+        Customer customerToUpdate = sessionFactory.getCurrentSession().get(Customer.class, customer.getId());
 
         customerToUpdate.setUsername(customer.getUsername());
         customerToUpdate.setEmail(customer.getEmail());
@@ -66,23 +64,23 @@ public class CustomerDao {
 
     public void delete(Integer id) {
 
-        Customer customer = currentSession.get(Customer.class, id);
-        currentSession.delete(customer);
+        Customer customer = sessionFactory.getCurrentSession().get(Customer.class, id);
+        sessionFactory.getCurrentSession().delete(customer);
     }
 
     public void delete(Customer customer) {
 
-        currentSession.delete(customer);
+        sessionFactory.getCurrentSession().delete(customer);
     }
 
     public Customer addAddress(Customer customer, Address address) {
 
-        // currentSession.beginTransaction();
+        // sessionFactory.getCurrentSession().beginTransaction();
         // manually add address to database, so trun off the cascade in the customer entity
-        currentSession.save(address);
+        sessionFactory.getCurrentSession().save(address);
         customer.getAddresses().add(address);
-        currentSession.merge(customer);
-        currentSession.getTransaction().commit();
+        sessionFactory.getCurrentSession().merge(customer);
+        sessionFactory.getCurrentSession().getTransaction().commit();
 
         return customer;
     }
