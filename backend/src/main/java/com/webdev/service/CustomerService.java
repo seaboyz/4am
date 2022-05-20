@@ -8,19 +8,16 @@ import com.webdev.model.Address;
 import com.webdev.model.Customer;
 import com.webdev.model.ShippingAddress;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
 
     private final CustomerDao customerDao;
-
-    @Autowired
-    public CustomerService(CustomerDao customerDao) {
-        this.customerDao = customerDao;
-    }
 
     @Transactional
     public Customer createCustomer(Customer customer) {

@@ -62,3 +62,16 @@ after frontend receive the json object with the order infomation from the backen
 * frontend will send a json object with email and password to backend
 * backend will check if the email and password match with the database
 * if match, backend will send a json object with user_id, email, password(transient), phone_number, username, jwt token to the frontend
+
+
+### Testing
+#### What is unit testing?
+![](images/testing/Screen%20Shot%202022-05-20%20at%207.51.12%20AM.png)
+* Testing the behavior not the implementation.
+#### What is not unit testing?
+![](images/testing/Screen%20Shot%202022-05-20%20at%207.53.14%20AM.png)
+#### Spring unit testing
+1. Don't use Spirng to write unit testing.
+![](images/testing/Screen%20Shot%202022-05-20%20at%208.27.11%20AM.png)
+![](images/testing/Screen%20Shot%202022-05-20%20at%208.29.12%20AM.png)
+2. Do use the constructor injection to inject the dependencies.

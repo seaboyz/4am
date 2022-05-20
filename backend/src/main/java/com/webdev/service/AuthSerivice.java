@@ -4,18 +4,15 @@ import javax.persistence.EntityNotFoundException;
 
 import com.webdev.model.Customer;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class AuthSerivice {
     private CustomerService customerService;
-
-    @Autowired
-    public AuthSerivice(CustomerService customerService) {
-        this.customerService = customerService;
-    }
 
     @Transactional(readOnly = true)
     public Customer login(String email, String password) throws EntityNotFoundException {
