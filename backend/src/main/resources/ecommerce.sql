@@ -21,7 +21,7 @@ DELETE FROM customers
 WHERE username = 'username';
 
 DELETE FROM customers
-WHERE id = 14;
+WHERE id = 15;
 
 
 

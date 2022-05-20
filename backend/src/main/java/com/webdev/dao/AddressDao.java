@@ -8,35 +8,27 @@ import javax.persistence.EntityManager;
 import com.webdev.model.Address;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class AddressDao {
     @Autowired
-    private EntityManager entityManager;
+    SessionFactory sessionFactory;
 
     public Address add(Address address) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.save(address);
+        sessionFactory.getCurrentSession().save(address);
         return address;
     }
 
-    public Optional<Address> get(Integer id) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        Optional<Address> address = Optional.ofNullable(currentSession.get(Address.class, id));
-        return address;
-    }
+    public Address get(Integer id) {
+        return sessionFactory.getCurrentSession().get(Address.class, id);
 
-    public List<Address> getAll() {
-        Session currentSession = entityManager.unwrap(Session.class);
-        List<Address> addresses = currentSession.createQuery("from Address", Address.class).list();
-
-        return addresses;
     }
 
     public Address update(Address address) {
-        Session currentSession = entityManager.unwrap(Session.class);
+        Session currentSession = sessionFactory.getCurrentSession();
 
         Address addressToUpdate = currentSession.get(Address.class, address.getId());
 
@@ -57,14 +49,12 @@ public class AddressDao {
     }
 
     public void delete(Integer id) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        Address address = currentSession.get(Address.class, id);
-        currentSession.delete(address);
+        sessionFactory.getCurrentSession().delete(get(id));
+
     }
 
     public void delete(Address address) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.delete(address);
+        sessionFactory.getCurrentSession().delete(address);
     }
 
 }

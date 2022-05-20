@@ -2,50 +2,42 @@ package com.webdev.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 
 import com.webdev.model.Product;
 
-import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProductDao {
     @Autowired
-    private EntityManager entityManager;
+    private SessionFactory sessionFactory;;
 
     public Product add(Product product) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-        currentSession.save(product);
+        sessionFactory.getCurrentSession().save(product);
         return product;
     }
 
     public Product get(Integer id) throws EntityNotFoundException {
-        Session currentSession = entityManager.unwrap(Session.class);
-        return currentSession.get(Product.class, id);
+        return sessionFactory.getCurrentSession().get(Product.class, id);
     }
 
     public List<Product> getAll() {
-        Session currentSession = entityManager.unwrap(Session.class);
-        return currentSession.createQuery("from Product", Product.class).list();
+        return sessionFactory.getCurrentSession().createQuery("from Product", Product.class).list();
     }
 
     public Product update(Product product) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        return (Product) currentSession.merge(product);
+        return (Product) sessionFactory.getCurrentSession().merge(product);
 
     }
 
     public void delete(Integer id) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.delete(get(id));
+        sessionFactory.getCurrentSession().delete(get(id));
     }
 
     public void delete(Product product) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.delete(product);
+        sessionFactory.getCurrentSession().delete(product);
     }
 }

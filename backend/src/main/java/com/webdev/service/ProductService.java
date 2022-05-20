@@ -15,15 +15,13 @@ public class ProductService {
     @Autowired
     private ProductDao productDao;
 
-    
-    @Transactional
-    public Product getProductById(Integer id)  throws NoSuchElementException {
+    @Transactional(readOnly = true)
+    public Product getProductById(Integer id) throws NoSuchElementException {
         return productDao.get(id);
 
-        
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Product> getAllProducts() {
         return productDao.getAll();
     }
