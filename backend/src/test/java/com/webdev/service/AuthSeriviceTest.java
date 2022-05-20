@@ -1,6 +1,7 @@
 package com.webdev.service;
 
 import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -27,18 +28,27 @@ public class AuthSeriviceTest {
 
     @Test
     void testLogin() {
-        when(customerService.getCustomerByEmail(anyString())).thenReturn(new Customer(
-           "test", "test@test.com","123456",
-           "555-555-5555"
-        ));
+        Customer customer = new Customer(
+                "test", "test@test.com", "123456",
+                "555-555-5555");
 
-        assertThrows(IllegalAccessException.class, () -> {
+        when(customerService.getCustomerByEmail(anyString())).thenReturn(customer);
+
+        assertThrows(IllegalArgumentException.class, () -> {
             authSerivice.login("", "");
         });
+
+        assertEquals(customer, authSerivice.login("test@test.com", "123456"));
     }
 
     @Test
     void testRegister() {
+        Customer customer = new Customer(
+                "test", "test@test.com", "123456",
+                "555-555-5555");
 
+        when(customerService.createCustomer(customer)).thenReturn(customer);
+
+        assertEquals(customer, authSerivice.register(customer));
     }
 }

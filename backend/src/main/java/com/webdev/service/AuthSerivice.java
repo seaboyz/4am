@@ -15,7 +15,7 @@ public class AuthSerivice {
     private final CustomerService customerService;
 
     @Transactional(readOnly = true)
-    public Customer login(String email, String password) throws EntityNotFoundException {
+    public Customer login(String email, String password) {
         if (email == null || password == null) {
             throw new IllegalArgumentException("Email or password cannot be null");
         }
