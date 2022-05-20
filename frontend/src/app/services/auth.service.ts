@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 
-const AUTH_API = 'http://localhost:8080/api/auth/';
+const AUTH_API = 'http://localhost:8080/auth/';
 
 const httpOptions = {
   headers: { 'Content-Type': 'application/json' }
@@ -18,7 +18,15 @@ export class AuthService
 
   login(email: string, password: string): Observable<any>
   {
-    return this.http.post(AUTH_API + 'login', { email, password }, httpOptions);
+    const base64Credential: string = btoa(email + ':' + password);
+
+    const httpOptions = {
+      headers: {
+        'Authorization': 'Basic ' + base64Credential,
+      }
+    }
+
+    return this.http.get(AUTH_API + 'login', httpOptions);
   }
 
   register(username: string, email: string, password: string)
