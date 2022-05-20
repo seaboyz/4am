@@ -27,7 +27,7 @@ export class AuthService
     return this.http.get(AUTH_API + 'login', httpOptions);
   }
 
-  register(username: string, email: string, password: string)
+  register(username: string, email: string, password: string, phoneNumber: string): Observable<any>
   {
     const httpOptions = {
       headers: { 'Content-Type': 'application/json' }
