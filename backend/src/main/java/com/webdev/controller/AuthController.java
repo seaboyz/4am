@@ -5,7 +5,6 @@ import java.util.Base64;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
-import javax.validation.Valid;
 
 import com.google.gson.Gson;
 import com.webdev.model.Customer;

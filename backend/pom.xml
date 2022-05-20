@@ -25,10 +25,48 @@
   </properties>
 
   <dependencies>
-    <dependency>
+    <!-- <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency> -->
+
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>5.3.20</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-dbcp -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-dbcp</artifactId>
+      <version>10.1.0-M15</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.6.8.Final</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-testing -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-testing</artifactId>
+      <version>5.6.8.Final</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>2.1.212</version>
+      <scope>runtime</scope>
+    </dependency>
+
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -67,29 +105,6 @@
       <version>42.3.5</version>
     </dependency>
 
-
-    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>5.6.8.Final</version>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-testing -->
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-testing</artifactId>
-      <version>5.6.8.Final</version>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <version>2.1.212</version>
-      <scope>runtime</scope>
-    </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
     <dependency>
