@@ -1,10 +1,5 @@
 package com.webdev.dao;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-
 import com.webdev.model.Address;
 
 import org.hibernate.Session;

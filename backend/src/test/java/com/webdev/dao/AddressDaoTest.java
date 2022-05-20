@@ -3,8 +3,6 @@ package com.webdev.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Optional;
-
 import javax.persistence.EntityManager;
 
 import com.webdev.model.Address;
@@ -25,7 +23,7 @@ public class AddressDaoTest {
 
     @Autowired
     private static AddressDao addressDao;
-    
+
     private Session currentSession;
 
     @BeforeEach
@@ -85,42 +83,9 @@ public class AddressDaoTest {
         // currentSession is closed in userdao.add()
 
         // check if the address was added to the database
-        Optional<Address> addressFromDb = addressDao.get(address.getId());
-        assertTrue(addressFromDb.isPresent());
-        assertEquals(address.toString(), addressFromDb.get().toString());
+        Address addressFromDb = addressDao.get(address.getId());
 
-    }
-
-    @Test
-    void testGetAll() {
-        Address address1 = new Address(
-                "firstname1",
-                "lastname1",
-                "street1",
-                "street21",
-                "city1",
-                "state1",
-                "zip1",
-                "country1");
-        Address address2 = new Address(
-                "firstname2",
-                "lastname2",
-                "street2",
-                "street22",
-                "city2",
-                "state2",
-                "zip2",
-                "country2");
-
-        currentSession.beginTransaction();
-        currentSession.save(address1);
-        currentSession.save(address2);
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        // currentSession is closed in userdao.add()
-
-        // start a new currentSession
-        assertEquals(2, addressDao.getAll().size());
+        assertEquals(address.toString(), addressFromDb.toString());
 
     }
 
@@ -190,8 +155,8 @@ public class AddressDaoTest {
         // currentSession is closed in userdao.delete()
 
         // check if the address was deleted from the database
-        Optional<Address> addressFromDb = addressDao.get(address.getId());
-        assertTrue(!addressFromDb.isPresent());
+        Address addressFromDb = addressDao.get(address.getId());
+        assertTrue(addressFromDb != null);
 
     }
 
@@ -215,8 +180,8 @@ public class AddressDaoTest {
         // currentSession is closed in userdao.delete()
 
         // check if the address was deleted from the database
-        Optional<Address> addressFromDb = addressDao.get(address.getId());
-        assertTrue(!addressFromDb.isPresent());
+        Address addressFromDb = addressDao.get(address.getId());
+        assertTrue(addressFromDb != null);
 
     }
 
