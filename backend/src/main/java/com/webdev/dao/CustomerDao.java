@@ -84,11 +84,18 @@ public class CustomerDao {
 
     public Customer addAddress(Customer customer, Address address) {
 
+        Session session = entityManager.unwrap(Session.class);
+
         customer.getAddresses().add(address);
 
-        entityManager.unwrap(Session.class).save(customer);
+        address.setCustomer(customer);
+
+        // I don't think we need to save the customer, because the customer is already saved in the address
+        // there is no addresses collumn in the customer table
+        // session.save(customer);
+
+        session.save(address);
 
         return customer;
-
     }
 }
