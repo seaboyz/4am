@@ -26,6 +26,13 @@ public class CustomerDao {
         return customer;
     }
 
+    // with spring stereotype annotation, we can implicily inject the entity manager(without @Autowired)
+    // with @RequiredArgsConstructor,we can autogenarate contructor with the final fields
+    // @Autowired
+    // public CustomerDao(EntityManager entityManager) {
+    //     this.entityManager = entityManager;
+    // }
+
     public Customer get(Integer id) throws EntityNotFoundException {
 
         return entityManager.unwrap(Session.class).get(Customer.class, id);
