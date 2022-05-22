@@ -26,7 +26,7 @@ public class App {
 
 		// customerDao.add(customer);
 
-	}
+	} 
 
 	@RequestMapping("/")
 	public String index() {

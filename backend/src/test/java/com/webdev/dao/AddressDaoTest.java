@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 
 import com.webdev.model.Address;
+import com.webdev.model.Customer;
 
 import org.hibernate.Session;
 import org.junit.jupiter.api.AfterEach;
@@ -40,7 +41,13 @@ public class AddressDaoTest {
 
     @Test
     void testAdd() {
+        Customer customer = new Customer(
+                "test",
+                "test@test.com",
+                "123456",
+                "555-555-5555");
         Address address = new Address(
+                customer,
                 "firstname",
                 "lastname",
                 "street",
@@ -59,7 +66,13 @@ public class AddressDaoTest {
 
     @Test
     void testGet() {
+        Customer customer = new Customer(
+                "test",
+                "test@test.com",
+                "123456",
+                "555-555-5555");
         Address address = new Address(
+                customer,
                 "firstname",
                 "lastname",
                 "street",
@@ -79,16 +92,23 @@ public class AddressDaoTest {
 
     @Test
     void testGetAll() {
+        Customer customer = new Customer(
+                "test",
+                "test@test.com",
+                "123456",
+                "555-555-5555");
         Address address1 = new Address(
-                "firstname1",
-                "lastname1",
-                "street1",
-                "street21",
-                "city1",
-                "state1",
-                "zip1",
-                "country1");
+                customer,
+                "firstname",
+                "lastname",
+                "street",
+                "street2",
+                "city",
+                "state",
+                "zip",
+                "country");
         Address address2 = new Address(
+                customer,
                 "firstname2",
                 "lastname2",
                 "street2",
@@ -107,7 +127,13 @@ public class AddressDaoTest {
     @Test
     void testUpdate() {
 
+        Customer customer = new Customer(
+                "test",
+                "test@test.com",
+                "123456",
+                "555-555-5555");
         Address address = new Address(
+                customer,
                 "firstname",
                 "lastname",
                 "street",
@@ -137,7 +163,13 @@ public class AddressDaoTest {
 
     @Test
     void testDelete() {
+        Customer customer = new Customer(
+                "test",
+                "test@test.com",
+                "123456",
+                "555-555-5555");
         Address address = new Address(
+                customer,
                 "firstname",
                 "lastname",
                 "street",
@@ -165,7 +197,13 @@ public class AddressDaoTest {
 
     @Test
     void testDelete2() {
+        Customer customer = new Customer(
+                "test",
+                "test@test.com",
+                "123456",
+                "555-555-5555");
         Address address = new Address(
+                customer,
                 "firstname",
                 "lastname",
                 "street",

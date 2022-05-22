@@ -17,79 +17,114 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class CustomerServiceTest {
-    @Mock
-    private CustomerDao customerDao;
+        @Mock
+        private CustomerDao customerDao;
 
-    private CustomerService customerService;
+        private CustomerService customerService;
 
-    @BeforeEach
-    public void setUp() {
-        customerService = new CustomerService(customerDao);
+        @BeforeEach
+        public void setUp() {
+                customerService = new CustomerService(customerDao);
 
-    }
+        }
 
-    @Test
-    void testCreateCustomer() {
+        @Test
+        void testCreateCustomer() {
 
-        Customer customer = new Customer();
-        Customer createdCustomer = new Customer();
-        createdCustomer.setId(1);
+                Customer customer = new Customer(
+                                "test",
+                                "test@test.com",
+                                "123456",
+                                "555-555-5555");
+                Customer createdCustomer = new Customer(
+                                "test",
+                                "test@test.com",
+                                "123456",
+                                "555-555-5555");
+                createdCustomer.setId(1);
 
-        when(customerDao.add(customer)).thenReturn(createdCustomer);
-        assertEquals(createdCustomer, customerService.createCustomer(customer));
+                when(customerDao.add(customer)).thenReturn(createdCustomer);
+                assertEquals(createdCustomer, customerService.createCustomer(customer));
 
-    }
+        }
 
-    @Test
-    void testGetCustomerByEmail() {
+        @Test
+        void testGetCustomerByEmail() {
 
-        Customer customer = new Customer();
-        customer.setEmail("test@test.com");
+                Customer customerFromDao = new Customer(
+                                "test",
+                                "test@test.com",
+                                "123456",
+                                "555-555-5555");
 
-        Customer customerFromDao = new Customer();
-        customerFromDao.setEmail("test@test.com");
+                when(customerDao.getbyEmail("test@test.com")).thenReturn(customerFromDao);
 
-        when(customerDao.getbyEmail("test@test.com")).thenReturn(customerFromDao);
+                assertEquals(customerFromDao, customerService.getCustomerByEmail("test@test.com"));
 
-        assertEquals(customerFromDao, customerService.getCustomerByEmail("test@test.com"));
+        }
 
-    }
+        @Test
+        void testGetCustomerById() {
 
-    @Test
-    void testGetCustomerById() {
+                Customer customer = new Customer(
+                                "test",
+                                "test@test.com",
+                                "123456",
+                                "555-555-5555");
+                customer.setId(1);
 
-        Customer customer = new Customer();
-        customer.setId(1);
+                Customer customerFromDao = new Customer(
+                                "test",
+                                "test@test.com",
+                                "123456",
+                                "555-555-5555");
+                customerFromDao.setId(1);
 
-        Customer customerFromDao = new Customer();
-        customerFromDao.setId(1);
+                when(customerDao.get(1)).thenReturn(customerFromDao);
 
-        when(customerDao.get(1)).thenReturn(customerFromDao);
+                assertEquals(customerFromDao, customerService.getCustomerById(1));
 
-        assertEquals(customerFromDao, customerService.getCustomerById(1));
+        }
 
-    }
+        @Disabled
+        @Test
+        void testAddAddressToCustomer() {
 
-    @Disabled
-    @Test
-    void testAddAddressToCustomer() {
+                Customer customer = new Customer(
+                                "test",
+                                "test@test.com",
+                                "123456",
+                                "555-555-5555");
+                Address address = new Address(
+                                customer,
+                                "firstname",
+                                "lastname",
+                                "street",
+                                "street2",
+                                "city",
+                                "state",
+                                "zip",
+                                "country");
 
-        Address address = new Address();
-        address.setStreet("123 Test Street");
+                ShippingAddress shippingAddress = new ShippingAddress(
+                                "firstname",
+                                "lastname",
+                                "street",
+                                "street2",
+                                "city",
+                                "state",
+                                "zip",
+                                "country");
 
-        ShippingAddress shippingAddress = new ShippingAddress();
-        shippingAddress.setStreet("123 Test Street");
+                customer.setId(1);
+                customer.getAddresses().add(address);
 
-        Customer customer = new Customer();
-        customer.setId(1);
-        customer.getAddresses().add(address);
+                when(customerDao.get(1)).thenReturn(customer);
 
-        when(customerDao.get(1)).thenReturn(customer);
+                when(customerDao.addAddress(customer, address)).thenReturn(customer);
 
-        when(customerDao.addAddress(customer, address)).thenReturn(customer);
+                assertEquals(customer, customerService.addAddressToCustomer(1, shippingAddress));
 
-        assertEquals(customer, customerService.addAddressToCustomer(1, shippingAddress));
-
-    }
+        }
 
 }

@@ -9,128 +9,59 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "addresses")
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Address {
 
-    @Id // primary key
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
 
+    @NonNull
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
+    @NonNull
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
+    @NonNull
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @NonNull
     @Column(name = "first_street_line", nullable = false)
     private String street;
 
+    @NonNull
     @Column(name = "second_street_line", nullable = false)
     private String street2;
 
+    @NonNull
     @Column(name = "city", nullable = false)
     private String city;
 
+    @NonNull
     @Column(name = "state", nullable = false)
     private String state;
 
+    @NonNull
     @Column(name = "zip", nullable = false)
     private String zip;
 
+    @NonNull
     @Column(name = "phone", nullable = false)
     private String country;
-
-    public Address() {
-    }
-
-    public Address(String firstName, String lastName, String street, String street2, String city, String state,
-            String zip, String country) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.street = street;
-        this.street2 = street2;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.country = country;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getStreet2() {
-        return street2;
-    }
-
-    public void setStreet2(String street2) {
-        this.street2 = street2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
 
     @Override
     public String toString() {

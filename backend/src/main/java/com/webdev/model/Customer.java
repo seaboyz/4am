@@ -13,52 +13,49 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity()
 @Table(name = "customers")
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private @Getter @Setter Integer id;
+    @Column(name = "id", updatable = false, nullable = false)
+    private Integer id;
 
+    @NonNull
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Username is required")
-    private @Getter @Setter  String username;
+    private String username;
 
+    @NonNull
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Email is required")
-    private @Getter @Setter  String email;
+    private String email;
 
+    @NonNull
     @Column(nullable = false)
-    @NotBlank(message = "Password is required")
-    private @Getter @Setter  String password;
+    private String password;
 
+    @NonNull
     @Column(name = "phone_number")
-    private @Getter @Setter  String phoneNumber;
+    private String phoneNumber;
 
     // when save the customer, if there are any unsaved addresses, save them
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    private @Getter @Setter  List<Address> addresses = new ArrayList<Address>();
+    private List<Address> addresses = new ArrayList<Address>();
 
     @OneToMany(mappedBy = "customer")
-    private @Getter @Setter  Set<CartItem> cartItems = new HashSet<CartItem>();
+    private Set<CartItem> cartItems = new HashSet<CartItem>();
 
     @OneToMany(mappedBy = "customer")
-    private @Getter @Setter  Set<Order> orders = new HashSet<Order>();
-
-    public Customer() {
-    }
-
-    public Customer(String username, String email, String password, String phoneNumber) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
+    private Set<Order> orders = new HashSet<Order>();
 
     @Override
     public String toString() {

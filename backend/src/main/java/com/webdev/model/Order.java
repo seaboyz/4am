@@ -3,44 +3,48 @@ package com.webdev.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+
 @Entity
 @Table(name = "orders")
+@Getter
+@Setter
 public class Order {
 
-    @Id // primary key
-    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
 
+    @NonNull
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false, updatable = false)
     private Customer customer;
 
-    // once the order is saved, the order items are saved in the order_items table
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<OrderItem> orderItemList = new HashSet<OrderItem>();
-
     // shipping address
+    @NonNull
     @Embedded
     private ShippingAddress shippingAddress;
 
-    // todo: implement payment_method
+    // once the order is saved, the order items are saved in the order_items table
+    @NonNull
+    @OneToMany(mappedBy = "order")
+    private Set<OrderItem> orderItemList = new HashSet<OrderItem>();
 
-    private double total;
-
-    public Order() {
-    }
+    private Double total;
 
     // there is no meaning to have an order without a customer
     // there is no meaning to have an order without an order item
@@ -54,29 +58,9 @@ public class Order {
         orderItemList.forEach(orderItem -> orderItem.setOrder(this));
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public Set<OrderItem> getOrderDetails() {
-        return orderItemList;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public ShippingAddress getShippingAddress() {
-        return shippingAddress;
-    }
-
     @Override
     public String toString() {
-        return "Order [id=" + id + ", customer=" + customer + ", shippingAddress=" + shippingAddress
+        return "Order [id=" + id + ", customer=" + customer.getId() + ", shippingAddress=" + shippingAddress
                 + ", total=" + total + "]";
     }
 

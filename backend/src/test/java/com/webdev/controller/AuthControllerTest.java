@@ -29,12 +29,12 @@ public class AuthControllerTest {
 	@Disabled
 	@Test
 	void testLogin() throws Exception {
-		Customer customer = new Customer();
+		Customer customer = new Customer(
+			"test",
+			"test@test.com",
+			"123456",
+			"555-555-5555");
 		customer.setId(1);
-		customer.setEmail("test@test.com");
-		customer.setUsername("test");
-		customer.setPassword("123456");
-		customer.setPhoneNumber("123456789");
 
 		when(customerService.getCustomerByEmail("test@test.com")).thenReturn(customer);
 

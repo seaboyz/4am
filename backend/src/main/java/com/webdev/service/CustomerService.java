@@ -35,7 +35,8 @@ public class CustomerService {
         return customerDao.getbyEmail(email);
     }
 
-    @Transactional
+    // @Transactional
+    // it doesn't not have to be transactional, because it only save the customerId on the addresses table
     public Customer addAddressToCustomer(
             Integer customerId,
             ShippingAddress shippingAddress)
@@ -44,6 +45,7 @@ public class CustomerService {
         Customer customer = customerDao.get(customerId);
 
         Address address = new Address(
+                customer,
                 shippingAddress.getFirstName(),
                 shippingAddress.getLastName(),
                 shippingAddress.getStreet(),
