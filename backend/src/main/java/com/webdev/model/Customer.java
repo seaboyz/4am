@@ -50,11 +50,6 @@ public class Customer {
         this.addresses = addresses;
     }
 
-    // public void addAddress(Address address) {
-    // this.addresses.add(address);
-    // address.setCustomer(this);
-    // }
-
     @OneToMany(mappedBy = "customer")
     private Set<CartItem> cartItems = new HashSet<CartItem>();
 
