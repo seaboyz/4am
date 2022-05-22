@@ -45,7 +45,6 @@ public class CustomerDaoTest {
         currentSession.close();
     }
 
-    // @Disabled
     @Test
     @Order(1)
     void testAdd() {

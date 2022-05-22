@@ -1,9 +1,7 @@
 package com.webdev.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import javax.persistence.EntityManager;
 
@@ -11,8 +9,10 @@ import com.webdev.model.Address;
 import com.webdev.model.Customer;
 
 import org.hibernate.Session;
+import org.hibernate.testing.junit4.CustomParameterized.Order;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,210 +20,128 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class AddressDaoTest {
 
-    @Autowired
-    private EntityManager entityManager;
+        @Autowired
+        private EntityManager entityManager;
 
-    private AddressDao addressDao;
+        private AddressDao addressDao;
 
-    private Session currentSession;
+        private Session currentSession;
 
-    @BeforeEach
-    public void init() {
-        addressDao = new AddressDao(entityManager);
-        currentSession = entityManager.unwrap(Session.class);
-    }
+        private Customer customer1;
 
-    @AfterEach
-    public void tear() {
-        if (currentSession != null)
-            currentSession.close();
-    }
+        private Customer customer2;
 
-    @Test
-    void testAdd() {
-        Customer customer = new Customer(
-                "test",
-                "test@test.com",
-                "123456",
-                "555-555-5555");
-        Address address = new Address(
-                customer,
-                "firstname",
-                "lastname",
-                "street",
-                "street2",
-                "city",
-                "state",
-                "zip",
-                "country");
+        private Address address1;
 
-        addressDao.add(address);
+        private Address address2;
 
-        currentSession = entityManager.unwrap(Session.class);
-        Address addressFromDb = currentSession.get(Address.class, address.getId());
-        assertEquals(address.toString(), addressFromDb.toString());
-    }
+        @BeforeEach
+        public void init() {
 
-    @Test
-    void testGet() {
-        Customer customer = new Customer(
-                "test",
-                "test@test.com",
-                "123456",
-                "555-555-5555");
-        Address address = new Address(
-                customer,
-                "firstname",
-                "lastname",
-                "street",
-                "street2",
-                "city",
-                "state",
-                "zip",
-                "country");
+                addressDao = new AddressDao(entityManager);
 
-        currentSession.save(address);
+                currentSession = entityManager.unwrap(Session.class);
 
-        Optional<Address> addressFromDb = addressDao.get(address.getId());
-        assertTrue(addressFromDb.isPresent());
-        assertEquals(address.toString(), addressFromDb.get().toString());
+                customer1 = new Customer(
+                                "test",
+                                "test@test.com",
+                                "123456",
+                                "555-555-5555");
 
-    }
+                customer2 = new Customer(
+                                "test2",
+                                "test@@test.com",
+                                "1234567",
+                                "555-555-5555");
 
-    @Test
-    void testGetAll() {
-        Customer customer = new Customer(
-                "test",
-                "test@test.com",
-                "123456",
-                "555-555-5555");
-        Address address1 = new Address(
-                customer,
-                "firstname",
-                "lastname",
-                "street",
-                "street2",
-                "city",
-                "state",
-                "zip",
-                "country");
-        Address address2 = new Address(
-                customer,
-                "firstname2",
-                "lastname2",
-                "street2",
-                "street22",
-                "city2",
-                "state2",
-                "zip2",
-                "country2");
+                address1 = new Address(
+                                customer1,
+                                "firstname",
+                                "lastname",
+                                "street",
+                                "street2",
+                                "city",
+                                "state",
+                                "zip",
+                                "country");
 
-        currentSession.save(address1);
-        currentSession.save(address2);
-        assertEquals(2, addressDao.getAll().size());
+                address2 = new Address(
+                                customer1,
+                                "firstname2",
+                                "lastname2",
+                                "street2",
+                                "street22",
+                                "city2",
+                                "state2",
+                                "zip2",
+                                "country2");
+        }
 
-    }
+        @AfterEach
+        public void tear() {
+                currentSession.close();
+        }
 
-    @Test
-    void testUpdate() {
+        @Order(1)
+        @Test
+        void testAdd() {
 
-        Customer customer = new Customer(
-                "test",
-                "test@test.com",
-                "123456",
-                "555-555-5555");
-        Address address = new Address(
-                customer,
-                "firstname",
-                "lastname",
-                "street",
-                "street2",
-                "city",
-                "state",
-                "zip",
-                "country");
-        currentSession.save(address);
-        currentSession.close();
+                currentSession.save(customer1);
 
-        address.setFirstName("john");
-        address.setLastName("doe");
-        address.setStreet("123 main st");
-        address.setStreet2("apt 1");
-        address.setCity("anytown");
-        address.setState("CA");
-        address.setZip("12345");
-        address.setCountry("USA");
+                assertEquals(address1, addressDao.add(address1));
+        }
 
-        currentSession = entityManager.unwrap(Session.class);
-        Address addressFromDb = currentSession.get(Address.class, address.getId());
+        @Order(2)
+        @Test
+        void testGet() {
 
-        assertEquals(address.toString(), addressFromDb.toString());
+                assertEquals(address1.getCity(), addressDao.get(1).getCity());
+        }
 
-    }
+        @Order(3)
+        @Test
+        void testGetAll() {
 
-    @Test
-    void testDelete() {
-        Customer customer = new Customer(
-                "test",
-                "test@test.com",
-                "123456",
-                "555-555-5555");
-        Address address = new Address(
-                customer,
-                "firstname",
-                "lastname",
-                "street",
-                "street2",
-                "city",
-                "state",
-                "zip",
-                "country");
+                assertEquals(1, addressDao.getAll().size());
+        }
 
-        currentSession.beginTransaction();
-        currentSession.save(address);
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        // currentSession is closed in userdao.add()
+        // @Disabled
+        @Order(4)
+        @Test
+        void testUpdate() {
 
-        // delete the address
-        addressDao.delete(address);
-        // currentSession is closed in userdao.delete()
+                Address addressToUpdate = addressDao.get(1);
 
-        // check if the address was deleted from the database
-        Optional<Address> addressFromDb = addressDao.get(address.getId());
-        assertTrue(!addressFromDb.isPresent());
+                addressToUpdate.setFirstName("jones");
 
-    }
+                assertEquals(addressToUpdate.getFirstName(), addressDao.update(addressToUpdate).getFirstName());
+        }
 
-    @Test
-    void testDelete2() {
-        Customer customer = new Customer(
-                "test",
-                "test@test.com",
-                "123456",
-                "555-555-5555");
-        Address address = new Address(
-                customer,
-                "firstname",
-                "lastname",
-                "street",
-                "street2",
-                "city",
-                "state",
-                "zip",
-                "country");
+        @Disabled
+        @Order(5)
+        @Test
+        void testDelete() {
 
-        addressDao.add(address);
-        // currentSession is closed in userdao.add()
+                Address addressToDelete = addressDao.get(1);
 
-        // delete the address
-        addressDao.delete(address);
-        // currentSession is closed in userdao.delete()
+                addressDao.delete(addressToDelete);
 
-        // check if the address was deleted from the database
-        Optional<Address> addressFromDb = addressDao.get(address.getId());
-        assertTrue(!addressFromDb.isPresent());
+                currentSession.close();
 
-    }
+                assertNull(addressDao.get(1));
+
+        }
+
+        @Disabled
+        @Order(6)
+        @Test
+        void testDelete2() {
+                addressDao.delete(address2);
+
+                assertNull(addressDao.get(2));
+
+                assertEquals(0, addressDao.getAll().size());
+
+        }
 
 }
