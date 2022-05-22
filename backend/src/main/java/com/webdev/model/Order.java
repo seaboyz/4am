@@ -15,11 +15,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
 @Table(name = "orders")
+@NoArgsConstructor
 @Getter
 @Setter
 public class Order {

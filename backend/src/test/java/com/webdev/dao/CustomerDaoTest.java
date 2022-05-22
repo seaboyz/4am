@@ -14,13 +14,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+// integration test with h2 database
 @SpringBootTest
 public class CustomerDaoTest {
-    @Autowired
-    EntityManager entityManager;
 
     @Autowired
-    CustomerDao customerDao;
+    private EntityManager entityManager;
+
+    private CustomerDao customerDao;
 
     Session currentSession;
 
@@ -28,6 +29,8 @@ public class CustomerDaoTest {
 
     @BeforeEach
     public void init() {
+        customerDao = new CustomerDao(entityManager);
+
         currentSession = entityManager.unwrap(Session.class);
         customer1 = new Customer(
                 "username1",

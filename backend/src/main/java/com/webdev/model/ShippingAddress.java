@@ -4,11 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Embeddable
+@NoArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @Setter
