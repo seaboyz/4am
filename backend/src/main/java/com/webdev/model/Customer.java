@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,11 +43,11 @@ public class Customer {
     private String password;
 
     @NonNull
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     // when save the customer, if there are any unsaved addresses, save them
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer")
     private List<Address> addresses = new ArrayList<Address>();
 
     @OneToMany(mappedBy = "customer")
