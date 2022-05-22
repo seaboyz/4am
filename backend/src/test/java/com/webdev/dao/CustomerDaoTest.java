@@ -23,12 +23,13 @@ public class CustomerDaoTest {
 
     private CustomerDao customerDao;
 
-    Session currentSession;
+    private Session currentSession;
 
-    Customer customer1;
+    private Customer customer1;
 
     @BeforeEach
     public void init() {
+
         customerDao = new CustomerDao(entityManager);
 
         currentSession = entityManager.unwrap(Session.class);
