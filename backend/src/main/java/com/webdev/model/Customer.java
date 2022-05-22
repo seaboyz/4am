@@ -15,51 +15,41 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity()
 @Table(name = "customers")
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private @Getter @Setter Integer id;
 
     @Column(nullable = false, unique = true)
     @NotBlank(message = "Username is required")
-    private String username;
+    private @Getter @Setter  String username;
 
     @Column(nullable = false, unique = true)
     @NotBlank(message = "Email is required")
-    private String email;
+    private @Getter @Setter  String email;
 
     @Column(nullable = false)
     @NotBlank(message = "Password is required")
-    private String password;
+    private @Getter @Setter  String password;
 
     @Column(name = "phone_number")
-    private String phoneNumber;
+    private @Getter @Setter  String phoneNumber;
 
     // when save the customer, if there are any unsaved addresses, save them
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    private List<Address> addresses = new ArrayList<Address>();
-
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
+    private @Getter @Setter  List<Address> addresses = new ArrayList<Address>();
 
     @OneToMany(mappedBy = "customer")
-    private Set<CartItem> cartItems = new HashSet<CartItem>();
-
-    public void addCartItem(CartItem cartItem) {
-        this.cartItems.add(cartItem);
-        cartItem.setCustomer(this);
-    }
+    private @Getter @Setter  Set<CartItem> cartItems = new HashSet<CartItem>();
 
     @OneToMany(mappedBy = "customer")
-    private Set<Order> orders = new HashSet<Order>();
+    private @Getter @Setter  Set<Order> orders = new HashSet<Order>();
 
     public Customer() {
     }
@@ -68,62 +58,6 @@ public class Customer {
         this.username = username;
         this.email = email;
         this.password = password;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Set<CartItem> getCartItems() {
-        return cartItems;
-    }
-
-    public void setCartItems(Set<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
-
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
     }
 
     @Override
