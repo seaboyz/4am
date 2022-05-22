@@ -63,7 +63,7 @@ public class CustomerDao {
         customerToUpdate.setUsername(customer.getUsername());
         customerToUpdate.setEmail(customer.getEmail());
         customerToUpdate.setPassword(customer.getPassword());
-        customerToUpdate.setPhone(customer.getPhone());
+        customerToUpdate.setPhoneNumber(customer.getPhoneNumber());
         if (customer.getAddresses().size() != customerToUpdate.getAddresses().size()) {
             customerToUpdate.setAddresses(customer.getAddresses());
         }

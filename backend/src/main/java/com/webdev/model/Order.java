@@ -36,7 +36,7 @@ public class Order {
 
     // shipping address
     @NonNull
-    @Embedded
+    @Embedded()
     private ShippingAddress shippingAddress;
 
     // once the order is saved, the order items are saved in the order_items table
@@ -44,6 +44,7 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private Set<OrderItem> orderItemList = new HashSet<OrderItem>();
 
+    @Column(name = "total", nullable = false)
     private Double total;
 
     // there is no meaning to have an order without a customer

@@ -1,5 +1,6 @@
 package com.webdev.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,28 +17,29 @@ import lombok.Setter;
 @Entity
 @Table(name = "order_items")
 @RequiredArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class OrderItem {
     @Id
+    @Column(name = "id", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", nullable = false, updatable = false)
     private Order order;
 
     @NonNull
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false, updatable = false)
     private Product product;
 
     @NonNull
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-     // subtotal should be calculated from the product price and quantity
+    // subtotal should be calculated from the product price and quantity
+    @Column(name = "subtotal", nullable = false)
     private double subtotal;
-
-    public OrderItem() {
-    }
 
 }
