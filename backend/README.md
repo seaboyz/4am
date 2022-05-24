@@ -64,4 +64,44 @@ after frontend receive the json object with the order infomation from the backen
 * if match, backend will send a json object with user_id, email, password(transient), phone_number, username, jwt token to the frontend
 
 
-#### HibernateConf is the same as hibernate.cfg.xml to configure the Hibernate SessionFactory without using spirng-jpa
+### Testing
+#### What is unit testing?
+![](images/testing/Screen%20Shot%202022-05-20%20at%207.51.12%20AM.png)
+* Testing the behavior not the implementation.
+#### What is not unit testing?
+![](images/testing/Screen%20Shot%202022-05-20%20at%207.53.14%20AM.png)
+#### Spring unit testing
+1. Don't use Spirng to write unit testing.
+![](images/testing/Screen%20Shot%202022-05-20%20at%208.27.11%20AM.png)
+![](images/testing/Screen%20Shot%202022-05-20%20at%208.29.12%20AM.png)
+2. Do use the constructor injection to inject the dependencies.
+
+
+### hibernate with spring 
+```java
+@Repository
+@RequiredArgsConstructor
+public class CustomerDao {
+
+    private final EntityManager entityManager;
+
+    public Customer add(Customer customer) {
+
+        entityManager.unwrap(Session.class).save(customer);
+        return customer;
+    }
+
+    // with spring stereotype annotation, we can implicily inject the entity manager(without @Autowired)
+    // with @RequiredArgsConstructor,we can autogenarate contructor with the final fields
+    // @Autowired
+    // public CustomerDao(EntityManager entityManager) {
+    //     this.entityManager = entityManager;
+    // }
+
+    public Customer get(Integer id) throws EntityNotFoundException {
+
+        return entityManager.unwrap(Session.class).get(Customer.class, id);
+
+    }
+  
+  ```

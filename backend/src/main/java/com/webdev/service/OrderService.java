@@ -13,28 +13,22 @@ import com.webdev.model.OrderItem;
 import com.webdev.model.Product;
 import com.webdev.model.ShippingAddress;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 // 1. service can only access dao
 // 2. service prefer to access its own dao
 // 3. if there is a service for a the dao you can use the service instead of the dao directly
 @Service
+@RequiredArgsConstructor
 public class OrderService {
-    @Autowired
-    private OrderDao orderDao;
 
-    @Autowired
-    private CustomerService customerService;
+    private final OrderDao orderDao;
 
-    @Autowired
-    private ProductService productService;
+    private final CustomerService customerService;
 
-    // what is the minimum information needed to create an order?
-    // 1. Customer(id)
-    // 2. Address(address)
-    // 3. Product(id)
-    // 4. Quantity(int)
+    private final ProductService productService;
 
     @Transactional
     public Integer placeAOrder(

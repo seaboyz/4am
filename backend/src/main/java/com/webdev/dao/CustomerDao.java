@@ -2,89 +2,106 @@ package com.webdev.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 
 import com.webdev.model.Address;
 import com.webdev.model.Customer;
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class CustomerDao {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final EntityManager entityManager;
+
+    // with spring stereotype annotation, we can implicily inject the entity manager(without @Autowired)
+    // with @RequiredArgsConstructor,we can autogenarate contructor with the final fields
+    // @Autowired
+    // public CustomerDao(EntityManager entityManager) {
+    //     this.entityManager = entityManager;
+    // }
 
     @Transactional
     public Customer add(Customer customer) {
-        sessionFactory.getCurrentSession().save(customer);
+
+        entityManager.unwrap(Session.class).save(customer);
         return customer;
     }
 
     @Transactional(readOnly = true)
     public Customer get(Integer id) throws EntityNotFoundException {
 
-        return sessionFactory.getCurrentSession().get(Customer.class, id);
+        return entityManager.unwrap(Session.class).get(Customer.class, id);
 
     }
 
     public Customer getbyEmail(String email) throws NoResultException {
 
-        Customer customerFromDb = sessionFactory.getCurrentSession()
+        return entityManager.unwrap(Session.class)
                 .createQuery("from Customer where email = :email", Customer.class)
                 .setParameter("email", email).getSingleResult();
 
-        return customerFromDb;
     }
 
     @Transactional(readOnly = true)
     public List<Customer> getAll() {
 
-        List<Customer> customers = sessionFactory.getCurrentSession().createQuery("from Customer", Customer.class)
-                .list();
-        return customers;
+        return entityManager.unwrap(Session.class)
+                .createQuery("from Customer", Customer.class).list();
+
     }
 
     public Customer update(Customer customer) {
 
-        Customer customerToUpdate = sessionFactory.getCurrentSession().get(Customer.class, customer.getId());
+        // Customer customerToUpdate = entityManager
+        //         .unwrap(Session.class)
+        //         .get(Customer.class, customer.getId());
 
-        customerToUpdate.setUsername(customer.getUsername());
-        customerToUpdate.setEmail(customer.getEmail());
-        customerToUpdate.setPassword(customer.getPassword());
-        customerToUpdate.setPhoneNumber(customer.getPhoneNumber());
-        if (customer.getAddresses().size() != customerToUpdate.getAddresses().size()) {
-            customerToUpdate.setAddresses(customer.getAddresses());
-        }
+        // customerToUpdate.setUsername(customer.getUsername());
+        // customerToUpdate.setEmail(customer.getEmail());
+        // customerToUpdate.setPassword(customer.getPassword());
+        // customerToUpdate.setPhoneNumber(customer.getPhoneNumber());
+        // if (customer.getAddresses().size() != customerToUpdate.getAddresses().size()) {
+        //     customerToUpdate.setAddresses(customer.getAddresses());
+        // }
+        entityManager.unwrap(Session.class).update(customer);
 
-        return customerToUpdate;
+        return customer;
     }
 
     @Transactional
     public void delete(Integer id) {
 
-        Customer customer = sessionFactory.getCurrentSession().get(Customer.class, id);
-        sessionFactory.getCurrentSession().delete(customer);
+        entityManager.unwrap(Session.class).unwrap(Session.class).delete(get(id));
+
     }
 
     public void delete(Customer customer) {
-
-        sessionFactory.getCurrentSession().delete(customer);
+        entityManager.unwrap(Session.class).delete(customer);
     }
 
     @Transactional
     public Customer addAddress(Customer customer, Address address) {
 
-        // sessionFactory.getCurrentSession().beginTransaction();
-        // manually add address to database, so trun off the cascade in the customer entity
-        sessionFactory.getCurrentSession().save(address);
+        Session session = entityManager.unwrap(Session.class);
+        
+
         customer.getAddresses().add(address);
-        sessionFactory.getCurrentSession().merge(customer);
-        sessionFactory.getCurrentSession().getTransaction().commit();
+
+        address.setCustomer(customer);
+
+        // I don't think we need to save the customer, because the customer is already saved in the address
+        // there is no addresses collumn in the customer table
+        // session.save(customer);
+
+        session.save(address);
 
         return customer;
     }

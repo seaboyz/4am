@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,123 +14,51 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity()
 @Table(name = "customers")
+@Getter
+@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
 
+    @NonNull
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Username is required")
     private String username;
 
+    @NonNull
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Email is required")
     private String email;
 
+    @NonNull
     @Column(nullable = false)
-    @NotBlank(message = "Password is required")
     private String password;
 
-    @Column(name = "phone_number")
+    @NonNull
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
     // when save the customer, if there are any unsaved addresses, save them
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Address> addresses = new ArrayList<Address>();
-
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
-
-    // public void addAddress(Address address) {
-    // this.addresses.add(address);
-    // address.setCustomer(this);
-    // }
 
     @OneToMany(mappedBy = "customer")
     private Set<CartItem> cartItems = new HashSet<CartItem>();
 
-    public void addCartItem(CartItem cartItem) {
-        this.cartItems.add(cartItem);
-        cartItem.setCustomer(this);
-    }
-
     @OneToMany(mappedBy = "customer")
     private Set<Order> orders = new HashSet<Order>();
-
-    public Customer() {
-    }
-
-    public Customer(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Set<CartItem> getCartItems() {
-        return cartItems;
-    }
-
-    public void setCartItems(Set<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
-
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
-    }
 
     @Override
     public String toString() {

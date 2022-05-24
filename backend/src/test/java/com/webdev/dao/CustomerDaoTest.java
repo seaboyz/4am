@@ -14,25 +14,30 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+// integration test with h2 database
 @SpringBootTest
 public class CustomerDaoTest {
-    @Autowired
-    EntityManager entityManager;
 
     @Autowired
-    CustomerDao customerDao;
+    private EntityManager entityManager;
 
-    Session currentSession;
+    private CustomerDao customerDao;
 
-    Customer customer1;
+    private Session currentSession;
+
+    private Customer customer1;
 
     @BeforeEach
     public void init() {
+
+        customerDao = new CustomerDao(entityManager);
+
         currentSession = entityManager.unwrap(Session.class);
         customer1 = new Customer(
                 "username1",
                 "email1",
-                "password1");
+                "password1",
+                "555-555-5555");
     }
 
     @AfterEach
@@ -40,7 +45,6 @@ public class CustomerDaoTest {
         currentSession.close();
     }
 
-    // @Disabled
     @Test
     @Order(1)
     void testAdd() {
@@ -60,7 +64,8 @@ public class CustomerDaoTest {
         Customer customer2 = new Customer(
                 "username2",
                 "email2",
-                "password");
+                "password",
+                "555-555-5555");
 
         currentSession.save(customer2);
 

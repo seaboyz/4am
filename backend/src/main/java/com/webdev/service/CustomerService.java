@@ -8,10 +8,12 @@ import com.webdev.model.Address;
 import com.webdev.model.Customer;
 import com.webdev.model.ShippingAddress;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
 
     private final CustomerDao customerDao;
@@ -34,6 +36,8 @@ public class CustomerService {
         return customerDao.getbyEmail(email);
     }
 
+    // @Transactional
+    // it doesn't not have to be transactional, because it only save the customerId on the addresses table
     public Customer addAddressToCustomer(
             Integer customerId,
             ShippingAddress shippingAddress)
@@ -42,6 +46,7 @@ public class CustomerService {
         Customer customer = customerDao.get(customerId);
 
         Address address = new Address(
+                customer,
                 shippingAddress.getFirstName(),
                 shippingAddress.getLastName(),
                 shippingAddress.getStreet(),

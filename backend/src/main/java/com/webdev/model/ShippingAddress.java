@@ -3,82 +3,48 @@ package com.webdev.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 @Embeddable
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class ShippingAddress {
-    @Column(name = "first_name")
+    @NonNull
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @NonNull
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "first_street_line")
+    @NonNull
+    @Column(name = "first_street_line", nullable = false)
     private String street;
 
-    @Column(name = "second_street_line")
+    @NonNull
+    @Column(name = "second_street_line", nullable = false)
     private String street2;
 
+    @NonNull
+    @Column(name = "city", nullable = false)
     private String city;
 
+    @NonNull
+    @Column(name = "state", nullable = false)
     private String state;
 
+    @NonNull
+    @Column(name = "zip", nullable = false)
     private String zip;
 
+    @NonNull
+    @Column(name = "country", nullable = false)
     private String country;
 
-    public ShippingAddress() {
-    }
-
-    public ShippingAddress(String firstName, String lastName, String street, String street2, String city, String state,
-            String zip, String country) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.street = street;
-        this.street2 = street2;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.country = country;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getStreet2() {
-        return street2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    @Override
-    public String toString() {
-        return "Address [street=" + street + ", street2=" + street2 + ", city=" + city + ", state="
-                + state + ", zip=" + zip + ", country=" + country + "]";
-    }
 }

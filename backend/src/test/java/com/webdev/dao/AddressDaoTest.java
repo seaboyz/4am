@@ -1,13 +1,15 @@
 package com.webdev.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import javax.persistence.EntityManager;
 
 import com.webdev.model.Address;
+import com.webdev.model.Customer;
 
 import org.hibernate.Session;
+import org.hibernate.testing.junit4.CustomParameterized.Order;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -15,174 +17,129 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@Disabled
 @SpringBootTest
 public class AddressDaoTest {
-    @Autowired
-    private static EntityManager entityManager;
 
-    @Autowired
-    private static AddressDao addressDao;
+        @Autowired
+        private EntityManager entityManager;
 
-    private Session currentSession;
+        private AddressDao addressDao;
 
-    @BeforeEach
-    public void init() {
-        currentSession = entityManager.unwrap(Session.class);
-    }
+        private Session currentSession;
 
-    @AfterEach
-    public void tear() {
-        if (currentSession != null)
-            currentSession.close();
-    }
+        private Customer customer1;
 
-    @AfterEach
-    public void tearDown() {
-        if (currentSession != null)
-            currentSession.close();
-    }
+        private Address address1;
 
-    @Test
-    void testAdd() {
-        Address address = new Address(
-                "firstname",
-                "lastname",
-                "street",
-                "street2",
-                "city",
-                "state",
-                "zip",
-                "country");
+        private Address address2;
 
-        addressDao.add(address);
-        // currentSession is closed in userdao.add()
+        @BeforeEach
+        public void init() {
 
-        // check if the address was added to the database
-        currentSession = entityManager.unwrap(Session.class);
-        Address addressFromDb = currentSession.get(Address.class, address.getId());
-        assertEquals(address.toString(), addressFromDb.toString());
-    }
+                addressDao = new AddressDao(entityManager);
 
-    @Test
-    void testGet() {
-        Address address = new Address(
-                "firstname",
-                "lastname",
-                "street",
-                "street2",
-                "city",
-                "state",
-                "zip",
-                "country");
+                currentSession = entityManager.unwrap(Session.class);
 
-        currentSession.beginTransaction();
-        currentSession.save(address);
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        // currentSession is closed in userdao.add()
+                customer1 = new Customer(
+                                "test",
+                                "test@test.com",
+                                "123456",
+                                "555-555-5555");
 
-        // check if the address was added to the database
-        Address addressFromDb = addressDao.get(address.getId());
+                customer2 = new Customer(
+                                "test2",
+                                "test@@test.com",
+                                "1234567",
+                                "555-555-5555");
 
-        assertEquals(address.toString(), addressFromDb.toString());
+                address1 = new Address(
+                                customer1,
+                                "firstname",
+                                "lastname",
+                                "street",
+                                "street2",
+                                "city",
+                                "state",
+                                "zip",
+                                "country");
 
-    }
+                address2 = new Address(
+                                customer1,
+                                "firstname2",
+                                "lastname2",
+                                "street2",
+                                "street22",
+                                "city2",
+                                "state2",
+                                "zip2",
+                                "country2");
+        }
 
-    @Test
-    void testUpdate() {
-        // create a new address
-        Address address = new Address(
-                "firstname",
-                "lastname",
-                "street",
-                "street2",
-                "city",
-                "state",
-                "zip",
-                "country");
+        @AfterEach
+        public void tear() {
+                currentSession.close();
+        }
 
-        currentSession.beginTransaction();
-        currentSession.save(address);
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        // address is detached
+        @Order(1)
+        @Test
+        void testAdd() {
 
-        // update the address
-        address.setFirstName("john");
-        address.setLastName("doe");
-        address.setStreet("123 main st");
-        address.setStreet2("apt 1");
-        address.setCity("anytown");
-        address.setState("CA");
-        address.setZip("12345");
-        address.setCountry("USA");
+                currentSession.save(customer1);
 
-        // update the address in the database
-        addressDao.update(address);
-        // currentSession is closed in userdao.update()
+                assertEquals(address1, addressDao.add(address1));
+        }
 
-        // check if the address was updated in the database
-        currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-        Address addressFromDb = currentSession.get(Address.class, address.getId());
-        currentSession.getTransaction().commit();
+        @Order(2)
+        @Test
+        void testGet() {
 
-        assertEquals(address.toString(), addressFromDb.toString());
+                assertEquals(address1.getCity(), addressDao.get(1).getCity());
+        }
 
-    }
+        @Order(3)
+        @Test
+        void testGetAll() {
 
-    @Test
-    void testDelete() {
-        Address address = new Address(
-                "firstname",
-                "lastname",
-                "street",
-                "street2",
-                "city",
-                "state",
-                "zip",
-                "country");
+                assertEquals(1, addressDao.getAll().size());
+        }
 
-        currentSession.beginTransaction();
-        currentSession.save(address);
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        // currentSession is closed in userdao.add()
+        // @Disabled
+        @Order(4)
+        @Test
+        void testUpdate() {
 
-        // delete the address
-        addressDao.delete(address);
-        // currentSession is closed in userdao.delete()
+                Address addressToUpdate = addressDao.get(1);
 
-        // check if the address was deleted from the database
-        Address addressFromDb = addressDao.get(address.getId());
-        assertTrue(addressFromDb != null);
+                addressToUpdate.setFirstName("jones");
 
-    }
+                assertEquals(addressToUpdate.getFirstName(), addressDao.update(addressToUpdate).getFirstName());
+        }
 
-    @Test
-    void testDelete2() {
-        Address address = new Address(
-                "firstname",
-                "lastname",
-                "street",
-                "street2",
-                "city",
-                "state",
-                "zip",
-                "country");
+        @Disabled
+        @Order(5)
+        @Test
+        void testDelete() {
 
-        addressDao.add(address);
-        // currentSession is closed in userdao.add()
+                Address addressToDelete = addressDao.get(1);
 
-        // delete the address
-        addressDao.delete(address);
-        // currentSession is closed in userdao.delete()
+                addressDao.delete(addressToDelete);
 
-        // check if the address was deleted from the database
-        Address addressFromDb = addressDao.get(address.getId());
-        assertTrue(addressFromDb != null);
+                currentSession.close();
 
-    }
+                assertNull(addressDao.get(1));
+
+        }
+
+        @Disabled
+        @Order(6)
+        @Test
+        void testDelete2() {
+                addressDao.delete(address2);
+
+                assertNull(addressDao.get(2));
+
+                assertEquals(0, addressDao.getAll().size());
+
+        }
 
 }

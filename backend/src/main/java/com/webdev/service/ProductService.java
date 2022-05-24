@@ -6,14 +6,16 @@ import java.util.NoSuchElementException;
 import com.webdev.dao.ProductDao;
 import com.webdev.model.Product;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ProductService {
-    @Autowired
-    private ProductDao productDao;
+
+    private final ProductDao productDao;
 
     @Transactional(readOnly = true)
     public Product getProductById(Integer id) throws NoSuchElementException {
