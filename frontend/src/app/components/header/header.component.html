@@ -1,9 +1,43 @@
-<mat-toolbar>
+<header>
+    <a
+        class="logo-container"
+        routerLink="/"
+    >
+        <img
+            class="logo"
+            src="/assets/logo-placeholder-image.png"
+            alt=""
+        />
+    </a>
+    <div class="options">
+        <a
+            class="option"
+            routerLink="/product-views"
+        >Shop</a>
 
-    <button mat-button>Basic</button>
-    <button mat-button>Basic</button>
-    <button mat-button>Basic</button>
-    <button mat-button>Basic</button>
-    <span class="example-spacer"></span>
+        <a
+            *ngIf="user; else signin"
+            class="option"
+            (click)="signOut()"
+        >Sign Out</a>
+        <ng-template
+            #signin
+            class="option"
+        >
+            <a routerLink="user-login">Sign In</a>
+        </ng-template>
 
-</mat-toolbar>
+        <a
+            class="option"
+            routerLink="user-registration"
+        >Sign Up</a>
+        <a
+            class="cart"
+            routerLink="/cart"
+        >
+            <app-cart-icon></app-cart-icon>
+        </a>
+    </div>
+
+</header>
+<router-outlet></router-outlet>

@@ -1,0 +1,9 @@
+<div
+    class="image"
+    [style.background-image]="url(product?.image)"
+></div>
+<app-add-to-cart-btn (click)="addToCart(product)"></app-add-to-cart-btn>
+<div class="footer">
+    <span class="name">{{ product?.name }}</span>
+    <span class="price">${{ product?.price }}</span>
+</div>

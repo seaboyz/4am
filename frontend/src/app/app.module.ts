@@ -1,25 +1,32 @@
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from '@angular/core';
+import { FormsModule } from "@angular/forms";
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from "@angular/material/input";
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from "@angular/router";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent, } from './components/login/login.component';
-import { FormsModule } from "@angular/forms";
-import { MatInputModule } from "@angular/material/input";
-import { MatCardModule } from '@angular/material/card';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatFormFieldControl, MatFormFieldModule } from "@angular/material/form-field";
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from "@angular/router";
-import { HomeComponent } from './views/home-page/home-page.component';
-import { RegisterComponent } from "./components/register/register.component";
-import { HttpClientModule } from "@angular/common/http";
+import { AddToCartBtn } from "./components/add-to-cart-btn/add-to-cart-btn.component";
+import { CartIconComponent } from "./components/cart-icon/cart-icon.component";
+import { CheckoutBtnComponent } from "./components/checkout-btn/checkout-btn.component";
 import { HeaderComponent } from './components/header/header.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { LoginComponent } from './components/login/login.component';
+import { PlaceOrderBtnComponent } from "./components/place-order-btn/place-order-btn.component";
+import { ProductComponent } from "./components/product/product.component";
+import { ProductsComponent } from "./components/products/products.component";
+import { RegisterComponent } from "./components/register/register.component";
+import { HomeComponent } from './views/home-page/home-page.component';
 import { LoginPageComponent } from './views/login-page/login-page.component';
+import { ProductsPageComponent } from './views/products-page/products-page.component';
+
 
 
 
@@ -32,6 +39,14 @@ import { LoginPageComponent } from './views/login-page/login-page.component';
     HomeComponent,
     HeaderComponent,
     LoginPageComponent,
+    ProductsPageComponent,
+    CartIconComponent,
+    ProductComponent,
+    AddToCartBtn,
+    PlaceOrderBtnComponent,
+    CheckoutBtnComponent,
+    ProductsComponent,
+    ProductComponent
   ],
   imports: [
     HttpClientModule,
@@ -52,7 +67,7 @@ import { LoginPageComponent } from './views/login-page/login-page.component';
     RouterModule.forRoot([
       {
         path: '',
-        component: HomeComponent
+        component: ProductsPageComponent
       },
       {
         path: 'login',
@@ -61,7 +76,7 @@ import { LoginPageComponent } from './views/login-page/login-page.component';
       {
         path: 'register',
         component: RegisterComponent
-      }
+      },
 
     ])
 
