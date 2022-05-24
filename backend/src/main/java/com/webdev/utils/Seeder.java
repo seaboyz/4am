@@ -19,26 +19,8 @@ import com.webdev.model.Customer;
 public class Seeder {
 
     public static void main(String[] args) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
 
-        // get all customers
-        List<Customer> customers = session.createQuery("from Customer", Customer.class).getResultList();
-
-        
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-
-        gsonBuilder.setPrettyPrinting();
-
-        Gson gson = gsonBuilder.create();
-
-        String json = gson.toJson(customers);
-
-        System.out.println(json);
-
-        session.close();
-        sessionFactory.close();
+        loadCustomerFromFile();
 
     }
 
@@ -97,6 +79,20 @@ public class Seeder {
         session.getTransaction().commit();
         session.close();
         sessionFactory.close();
+    }
+
+    public static void loadProductsFromFile() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.createQuery("delete from Product").executeUpdate();
+
+        try {
+            File file = new File("backend/src/main/resources/data/products.json");
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
     }
 
 }
