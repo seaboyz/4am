@@ -35,8 +35,8 @@ public class Customer {
     @NotBlank(message = "Password is required")
     private String password;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "phone_number", nullable = false)
+    private String phone;
 
     // when save the customer, if there are any unsaved addresses, save them
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
@@ -73,6 +73,7 @@ public class Customer {
         this.username = username;
         this.email = email;
         this.password = password;
+
     }
 
     public Integer getId() {
@@ -107,12 +108,12 @@ public class Customer {
         this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phoneNumber) {
+        this.phone = phoneNumber;
     }
 
     public Set<CartItem> getCartItems() {
@@ -134,7 +135,7 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
-                + ", phoneNumber=" + phoneNumber + "]";
+                + ", phoneNumber=" + phone + "]";
     }
 
 }
