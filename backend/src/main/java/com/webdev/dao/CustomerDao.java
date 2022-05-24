@@ -56,19 +56,20 @@ public class CustomerDao {
 
     public Customer update(Customer customer) {
 
-        Customer customerToUpdate = entityManager
-                .unwrap(Session.class)
-                .get(Customer.class, customer.getId());
+        // Customer customerToUpdate = entityManager
+        //         .unwrap(Session.class)
+        //         .get(Customer.class, customer.getId());
 
-        customerToUpdate.setUsername(customer.getUsername());
-        customerToUpdate.setEmail(customer.getEmail());
-        customerToUpdate.setPassword(customer.getPassword());
-        customerToUpdate.setPhoneNumber(customer.getPhoneNumber());
-        if (customer.getAddresses().size() != customerToUpdate.getAddresses().size()) {
-            customerToUpdate.setAddresses(customer.getAddresses());
-        }
+        // customerToUpdate.setUsername(customer.getUsername());
+        // customerToUpdate.setEmail(customer.getEmail());
+        // customerToUpdate.setPassword(customer.getPassword());
+        // customerToUpdate.setPhoneNumber(customer.getPhoneNumber());
+        // if (customer.getAddresses().size() != customerToUpdate.getAddresses().size()) {
+        //     customerToUpdate.setAddresses(customer.getAddresses());
+        // }
+        entityManager.unwrap(Session.class).update(customer);
 
-        return customerToUpdate;
+        return customer;
     }
 
     public void delete(Integer id) {
@@ -78,13 +79,13 @@ public class CustomerDao {
     }
 
     public void delete(Customer customer) {
-
         entityManager.unwrap(Session.class).delete(customer);
     }
 
     public Customer addAddress(Customer customer, Address address) {
 
         Session session = entityManager.unwrap(Session.class);
+        
 
         customer.getAddresses().add(address);
 
