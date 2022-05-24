@@ -37,27 +37,5 @@ export class AuthService
     return this.http.post(this.base_url + 'register', { username, email, password, phoneNumber }, httpOptions);
   }
 
-  createUser(body: object, options: object): Observable<any>
-  {
-    return this.http.post<any>(this.base_url + "/register", JSON.stringify(body), options)
-      .pipe(
-        retry(3),
-        catchError(this.errorHandler)
-      )
-  }
 
-  errorHandler(e: any): any
-  {
-    console.log("Error handler invoked...");
-    let errorMessage = '';
-    if (e.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = e.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${e.status}\nMessage: ${e.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(() => new Error(errorMessage));
-  }
 }

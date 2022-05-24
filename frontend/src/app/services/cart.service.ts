@@ -10,10 +10,9 @@ export class CartService implements OnInit
   cartItems = new BehaviorSubject<CartItem[]>([]);
 
   constructor()
-{
-    console.log("cartservice init")
+  {
     const cartData = localStorage.getItem("cart");
-    console.log(cartData)
+
     if (!cartData) {
       localStorage.setItem("cart", "[]");
     }
