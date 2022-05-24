@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from "src/app/services/user.service";
 import { User } from "src/app/shared/interface/user";
 
 
@@ -10,20 +11,18 @@ import { User } from "src/app/shared/interface/user";
 })
 export class HeaderComponent implements OnInit
 {
-  user: User | null = {
-    id: "1",
-    email: "john@example.com",
-    displayName: "John Doe",
-  };
+  user: User | undefined;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
-  ngOnInit() { }
-
+  ngOnInit()
+  {
+    this.userService.currentUser.subscribe(currentUser => this.user = currentUser)
+  }
 
   signOut()
   {
-    this.user = null;
+    this.userService.signOut();
   }
 
 }

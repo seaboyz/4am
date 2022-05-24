@@ -27,6 +27,12 @@ import { HomeComponent } from './views/home-page/home-page.component';
 import { LoginPageComponent } from './views/login-page/login-page.component';
 import { ProductsPageComponent } from './views/products-page/products-page.component';
 
+import { CartItemComponent } from "./components/cart-item/cart-item.component";
+import { CartPageComponent } from "./views/cart-page/cart-page.component";
+import { CartService } from "./services/cart.service";
+import { AuthService } from "./services/auth.service";
+import { ProductService } from "./services/product.service";
+
 
 
 
@@ -46,7 +52,9 @@ import { ProductsPageComponent } from './views/products-page/products-page.compo
     PlaceOrderBtnComponent,
     CheckoutBtnComponent,
     ProductsComponent,
-    ProductComponent
+    ProductComponent,
+    CartItemComponent,
+    CartPageComponent
   ],
   imports: [
     HttpClientModule,
@@ -77,11 +85,15 @@ import { ProductsPageComponent } from './views/products-page/products-page.compo
         path: 'register',
         component: RegisterComponent
       },
+      {
+        path: 'cart',
+        component: CartPageComponent
+      }
 
     ])
 
   ],
-  providers: [],
+  providers: [CartService, AuthService, ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

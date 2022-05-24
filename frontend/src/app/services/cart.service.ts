@@ -19,6 +19,11 @@ export class CartService implements OnInit
 
   ngOnInit(): void
   {
+    const cartData = localStorage.getItem("cart");
+    console.log(cartData)
+    if (!cartData) {
+      localStorage.setItem("cart", "[]");
+    }
     const storage: CartItem[] = JSON.parse(localStorage.getItem("cart")!);
     if (storage) {
       this.cartItems.next(storage);

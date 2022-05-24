@@ -12,28 +12,28 @@
     <div class="options">
         <a
             class="option"
-            routerLink="/product-views"
+            routerLink=""
         >Shop</a>
 
         <a
-            *ngIf="user; else signin"
+            *ngIf="user?.displayName; else signin"
             class="option"
             (click)="signOut()"
-        >Sign Out</a>
+        >Welcome {{user?.displayName}}</a>
         <ng-template
             #signin
             class="option"
         >
-            <a routerLink="user-login">Sign In</a>
+            <a routerLink="login">Sign In</a>
         </ng-template>
 
         <a
             class="option"
-            routerLink="user-registration"
+            routerLink="register"
         >Sign Up</a>
         <a
             class="cart"
-            routerLink="/cart"
+            routerLink="cart"
         >
             <app-cart-icon></app-cart-icon>
         </a>

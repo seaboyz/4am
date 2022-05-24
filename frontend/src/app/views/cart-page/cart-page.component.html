@@ -1,0 +1,37 @@
+<div class='checkout-page'>
+    <div class='checkout-header'>
+        <div class='header-block'>
+            <span>Product</span>
+        </div>
+        <div class='header-block'>
+            <span>Description</span>
+        </div>
+        <div class='header-block'>
+            <span>Quantity</span>
+        </div>
+        <div class='header-block'>
+            <span>Price</span>
+        </div>
+        <div class='header-block'>
+            <span>Remove</span>
+        </div>
+    </div>
+
+    <app-cart-item
+        *ngFor="let cartItem of cartItems"
+        [cartItem]="cartItem"
+    ></app-cart-item>
+
+
+    <div class='total'>
+        <span>Total: ${{totalPrice.toFixed(2)}}</span>
+    </div>
+    <div style="color: red;text-align: center;">
+        <h2 style="font-size: 1.5rem;">
+            * Plsese use the following test credit card from payments*
+        </h2>
+        <p style="font-size: 1.5rem;">
+            4242 4242 4242 4242 -- Exp: 01/25 -- CVV: 123
+        </p>
+    </div>
+    <app-checkout-btn></app-checkout-btn>

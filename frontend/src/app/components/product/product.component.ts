@@ -28,7 +28,7 @@ export class ProductComponent implements OnInit
   addToCart(product?: Product)
   {
     if (product) {
-      this.cartService.addItem({ id: product.id, quantity: 1 });
+      this.cartService.addItem({ ...product, quantity: 1 });
     }
     return;
   }

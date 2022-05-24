@@ -1,8 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
+import { catchError, Observable, retry, throwError } from "rxjs";
 
-const AUTH_API = 'http://localhost:8080/auth/';
 
 
 
@@ -11,6 +10,7 @@ const AUTH_API = 'http://localhost:8080/auth/';
 })
 export class AuthService
 {
+  base_url = 'http://localhost:8080/auth/';
 
   constructor(private http: HttpClient) { }
 
@@ -24,7 +24,7 @@ export class AuthService
       }
     }
 
-    return this.http.get(AUTH_API + 'login', httpOptions);
+    return this.http.get(this.base_url + 'login', httpOptions);
   }
 
   register(username: string, email: string, password: string, phoneNumber: string): Observable<any>
@@ -34,6 +34,30 @@ export class AuthService
       headers: { 'Content-Type': 'application/json' }
     };
 
-    return this.http.post(AUTH_API + 'register', { username, email, password, phoneNumber }, httpOptions);
+    return this.http.post(this.base_url + 'register', { username, email, password, phoneNumber }, httpOptions);
+  }
+
+  createUser(body: object, options: object): Observable<any>
+  {
+    return this.http.post<any>(this.base_url + "/register", JSON.stringify(body), options)
+      .pipe(
+        retry(3),
+        catchError(this.errorHandler)
+      )
+  }
+
+  errorHandler(e: any): any
+  {
+    console.log("Error handler invoked...");
+    let errorMessage = '';
+    if (e.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = e.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${e.status}\nMessage: ${e.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(() => new Error(errorMessage));
   }
 }
