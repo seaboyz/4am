@@ -34,7 +34,7 @@ public class AuthControllerTest {
                 customer.setEmail("test@test.com");
                 customer.setUsername("test");
                 customer.setPassword("123456");
-                customer.setPhoneNumber("123456789");
+                customer.setPhone("123456789");
 
                 when(customerService.getCustomerByEmail("test@test.com")).thenReturn(customer);
 
@@ -51,12 +51,14 @@ public class AuthControllerTest {
                 Customer newCustomer = new Customer(
                                 "test",
                                 "test@test.com",
-                                "123456");
+                                "123456",
+                                "123456789");
 
                 Customer registeredCustomer = new Customer(
                                 "test",
                                 "test@test.com",
-                                "123456");
+                                "123456",
+                                "123456789");
                 registeredCustomer.setId(1);
 
                 when(customerService.createCustomer(newCustomer)).thenReturn(registeredCustomer);

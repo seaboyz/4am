@@ -2,11 +2,12 @@ package com.webdev.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import javax.persistence.EntityManager;
+
 
 import com.webdev.model.Customer;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -17,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class CustomerDaoTest {
     @Autowired
-    EntityManager entityManager;
+    SessionFactory sessionFactory;
 
     @Autowired
     CustomerDao customerDao;
@@ -28,11 +29,12 @@ public class CustomerDaoTest {
 
     @BeforeEach
     public void init() {
-        currentSession = entityManager.unwrap(Session.class);
+        currentSession = sessionFactory.getCurrentSession();
         customer1 = new Customer(
                 "username1",
                 "email1",
-                "password1");
+                "password1",
+                "123456789");
     }
 
     @AfterEach
@@ -60,7 +62,8 @@ public class CustomerDaoTest {
         Customer customer2 = new Customer(
                 "username2",
                 "email2",
-                "password");
+                "password",
+                "123456789");
 
         currentSession.save(customer2);
 

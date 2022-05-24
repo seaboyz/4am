@@ -6,8 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-
 import com.google.gson.Gson;
 import com.webdev.model.Customer;
 import com.webdev.model.Order;
@@ -16,6 +14,7 @@ import com.webdev.model.Product;
 import com.webdev.model.ShippingAddress;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +28,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class OrderDaoTest {
 
     @Autowired
-    private EntityManager entityManager;
+    private SessionFactory sessionFactory;
 
     @Autowired
     static OrderDao orderDao;
@@ -47,7 +46,8 @@ public class OrderDaoTest {
         customer = new Customer(
                 "johnd",
                 "john@gmail.com",
-                "m38rmF$");
+                "m38rmF$",
+                "123456789");
         shippingAddress = new ShippingAddress(
                 "john",
                 "doe",
@@ -71,9 +71,7 @@ public class OrderDaoTest {
         orderItemList.add(orderItem);
 
         order = new Order(customer, shippingAddress, orderItemList);
-
-        currentSession = entityManager.unwrap(Session.class);
-
+        currentSession = sessionFactory.getCurrentSession();
         currentSession.beginTransaction();
         currentSession.save(product);
         currentSession.save(customer);
@@ -89,7 +87,6 @@ public class OrderDaoTest {
             currentSession.close();
         }
         // clean up the database
-        currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
         currentSession.createQuery("delete from OrderItem").executeUpdate();
         currentSession.createQuery("delete from Order").executeUpdate();
@@ -104,7 +101,8 @@ public class OrderDaoTest {
         Customer customer = new Customer(
                 "mor_2314",
                 "morrison@gmail.com",
-                "83r5^_");
+                "83r5^_",
+                "123456789");
         ShippingAddress shippingAddress = new ShippingAddress(
                 "david",
                 "morrison",
@@ -124,7 +122,7 @@ public class OrderDaoTest {
         OrderItem orderItem = new OrderItem(product, 1);
 
         // save orderItem
-        currentSession = entityManager.unwrap(Session.class);
+
         currentSession.beginTransaction();
         currentSession.save(product);
         currentSession.save(orderItem);
@@ -141,7 +139,7 @@ public class OrderDaoTest {
         orderDao.add(order);
 
         // check if the order is saved
-        currentSession = entityManager.unwrap(Session.class);
+
         currentSession.beginTransaction();
         Order savedOrder = currentSession.get(Order.class, order.getId());
         currentSession.getTransaction().commit();
@@ -149,7 +147,6 @@ public class OrderDaoTest {
 
         assert savedOrder != null;
 
-        currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
         // get all the orders
         Query<Order> query = currentSession.createQuery("from Order", Order.class);

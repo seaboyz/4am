@@ -6,14 +6,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class AddressDao {
     @Autowired
     SessionFactory sessionFactory;
 
-    @Transactional
+
     public Address add(Address address) {
         sessionFactory.getCurrentSession().save(address);
         return address;
@@ -45,13 +44,13 @@ public class AddressDao {
         return addressToUpdate;
     }
 
-    @Transactional
+
     public void delete(Integer id) {
         sessionFactory.getCurrentSession().delete(get(id));
 
     }
 
-    @Transactional
+
     public void delete(Address address) {
         sessionFactory.getCurrentSession().delete(address);
     }

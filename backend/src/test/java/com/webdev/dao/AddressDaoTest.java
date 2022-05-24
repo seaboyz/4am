@@ -3,11 +3,10 @@ package com.webdev.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import javax.persistence.EntityManager;
-
 import com.webdev.model.Address;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -19,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class AddressDaoTest {
     @Autowired
-    private static EntityManager entityManager;
+    private static SessionFactory sessionFactory;
 
     @Autowired
     private static AddressDao addressDao;
@@ -28,7 +27,7 @@ public class AddressDaoTest {
 
     @BeforeEach
     public void init() {
-        currentSession = entityManager.unwrap(Session.class);
+        currentSession = sessionFactory.getCurrentSession();
     }
 
     @AfterEach
@@ -59,7 +58,6 @@ public class AddressDaoTest {
         // currentSession is closed in userdao.add()
 
         // check if the address was added to the database
-        currentSession = entityManager.unwrap(Session.class);
         Address addressFromDb = currentSession.get(Address.class, address.getId());
         assertEquals(address.toString(), addressFromDb.toString());
     }
@@ -123,7 +121,6 @@ public class AddressDaoTest {
         // currentSession is closed in userdao.update()
 
         // check if the address was updated in the database
-        currentSession = entityManager.unwrap(Session.class);
         currentSession.beginTransaction();
         Address addressFromDb = currentSession.get(Address.class, address.getId());
         currentSession.getTransaction().commit();

@@ -7,7 +7,6 @@ import com.webdev.model.OrderItem;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class OrderItemDao {
@@ -15,7 +14,7 @@ public class OrderItemDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Transactional
+
     public OrderItem add(OrderItem orderItem) {
         sessionFactory.getCurrentSession().save(orderItem);
         return orderItem;

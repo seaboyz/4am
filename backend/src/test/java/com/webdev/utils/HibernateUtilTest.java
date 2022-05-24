@@ -5,11 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import com.webdev.model.Customer;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,12 +21,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class HibernateUtilTest {
     @Autowired
-    EntityManager entityManager;
+    SessionFactory sessionFactory;
     private Session session;
 
     @BeforeEach
     public void setUp() throws Exception {
-        session = entityManager.unwrap(Session.class);
+        session = sessionFactory.getCurrentSession();
     }
 
     @AfterEach
@@ -36,7 +35,7 @@ public class HibernateUtilTest {
             session.close();
 
         // remove all customers from the database
-        session = entityManager.unwrap(Session.class);
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.createQuery("delete from Customer").executeUpdate();
         session.getTransaction().commit();
@@ -50,7 +49,8 @@ public class HibernateUtilTest {
         Customer customer1 = new Customer(
                 "username1",
                 "email1",
-                "password");
+                "password",
+                "123456789");
 
         Integer id = (Integer) session.save(customer1);
 
@@ -65,7 +65,8 @@ public class HibernateUtilTest {
         Customer customer = new Customer(
                 "username1",
                 "email1",
-                "password");
+                "password",
+                "123456789");
         session.beginTransaction();
         session.save(customer);
         session.getTransaction().commit();
@@ -74,7 +75,7 @@ public class HibernateUtilTest {
 
         // start a new session
         // get customer from database
-        session = entityManager.unwrap(Session.class);
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Customer getCustomer = session.get(Customer.class, customer.getId());
 
@@ -87,7 +88,8 @@ public class HibernateUtilTest {
         Customer customer = new Customer(
                 "username1",
                 "email1",
-                "password");
+                "password",
+                "123456789");
         session.beginTransaction();
         session.save(customer);
         session.getTransaction().commit();
@@ -96,7 +98,7 @@ public class HibernateUtilTest {
 
         // start a new session
         // update customer
-        session = entityManager.unwrap(Session.class);
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         customer.setUsername("username2");
         session.update(customer);
@@ -106,7 +108,7 @@ public class HibernateUtilTest {
 
         // start a new session
         // get customer from database
-        session = entityManager.unwrap(Session.class);
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Customer updatCustomer = session.get(Customer.class, customer.getId());
 
@@ -119,7 +121,8 @@ public class HibernateUtilTest {
         Customer customer1 = new Customer(
                 "username1",
                 "email1",
-                "password");
+                "password",
+                "123456789");
         session.beginTransaction();
         session.save(customer1);
         session.getTransaction().commit();
@@ -127,11 +130,12 @@ public class HibernateUtilTest {
         // then customer becomes detached
 
         // start a new session
-        session = entityManager.unwrap(Session.class);
+        session = sessionFactory.getCurrentSession();
         Customer customer2 = new Customer(
                 "username2",
                 "email2",
-                "password");
+                "password",
+                "123456789");
         session.beginTransaction();
         session.save(customer2);
         session.getTransaction().commit();
@@ -139,7 +143,7 @@ public class HibernateUtilTest {
         // then customer becomes detached
 
         // start a new session
-        session = entityManager.unwrap(Session.class);
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         Query<Customer> query = session.createQuery("from Customer", Customer.class);
         List<Customer> customers = query.getResultList();
@@ -152,7 +156,8 @@ public class HibernateUtilTest {
         Customer customer1 = new Customer(
                 "username1",
                 "email1",
-                "password");
+                "password",
+                "123456789");
         session.beginTransaction();
         session.save(customer1);
         session.getTransaction().commit();
@@ -160,14 +165,14 @@ public class HibernateUtilTest {
         // then customer becomes detached
 
         // start a new session
-        session = entityManager.unwrap(Session.class);
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         session.delete(customer1);
         session.getTransaction().commit();
         session.close();
 
         // start a new session
-        session = entityManager.unwrap(Session.class);
+        session = sessionFactory.getCurrentSession();
         session.beginTransaction();
 
         Customer deletedCustomer = session.get(Customer.class, customer1.getId());
