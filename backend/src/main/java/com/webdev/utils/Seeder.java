@@ -32,7 +32,7 @@ public class Seeder {
         session.createQuery("delete from Customer").executeUpdate();
 
         try {
-            File file = new File("backend/src/main/resources/data/users.json");
+            File file = new File("src/main/resources/data/users.json");
             FileReader fileReader = new FileReader(file);
 
             GsonBuilder gsonBuilder = new GsonBuilder();

@@ -9,7 +9,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HibernateUtil {
 	public static SessionFactory getSessionFactory() {
-		File file = new File("backend/src/main/resources/hibernate.postgres/hibernate.cfg.xml");
+		File file = new File("src/main/resources/hibernate.postgres/hibernate.cfg.xml");
 		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure(file).build();
 
 		SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
