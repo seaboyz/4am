@@ -4,21 +4,14 @@ import { CartItem } from "../shared/interface/cartItem";
 
 
 
-@Injectable({
-  providedIn: 'root'
-})
-
-
+@Injectable({ providedIn: 'root' })
 export class CartService implements OnInit
 {
   cartItems = new BehaviorSubject<CartItem[]>([]);
 
   constructor()
-  {
-  }
-
-  ngOnInit(): void
-  {
+{
+    console.log("cartservice init")
     const cartData = localStorage.getItem("cart");
     console.log(cartData)
     if (!cartData) {
@@ -30,6 +23,11 @@ export class CartService implements OnInit
     } else {
       localStorage.setItem("cart", JSON.stringify([]))
     }
+  }
+
+  ngOnInit(): void
+  {
+
   }
 
 

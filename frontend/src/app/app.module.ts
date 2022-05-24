@@ -1,5 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -29,13 +29,6 @@ import { ProductsPageComponent } from './views/products-page/products-page.compo
 
 import { CartItemComponent } from "./components/cart-item/cart-item.component";
 import { CartPageComponent } from "./views/cart-page/cart-page.component";
-import { CartService } from "./services/cart.service";
-import { AuthService } from "./services/auth.service";
-import { ProductService } from "./services/product.service";
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -93,7 +86,8 @@ import { ProductService } from "./services/product.service";
     ])
 
   ],
-  providers: [CartService, AuthService, ProductService],
-  bootstrap: [AppComponent]
+
+  bootstrap: [AppComponent],
 })
+
 export class AppModule { }
