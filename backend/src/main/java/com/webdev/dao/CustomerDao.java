@@ -10,23 +10,19 @@ import com.webdev.model.Address;
 import com.webdev.model.Customer;
 
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.RequiredArgsConstructor;
-
 @Repository
-@RequiredArgsConstructor
 public class CustomerDao {
 
-    private final EntityManager entityManager;
+    private EntityManager entityManager;
 
-    // with spring stereotype annotation, we can implicily inject the entity manager(without @Autowired)
-    // with @RequiredArgsConstructor,we can autogenarate contructor with the final fields
-    // @Autowired
-    // public CustomerDao(EntityManager entityManager) {
-    //     this.entityManager = entityManager;
-    // }
+    @Autowired
+    public CustomerDao(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Transactional
     public Customer add(Customer customer) {
@@ -91,7 +87,6 @@ public class CustomerDao {
     public Customer addAddress(Customer customer, Address address) {
 
         Session session = entityManager.unwrap(Session.class);
-        
 
         customer.getAddresses().add(address);
 

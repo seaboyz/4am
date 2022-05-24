@@ -46,12 +46,6 @@ public class AddressDaoTest {
                                 "123456",
                                 "555-555-5555");
 
-                customer2 = new Customer(
-                                "test2",
-                                "test@@test.com",
-                                "1234567",
-                                "555-555-5555");
-
                 address1 = new Address(
                                 customer1,
                                 "firstname",

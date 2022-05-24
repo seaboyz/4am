@@ -2,7 +2,6 @@ package com.webdev;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class App {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(App.class, args);
+		SpringApplication.run(App.class, args);
 
 		// This is a bit of a hack, but it works.
-		context.start();
+		// context.start();
 
 		// CustomerDao customerDao = context.getBean(CustomerDao.class);
 
@@ -27,7 +26,7 @@ public class App {
 
 		// customerDao.add(customer);
 
-	} 
+	}
 
 	@RequestMapping("/")
 	public String index() {
