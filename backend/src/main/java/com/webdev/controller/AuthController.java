@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.webdev.model.Customer;
 import com.webdev.service.CustomerService;
 
+import org.hibernate.validator.constraints.CodePointLength;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class AuthController {
         this.customerService = customerService;
     }
 
-    @CrossOrigin(origins = "*")
+    @CrossOrigin()
     @GetMapping(value = "/auth/login")
     public ResponseEntity<String> login(@RequestHeader("Authorization") String auth) {
 

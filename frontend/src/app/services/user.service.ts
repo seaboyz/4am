@@ -9,29 +9,21 @@ import { User } from "../shared/interface/user";
 export class UserService implements OnInit
 {
 
-  currentUser = new BehaviorSubject<User>({ id: "", username: "", email: "" });
-
-  emptyUser: User = { id: "", username: "", email: "" }
 
   baseUrl: string = "http://localhost:8080/users";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient)
+  {
+
+
+  }
 
   ngOnInit(): void
   {
-    const storage = JSON.parse(localStorage.getItem("currentUser")!);
-    if (storage) {
-      this.currentUser.next(storage);
-    } else {
-      localStorage.setItem("currentUser", JSON.stringify(this.emptyUser))
-    }
+
   }
 
-  signOut()
-  {
-    localStorage.setItem("currentUser", "")
-    this.currentUser.next(this.emptyUser)
-  }
+
 
 
 

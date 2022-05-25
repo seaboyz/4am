@@ -16,9 +16,9 @@ export class CartService implements OnInit
     if (!cartData) {
       localStorage.setItem("cart", "[]");
     }
-    const storage: CartItem[] = JSON.parse(localStorage.getItem("cart")!);
-    if (storage) {
-      this.cartItems.next(storage);
+    const cartItems: CartItem[] = JSON.parse(localStorage.getItem("cart")!);
+    if (cartItems) {
+      this.cartItems.next(cartItems);
     } else {
       localStorage.setItem("cart", JSON.stringify([]))
     }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from "src/app/services/auth.service";
 import { UserService } from "src/app/services/user.service";
 import { User } from "src/app/shared/interface/user";
 
@@ -13,16 +14,16 @@ export class HeaderComponent implements OnInit
 {
   user: User | undefined;
 
-  constructor(private userService: UserService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit()
   {
-    this.userService.currentUser.subscribe(currentUser => this.user = currentUser)
+    this.authService.currentUser.subscribe(currentUser => this.user = currentUser)
   }
 
   signOut()
   {
-    this.userService.signOut();
+    this.authService.signOut();
   }
 
 }

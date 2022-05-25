@@ -25,9 +25,9 @@ export class LoginComponent implements OnInit
   login(email: string, password: string): void
   {
     this.authService.login(email, password).subscribe(
-      data =>
+      user =>
       {
-        console.log(data);
+        console.log(user);
       }
     )
   }
