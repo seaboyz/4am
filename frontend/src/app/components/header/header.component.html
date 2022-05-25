@@ -16,10 +16,10 @@
         >Shop</a>
 
         <a
-            *ngIf="user?.displayName; else signin"
+            *ngIf="user?.username; else signin"
             class="option"
             (click)="signOut()"
-        >Welcome {{user?.displayName}}</a>
+        >Welcome {{user?.username}}</a>
         <ng-template
             #signin
             class="option"

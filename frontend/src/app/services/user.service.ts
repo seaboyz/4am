@@ -9,9 +9,9 @@ import { User } from "../shared/interface/user";
 export class UserService implements OnInit
 {
 
-  currentUser = new BehaviorSubject<User>({ id: "", displayName: "", email: "" });
+  currentUser = new BehaviorSubject<User>({ id: "", username: "", email: "" });
 
-  emptyUser: User = { id: "", displayName: "", email: "" }
+  emptyUser: User = { id: "", username: "", email: "" }
 
   baseUrl: string = "http://localhost:8080/users";
 
