@@ -4,6 +4,7 @@ header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 25px;
+    background-color: black;
 
     .logo-container {
         height: 100%;
@@ -20,6 +21,10 @@ header {
         justify-content: flex-end;
         cursor: pointer;
         position: relative;
+
+        a {
+            color: white;
+        }
 
         .option {
             padding: 10px 15px;

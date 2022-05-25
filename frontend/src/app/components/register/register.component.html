@@ -70,11 +70,11 @@
                         type="number"
                         required
                         minlength="10"
-                        name="phoneNumber"
+                        name="phone"
                         ngModel
-                        #phoneNumber="ngModel"
+                        #phone="ngModel"
                     >
-                    <mat-error *ngIf="phoneNumber.invalid">
+                    <mat-error *ngIf="phone.invalid">
                         Re-Enter Password is required
                     </mat-error>
                     <mat-icon matSuffix>lock</mat-icon>
@@ -85,7 +85,7 @@
                     color="primary"
                     class="register-button "
                     style="text-transform: uppercase;letter-spacing: 2px;"
-                    (click)="register(username.value,email.value,password.value,phoneNumber.value)"
+                    (click)="register(username.value,email.value,password.value, phone.value)"
                 >
                     Create your account
                 </button>

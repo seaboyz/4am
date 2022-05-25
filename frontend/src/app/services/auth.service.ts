@@ -60,14 +60,14 @@ export class AuthService
     return user;
   }
 
-  register(username: string, email: string, password: string, phoneNumber: string): Observable<any>
+  register(username: string, email: string, password: string, phone: string): Observable<User>
   {
-    console.log(username, email, password, phoneNumber);
     const httpOptions = {
       headers: { 'Content-Type': 'application/json' }
     };
 
-    return this.http.post(this.base_url + 'register', { username, email, password, phoneNumber }, httpOptions);
+    return this.http.post<User>(this.base_url + 'register', JSON.stringify({ username, email, password, phone }), httpOptions);
+    
   }
 
   signOut()

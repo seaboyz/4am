@@ -3,21 +3,18 @@
         class="logo-container"
         routerLink="/"
     >
-        <img
-            class="logo"
-            src="/assets/logo-placeholder-image.png"
-            alt=""
-        />
-    </a>
-    <div class="options">
+
         <a
             class="option"
             routerLink=""
-        >Home</a>
+            style="font-size: 25px;font-weight: 700; letter-spacing: 2px;"
+        >4am</a>
+    </a>
+    <div class="options">
         <a
             *ngIf="user"
             class="option"
-        >Welcome {{user?.username}}</a>
+        >Hello {{user?.username}}</a>
 
         <a
             *ngIf="user; else signin"
@@ -32,6 +29,7 @@
         </ng-template>
 
         <a
+            *ngIf="!user"
             class="option"
             routerLink="register"
         >Sign Up</a>

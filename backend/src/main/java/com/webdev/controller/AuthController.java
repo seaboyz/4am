@@ -62,17 +62,28 @@ public class AuthController {
         Gson gson = new Gson();
         String json = gson.toJson(customer, Customer.class);
 
+        System.out.println(json);
+
         return new ResponseEntity<String>(json, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
+    @CrossOrigin()
     @PostMapping(value = "/auth/register")
     public ResponseEntity<String> postMethodName(
             @RequestBody Customer customer) {
         System.out.println(customer);
         try {
-            customerService.createCustomer(customer);
-            return new ResponseEntity<String>("Customer created", HttpStatus.CREATED);
+            Customer registeredCustomer = customerService.createCustomer(customer);
+            registeredCustomer.setPassword(null);
+            registeredCustomer.setOrders(null);
+            registeredCustomer.setAddresses(null);
+            registeredCustomer.setCartItems(null);
+
+            Gson gson = new Gson();
+            String json = gson.toJson(registeredCustomer, Customer.class);
+
+            return new ResponseEntity<String>(json, HttpStatus.OK);
+
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
