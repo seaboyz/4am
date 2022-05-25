@@ -11,13 +11,13 @@
     </div>
     <div class="options">
         <a
-            *ngIf="user"
+            *ngIf="user?.id"
             class="option"
             routerLink="profile"
         >Hello {{user?.username}}</a>
 
         <a
-            *ngIf="user; else signin"
+            *ngIf="user?.id; else signin"
             class="option"
             (click)="signOut()"
         >Sign Out</a>

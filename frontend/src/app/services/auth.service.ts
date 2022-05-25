@@ -67,7 +67,6 @@ export class AuthService
     };
 
     return this.http.post<User>(this.base_url + 'register', JSON.stringify({ username, email, password, phone }), httpOptions);
-
   }
 
   signOut()

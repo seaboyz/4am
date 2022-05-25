@@ -14,11 +14,14 @@ export class HeaderComponent implements OnInit
 {
   user: User | undefined;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService)
+  {
+    this.authService.currentUser.subscribe(user => this.user = user)
+  }
 
   ngOnInit()
   {
-    this.authService.currentUser.subscribe(currentUser => this.user = currentUser)
+
   }
 
   signOut()

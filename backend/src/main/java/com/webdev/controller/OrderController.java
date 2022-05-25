@@ -45,6 +45,8 @@ public class OrderController {
     @CrossOrigin()
     @PostMapping(value = "/orders")
     public ResponseEntity<String> createOrder(@RequestBody String orderJson) {
+        System.out.println(orderJson);
+
         GsonBuilder gsonBuilder = new GsonBuilder();
 
         gsonBuilder.registerTypeAdapter(OrderItem.class, new DoubleToIntDeserializer());

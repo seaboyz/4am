@@ -1,10 +1,10 @@
 export interface Address
 {
-    firstname: string,
-    lastname: string,
+    firstName: string,
+    lastName: string,
     phone: string,
-    address: string,
-    zipCode: string,
+    street: string,
+    zip: string,
     city: string,
     state: string,
     country: string
