@@ -9,8 +9,8 @@
     background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
-
     // background-color: #F1F1F1;
+
     mat-card {
         width: 35%;
         min-width: 300px;
@@ -21,67 +21,64 @@
         font-family: 'Manrope', sans-serif;
         padding: 3rem;
 
-
-        mat-card-titil {
-            font-size: 2rem;
-        }
-
-        mat-card-subtitle {
-            font-size: 1rem;
-        }
-
-        .group {
+        form {
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: flex-start;
+            flex-direction: column;
+            column-gap: 1rem;
 
-            align-items: center;
-            margin-top: 1rem;
-            gap: 1rem;
+            mat-card-title {
+                font-size: 1.5rem;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
 
-            mat-form-field {
+            mat-card-subtitle {
+                font-size: 1rem;
                 color: #D87D4A;
-                width: 45%;
-                margin-left: 0;
-                height: 35px;
+                margin-top: 1rem;
+                margin-bottom: 0;
+            }
+
+            .group {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                align-items: center;
+                margin-top: -1rem;
+                gap: 1rem;
+                margin-bottom: 2rem;
+
+
+                mat-form-field {
+                    // color: #D87D4A;
+                    width: 45%;
+                    margin-left: 0;
+                    margin-top: 1rem;
+                    margin-bottom: 0;
+                    height: 20px;
+                    font-size: 1rem;
+                }
+
+                mat-form-field.address-input {
+                    width: 94.5%;
+                }
+            }
+
+            .place-order-button {
+                margin-top: 20px;
+                display: block;
+                width: 100%;
+                margin: 20px auto;
+                background-color: #D87D4A;
+                color: #F1F1F1;
+            }
+
+            .place-order-button:disabled {
+                background-color: #fbaf85;
+                color: #F1F1F1;
             }
         }
     }
-}
 
-
-
-
-
-
-mat-form-field,
-mat-checkbox {
-    width: 100%;
-    display: block;
-    margin: auto;
-    margin-block: 1rem;
-    opacity: 0.75;
-}
-
-mat-card-content {
-    margin-top: 20px;
-}
-
-.register-button {
-    margin-top: 20px;
-    display: block;
-    width: 100%;
-    margin: 20px auto;
-    background-color: #D87D4A;
-    color: #F1F1F1;
-}
-
-.register-button:disabled {
-    background-color: #fbaf85;
-    color: #F1F1F1;
-}
-
-mat-icon {
-    opacity: 0.5;
 }

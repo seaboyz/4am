@@ -1,56 +1,171 @@
 <div class="checkout">
     <mat-card class="mat-elevation-z12">
         <mat-card-title>CHECKOUT</mat-card-title>
-        <mat-card-content>
-            <mat-card-subtitle>BILLING DETIALS</mat-card-subtitle>
-            <form action="">
-                <div class="group">
-                    <mat-form-field>
-                        <input
-                            matInput
-                            placeholder="First Name"
-                            required
-                            name="firstname"
-                            #firstname="ngModel"
-                            ngModel
-                        >
-                        <mat-error *ngIf="firstname.invalid">first name is required</mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input
-                            matInput
-                            placeholder="First Name"
-                            required
-                            name="firstname"
-                            #firstname="ngModel"
-                            ngModel
-                        >
-                        <mat-error *ngIf="firstname.invalid">last name is required</mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input
-                            matInput
-                            placeholder="Phone Number"
-                            required
-                            name="phone"
-                            #phone="ngModel"
-                            ngModel
-                        >
-                        <mat-error *ngIf="firstname.invalid">phone number is required</mat-error>
-                    </mat-form-field>
-                </div>
 
-                <button
-                    [disabled]="firstname.errors "
-                    mat-raised-button
-                    color="primary"
-                    class="register-button "
-                    style="text-transform: uppercase;letter-spacing: 2px;"
-                    (click)="placeOrder()"
-                >
-                    Place your order
-                </button>
-            </form>
-        </mat-card-content>
+        <form action="">
+            <mat-card-subtitle>BILLING DETIALS</mat-card-subtitle>
+            <div class="group">
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="First Name"
+                        name="firstname"
+                        #firstname="ngModel"
+                        ngModel
+                        required
+                    >
+                    <!-- <mat-error *ngIf="firstname.invalid">first name is required</mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Last Name"
+                        name="lastname"
+                        #lastname="ngModel"
+                        ngModel
+                        required
+                    >
+                    <!-- <mat-error *ngIf="firstname.invalid">last name is required</mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Phone Number"
+                        name="phone"
+                        #phone="ngModel"
+                        ngModel
+                        required
+                    >
+                    <!-- <mat-error *ngIf="firstname.invalid">phone number is required</mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <mat-card-subtitle>SHIPPING INFO</mat-card-subtitle>
+
+            <div class="group">
+                <mat-form-field class="address-input">
+                    <input
+                        matInput
+                        placeholder="Address"
+                        name="address"
+                        #address="ngModel"
+                        ngModel
+                        required
+                    >
+                    <!-- <mat-error *ngIf="address.invalid">address is required</mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Zip Code"
+                        name="zipCode"
+                        #zipCode="ngModel"
+                        ngModel
+                        required
+                    >
+                    <!-- <mat-error *ngIf="zipCode.invalid">zipCode is required</mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="City"
+                        name="city"
+                        #city="ngModel"
+                        ngModel
+                        required
+                    >
+                    <!-- <mat-error *ngIf="city.invalid">city is required</mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="State"
+                        name="state"
+                        #state="ngModel"
+                        ngModel
+                        required
+                    >
+                    <!-- <mat-error *ngIf="state.invalid">city is required</mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Country"
+                        name="country"
+                        #country="ngModel"
+                        ngModel
+                        required
+                    >
+                    <!-- <mat-error *ngIf="country.invalid">country is required</mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <mat-card-subtitle>PAYMENT INFO</mat-card-subtitle>
+
+            <div class="group">
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Card Number"
+                        name="cardNumber"
+                        #cardNumber="ngModel"
+                        ngModel
+                        required
+                    >
+                    <!-- <mat-error *ngIf="cardNumber.invalid">card number is required</mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Exp"
+                        name="exp"
+                        #exp="ngModel"
+                        ngModel
+                        required
+                    >
+                    <!-- <mat-error *ngIf="exp.invalid">Experation Date is required</mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="CVV"
+                        name="cvv"
+                        #cvv="ngModel"
+                        ngModel
+                        required
+                    >
+                    <!-- <mat-error *ngIf="cvv.invalid">cvv is required</mat-error> -->
+                </mat-form-field>
+
+            </div>
+
+            <button
+                [disabled]="cvv.invalid||lastname.invalid||phone.invalid||address.invalid||zipCode.invalid|| city.invalid||country.invalid|| cardNumber.invalid|| exp.invalid|| cvv.invalid"
+                mat-raised-button
+                color="primary"
+                class="place-order-button "
+                style="text-transform: uppercase;letter-spacing: 2px;"
+                (click)="placeOrder(
+                       { 
+                            firstname:firstname.value,
+                            lastname:lastname.value,
+                            phone:phone.value,
+                            address:address.value,
+                            zipCode:zipCode.value,
+                            city:city.value,
+                            state:state.value,
+                            country: country.value
+                        },
+                        {
+                            cardNumber:cardNumber.value,
+                            exp:exp.value,
+                            cvv:cvv.value
+                        }
+                        )"
+            >
+                Place your order
+            </button>
+        </form>
+
     </mat-card>
 </div>

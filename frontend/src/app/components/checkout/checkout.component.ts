@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Address } from "src/app/shared/interface/address";
+import { Card } from "src/app/shared/interface/card";
 
 @Component({
   selector: 'app-checkout-component',
@@ -11,16 +13,15 @@ export class CheckoutComponent implements OnInit
   #firstname: string = "";
   #lastname: string = "";
   #phone: string = "";
-  password: string = "";
-  lName: string = "";
-  email: string = "";
-  address: string = "";
-  zipCode: string = "";
-  city: string = "";
-  country: string = "";
-  cardNumber: string = "";
-  exp: string = "";
-  cvv: string = "";
+  #address: string = "";
+  #zipCode: string = "";
+  #city: string = "";
+  #state: string = "";
+  #country: string = "";
+
+  #cardNumber: string = "";
+  #exp: string = "";
+  #cvv: string = "";
 
 
   constructor() { }
@@ -31,7 +32,11 @@ export class CheckoutComponent implements OnInit
 
   }
 
-  placeOrder() { }
+  placeOrder(address: Address, card: Card)
+  {
+    console.log(address, card)
+  }
+
 
 
 
