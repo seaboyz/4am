@@ -24,7 +24,7 @@ public class Order {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     // once the order is saved, the order items are saved in the order_items table
@@ -34,8 +34,6 @@ public class Order {
     // shipping address
     @Embedded
     private ShippingAddress shippingAddress;
-
-    // todo: implement payment_method
 
     private double total;
 

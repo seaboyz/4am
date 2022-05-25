@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
 import com.webdev.dao.OrderDao;
 import com.webdev.model.Customer;
 import com.webdev.model.Order;
@@ -36,7 +34,6 @@ public class OrderService {
     // 3. Product(id)
     // 4. Quantity(int)
 
-    @Transactional
     public Integer placeAOrder(
             Integer customerId,
             ShippingAddress shippingAddress,
