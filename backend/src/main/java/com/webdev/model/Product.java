@@ -15,14 +15,19 @@ public class Product {
     @Column(name = "id", updatable = false, nullable = false)
     private Integer id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "price", nullable = false)
     private double price;
 
+    @Column(name = "image", nullable = false)
     private String image;
 
+    @Column(name = "category", nullable = false)
     private String category;
 
     public Product() {

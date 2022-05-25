@@ -3,18 +3,17 @@ package com.webdev.utils;
 import java.io.File;
 import java.io.FileReader;
 import java.lang.reflect.Field;
-import java.util.List;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.webdev.model.Customer;
+import com.webdev.model.Product;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
-import com.webdev.model.Customer;
 
 public class Seeder {
 
@@ -89,10 +88,41 @@ public class Seeder {
         session.createQuery("delete from Product").executeUpdate();
 
         try {
-            File file = new File("backend/src/main/resources/data/products.json");
+            File file = new File("src/main/resources/data/products.json");
+            FileReader fileReader = new FileReader(file);
+            GsonBuilder gsonBuilder = new GsonBuilder();
+
+            // exclude the id field
+            ExclusionStrategy excludeId = new ExclusionStrategy() {
+                @Override
+                public boolean shouldSkipField(FieldAttributes f) {
+                    return f.getName().equals("id");
+                }
+
+                @Override
+                public boolean shouldSkipClass(java.lang.Class<?> clazz) {
+                    return false;
+                }
+            };
+
+            gsonBuilder.addDeserializationExclusionStrategy(excludeId);
+
+            Gson gson = gsonBuilder.create();
+
+            Product[] products = gson.fromJson(fileReader, Product[].class);
+
+            for (Product p : products) {
+                System.out.println(p);
+                session.save(p);
+            }
+
         } catch (Exception e) {
-            //TODO: handle exception
+            e.printStackTrace();
         }
+        session.getTransaction().commit();
+        session.close();
+        sessionFactory.close();
+
     }
 
 }
