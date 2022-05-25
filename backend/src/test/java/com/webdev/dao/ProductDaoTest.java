@@ -2,14 +2,13 @@ package com.webdev.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Optional;
 
-import javax.persistence.EntityManager;
 
 import com.google.gson.Gson;
 import com.webdev.model.Product;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -21,7 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class ProductDaoTest {
 	@Autowired
-	EntityManager entityManager;
+	SessionFactory sessionFactory;
 
 	@Autowired
 	ProductDao productDao;
@@ -51,7 +50,7 @@ public class ProductDaoTest {
 				"men's clothing");
 
 		// pre-inserted data and make sure the currentSession is closed before each test
-		currentSession = entityManager.unwrap(Session.class);
+		currentSession = sessionFactory.getCurrentSession();
 		currentSession.save(product);
 		currentSession.beginTransaction();
 		currentSession.save(product);
@@ -87,11 +86,11 @@ public class ProductDaoTest {
 
 		Integer id = product.getId();
 
-		Optional<Product> productFromDb = productDao.get(id);
+		Product productFromDb = productDao.get(id);
 
 		assertEquals(
 				gson.toJson(product, Product.class),
-				gson.toJson(productFromDb.get(), Product.class));
+				gson.toJson(productFromDb, Product.class));
 
 	}
 
@@ -118,7 +117,7 @@ public class ProductDaoTest {
 		productDao.delete(id);
 
 		// open a new currentSession
-		currentSession = entityManager.unwrap(Session.class);
+		currentSession = sessionFactory.getCurrentSession();
 		Product productFromDb = currentSession.get(Product.class, id);
 		assertEquals(
 				null,
@@ -133,7 +132,7 @@ public class ProductDaoTest {
 	void testDelete2() {
 		productDao.delete(product);
 		// open a new currentSession
-		currentSession = entityManager.unwrap(Session.class);
+		currentSession = sessionFactory.getCurrentSession();
 		Product productFromDb = currentSession.get(Product.class, product.getId());
 		assertEquals(
 				null,
@@ -150,7 +149,7 @@ public class ProductDaoTest {
 		productDao.update(product);
 
 		// open a new currentSession
-		currentSession = entityManager.unwrap(Session.class);
+		currentSession = sessionFactory.getCurrentSession();
 		Product productFromDb = currentSession.get(Product.class, product.getId());
 		assertEquals(
 				gson.toJson(product, Product.class),

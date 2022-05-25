@@ -1,61 +1,56 @@
 package com.webdev.service;
 
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 
 import com.webdev.dao.CustomerDao;
 import com.webdev.model.Address;
 import com.webdev.model.Customer;
 import com.webdev.model.ShippingAddress;
-import com.webdev.utils.AddressConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CustomerService {
 
-    private CustomerDao customerDao;
+    private final CustomerDao customerDao;
 
     @Autowired
     public CustomerService(CustomerDao customerDao) {
         this.customerDao = customerDao;
     }
 
-    @Transactional
-    public Optional<Customer> createCustomer(Customer customer) {
-        
-        Optional<Customer> optionalCustomer = customerDao.getbyEmail(customer.getEmail());
-        if (optionalCustomer.isPresent()) {
-            throw new IllegalArgumentException("Customer already exists");
-        }
-
+    public Customer createCustomer(Customer customer) {
         return customerDao.add(customer);
 
     }
 
-    @Transactional
-    public Optional<Customer> getCustomerById(Integer id) {
+    public Customer getCustomerById(Integer id) throws EntityNotFoundException {
         return customerDao.get(id);
-
     }
 
-    @Transactional
-    public Optional<Customer> getCustomerByEmail(String email) {
+    public Customer getCustomerByEmail(String email) throws EntityNotFoundException, NoResultException {
         return customerDao.getbyEmail(email);
     }
 
-    @Transactional
-    public void addAddressToCustomer(Integer customerId, ShippingAddress shippingAddress) {
-        Optional<Customer> optionalCustomer = getCustomerById(customerId);
-        if (!optionalCustomer.isPresent()) {
-            return;
-        }
+    public Customer addAddressToCustomer(
+            Integer customerId,
+            ShippingAddress shippingAddress)
+            throws EntityNotFoundException {
 
-        Customer customer = optionalCustomer.get();
+        Customer customer = customerDao.get(customerId);
 
-        Address address = AddressConverter.shippingAddressToAddress(shippingAddress);
+        Address address = new Address(
+                shippingAddress.getFirstName(),
+                shippingAddress.getLastName(),
+                shippingAddress.getStreet(),
+                shippingAddress.getStreet2(),
+                shippingAddress.getCity(),
+                shippingAddress.getState(),
+                shippingAddress.getZip(),
+                shippingAddress.getCountry());
 
-        customerDao.addAddress(customer, address);
+        return customerDao.addAddress(customer, address);
     }
 }

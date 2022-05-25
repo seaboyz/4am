@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity()
 @Table(name = "customers")
@@ -23,12 +24,15 @@ public class Customer {
     private Integer id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "Username is required")
     private String username;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "Email is required")
     private String email;
 
     @Column(nullable = false)
+    @NotBlank(message = "Password is required")
     private String password;
 
     @Column(name = "phone_number", nullable = false)
@@ -65,11 +69,11 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String username, String email, String password, String phoneNumber) {
+    public Customer(String username, String email, String password, String phone) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.phone = phoneNumber;
+        this.phone = phone;
     }
 
     public Integer getId() {

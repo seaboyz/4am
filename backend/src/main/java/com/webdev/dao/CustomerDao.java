@@ -1,81 +1,56 @@
 package com.webdev.dao;
 
 import java.util.List;
-import java.util.Optional;
 
-import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 
 import com.webdev.model.Address;
 import com.webdev.model.Customer;
 
-import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class CustomerDao {
 
-    private EntityManager entityManager;
-
-    private Session currentSession;
-
     @Autowired
-    public CustomerDao(EntityManager entityManager) {
-        this.entityManager = entityManager;
-        this.currentSession = entityManager.unwrap(Session.class);
-    }
+    private SessionFactory sessionFactory;
 
-    public Optional<Customer> add(Customer customer) {
 
-        currentSession = entityManager.unwrap(Session.class);
-        currentSession.save(customer);
-        currentSession.close();
-        if (customer.getId() == null) {
-            return Optional.empty();
-        }
-        return Optional.of(customer);
-    }
-
-    public Optional<Customer> get(Integer id) {
-        currentSession = entityManager.unwrap(Session.class);
-        Optional<Customer> customer = Optional.ofNullable(currentSession.get(Customer.class, id));
-        currentSession.close();
+    public Customer add(Customer customer) {
+        sessionFactory.getCurrentSession().save(customer);
         return customer;
     }
 
-    public Optional<Customer> getbyEmail(String email) {
-        currentSession = entityManager.unwrap(Session.class);
-        // Optional<Customer> customer = Optional
-        //         .ofNullable(currentSession.createQuery("from Customer where email = :email", Customer.class)
-        //                 .setParameter("email", email).getSingleResult());
-        // currentSession.close();
-        // return customer;
-        try {
-            Customer customerFromDb = currentSession.createQuery("from Customer where email = :email", Customer.class)
-                    .setParameter("email", email).getSingleResult();
-            return Optional.of(customerFromDb);
-        } catch (NoResultException e) {
-            return Optional.empty();
-        } finally {
-            currentSession.close();
-        }
+
+    public Customer get(Integer id) throws EntityNotFoundException {
+
+        return sessionFactory.getCurrentSession().get(Customer.class, id);
+
     }
 
+    public Customer getbyEmail(String email) throws NoResultException {
+
+        Customer customerFromDb = sessionFactory.getCurrentSession()
+                .createQuery("from Customer where email = :email", Customer.class)
+                .setParameter("email", email).getSingleResult();
+
+        return customerFromDb;
+    }
+
+
     public List<Customer> getAll() {
-        currentSession = entityManager.unwrap(Session.class);
-        List<Customer> customers = currentSession.createQuery("from Customer", Customer.class).list();
-        currentSession.close();
+
+        List<Customer> customers = sessionFactory.getCurrentSession().createQuery("from Customer", Customer.class)
+                .list();
         return customers;
     }
 
     public Customer update(Customer customer) {
-        currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
 
-        Customer customerToUpdate = currentSession.get(Customer.class, customer.getId());
-
-        currentSession.evict(customerToUpdate);
+        Customer customerToUpdate = sessionFactory.getCurrentSession().get(Customer.class, customer.getId());
 
         customerToUpdate.setUsername(customer.getUsername());
         customerToUpdate.setEmail(customer.getEmail());
@@ -85,32 +60,31 @@ public class CustomerDao {
             customerToUpdate.setAddresses(customer.getAddresses());
         }
 
-        currentSession.merge(customerToUpdate);
-        currentSession.getTransaction().commit();
-        currentSession.close();
-
         return customerToUpdate;
     }
 
+
     public void delete(Integer id) {
-        currentSession = entityManager.unwrap(Session.class);
-        Customer customer = currentSession.get(Customer.class, id);
-        currentSession.delete(customer);
+
+        Customer customer = sessionFactory.getCurrentSession().get(Customer.class, id);
+        sessionFactory.getCurrentSession().delete(customer);
     }
 
     public void delete(Customer customer) {
-        currentSession = entityManager.unwrap(Session.class);
-        currentSession.delete(customer);
+
+        sessionFactory.getCurrentSession().delete(customer);
     }
 
-    public void addAddress(Customer customer, Address address) {
-        currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
+
+    public Customer addAddress(Customer customer, Address address) {
+
+        // sessionFactory.getCurrentSession().beginTransaction();
         // manually add address to database, so trun off the cascade in the customer entity
-        currentSession.save(address);
+        sessionFactory.getCurrentSession().save(address);
         customer.getAddresses().add(address);
-        currentSession.merge(customer);
-        currentSession.getTransaction().commit();
-        currentSession.close();
+        sessionFactory.getCurrentSession().merge(customer);
+        sessionFactory.getCurrentSession().getTransaction().commit();
+
+        return customer;
     }
 }

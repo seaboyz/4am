@@ -2,7 +2,6 @@ package com.webdev.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import com.webdev.dao.ProductDao;
 import com.webdev.model.Product;
@@ -16,19 +15,13 @@ public class ProductService {
     @Autowired
     private ProductDao productDao;
 
-    
-    @Transactional
-    public Product getProductById(Integer id) {
-        Optional<Product> product = productDao.get(id);
+    @Transactional(readOnly = true)
+    public Product getProductById(Integer id) throws NoSuchElementException {
+        return productDao.get(id);
 
-        if (!product.isPresent()) {
-            throw new NoSuchElementException("Product not found with id: " + id);
-        }
-
-        return product.get();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Product> getAllProducts() {
         return productDao.getAll();
     }

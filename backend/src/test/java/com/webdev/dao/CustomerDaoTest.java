@@ -1,18 +1,16 @@
 package com.webdev.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Optional;
 
-import javax.persistence.EntityManager;
 
 import com.webdev.model.Customer;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,120 +18,67 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class CustomerDaoTest {
     @Autowired
-    EntityManager entityManager;
+    SessionFactory sessionFactory;
 
     @Autowired
     CustomerDao customerDao;
 
     Session currentSession;
 
+    Customer customer1;
+
     @BeforeEach
     public void init() {
-        currentSession = entityManager.unwrap(Session.class);
+        currentSession = sessionFactory.getCurrentSession();
+        customer1 = new Customer(
+                "username1",
+                "email1",
+                "password1",
+                "123456789");
     }
 
     @AfterEach
     public void tearDown() {
-        if (currentSession != null) {
-            currentSession.close();
-        }
-    }
-
-    @Test
-    void testAdd() {
-        Customer customer = new Customer(
-                "username1",
-                "email1",
-                "password",
-                "phoneNumber");
-
-        customerDao.add(customer);
-
-        Customer savedCustomer = currentSession.get(Customer.class, customer.getId());
-
-        assertEquals(customer.getUsername(), savedCustomer.getUsername());
-    }
-
-    @Test
-    void testGet() {
-        Customer customer = new Customer(
-                "username",
-                "email",
-                "password",
-                "phoneNumber");
-
-        currentSession.save(customer);
         currentSession.close();
+    }
 
-        assertEquals(customer.getUsername(), customerDao.get(customer.getId()).get().getUsername());
+    // @Disabled
+    @Test
+    @Order(1)
+    void testAdd() {
 
+        assertEquals(customer1.getUsername(), customerDao.add(customer1).getUsername());
     }
 
     @Test
+    @Order(2)
+    void testGet() {
+        assertEquals(customer1.getUsername(), customerDao.get(1).getUsername());
+    }
+
+    @Test
+    @Order(3)
     void testGetAll() {
-        Customer customer1 = new Customer(
-                "username1",
-                "email1",
-                "password",
-                "phoneNumber");
         Customer customer2 = new Customer(
                 "username2",
                 "email2",
                 "password",
-                "phoneNumber");
+                "123456789");
 
-        currentSession.save(customer1);
         currentSession.save(customer2);
-        currentSession.close();
 
         assertEquals(2, customerDao.getAll().size());
 
     }
 
     @Test
+    @Order(4)
     void testUpdate() {
-        Customer customer = new Customer(
-                "username1",
-                "email1",
-                "password",
-                "phoneNumber");
+        Customer customerToUpdate = currentSession.get(Customer.class, 1);
 
-        currentSession.save(customer);
-        currentSession.close();
+        customerToUpdate.setUsername("newUsername1");
 
-        customer.setUsername("username2");
+        assertEquals(customerToUpdate.getUsername(), customerDao.update(customerToUpdate).getUsername());
 
-        // currentSession = entityManager.unwrap(Session.class);
-        customerDao.update(customer);
-
-        // currentSession = entityManager.unwrap(Session.class);
-        Customer updatCustomer = currentSession.get(Customer.class, customer.getId());
-
-        assertEquals("username2", updatCustomer.getUsername());
-
-    }
-
-    @Disabled
-    @Test
-    void testDeleteById() throws Exception {
-        Customer customer = new Customer(
-                "username1",
-                "email1",
-                "password",
-                "phoneNumber");
-        // currentSession.beginTransaction();
-        currentSession.save(customer);
-
-        Customer savedCustomer = currentSession.get(Customer.class, customer.getId());
-
-        customerDao.delete(savedCustomer.getId());
-
-        // start a new currentSession
-        currentSession = entityManager.unwrap(Session.class);
-        // currentSession.beginTransaction();
-        Optional<Customer> deletedCustomer = customerDao.get(customer.getId());
-        currentSession.close();
-
-        assertTrue(!deletedCustomer.isPresent());
     }
 }

@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import com.google.gson.Gson;
 import com.webdev.dao.ProductDao;
@@ -49,7 +48,7 @@ public class ProductServiceTest {
     @Disabled
     @Test
     void testGetProductById() throws NoSuchElementException {
-        when(productDao.get(1)).thenReturn(Optional.ofNullable(product));
+        when(productDao.get(1)).thenReturn(product);
 
         Product productFromDb = productService.getProductById(1);
 

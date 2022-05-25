@@ -1,0 +1,95 @@
+<div class="register-page">
+    <mat-card class="mat-elevation-z12">
+        <mat-card-content>
+            <form action="">
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="User Name"
+                        required
+                        name="username"
+                        #username="ngModel"
+                        ngModel
+                    >
+                    <mat-error *ngIf="username.invalid">User name is required</mat-error>
+                    <mat-icon matSuffix>perm_identity</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Email"
+                        type="email"
+                        required
+                        name="email"
+                        ngModel
+                        #email="ngModel"
+                    >
+                    <mat-error *ngIf="email.invalid">Email is required</mat-error>
+                    <mat-icon matSuffix>email</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Password"
+                        type="password"
+                        required
+                        minlength="6"
+                        name="password"
+                        ngModel
+                        #password="ngModel"
+                    >
+                    <mat-error *ngIf="password.errors && password.errors['required']">
+                        Password is required
+                    </mat-error>
+                    <mat-error *ngIf="password.errors && password.errors['minlength']">
+                        Password must be of length 6
+                    </mat-error>
+                    <mat-icon matSuffix>lock</mat-icon>
+
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Re-Enter Password"
+                        type="password"
+                        required
+                        minlength="6"
+                        name="repassword"
+                        ngModel
+                        #repassword="ngModel"
+                    >
+                    <mat-error *ngIf="repassword.errors && repassword.errors['required']">
+                        Re-Enter Password is required
+                    </mat-error>
+                    <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="Phone Number"
+                        type="number"
+                        required
+                        minlength="10"
+                        name="phoneNumber"
+                        ngModel
+                        #phoneNumber="ngModel"
+                    >
+                    <mat-error *ngIf="phoneNumber.invalid">
+                        Re-Enter Password is required
+                    </mat-error>
+                    <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+                <button
+                    [disabled]="username.errors || email.errors ||password.errors && repassword.errors"
+                    mat-raised-button
+                    color="primary"
+                    class="register-button "
+                    style="text-transform: uppercase;letter-spacing: 2px;"
+                    (click)="register(username.value,email.value,password.value,phoneNumber.value)"
+                >
+                    Create your account
+                </button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

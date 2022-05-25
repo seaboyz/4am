@@ -1,38 +1,30 @@
 package com.webdev.dao;
 
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 
 import com.webdev.model.Order;
 
-import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class OrderDao {
     @Autowired
-    private EntityManager entityManager;
+    private SessionFactory sessionFactory;
 
     // add a new order
+
     public Integer add(Order order) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-        Integer id = (Integer) currentSession.save(order);
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        return id;
+        return (Integer) sessionFactory.getCurrentSession().save(order);
+
     }
 
     // get a order by id
-    public Optional<Order> get(Integer id) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-        Optional<Order> order = Optional.ofNullable(currentSession.get(Order.class, id));
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        return order;
+
+    public Order get(Integer id) throws EntityNotFoundException {
+        return sessionFactory.getCurrentSession().get(Order.class, id);
+
     }
 
 }

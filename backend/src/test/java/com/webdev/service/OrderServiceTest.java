@@ -4,10 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
-
-import javax.persistence.EntityManager;
 
 import com.webdev.model.Customer;
 import com.webdev.model.OrderItem;
@@ -15,6 +12,7 @@ import com.webdev.model.Product;
 import com.webdev.model.ShippingAddress;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class OrderServiceTest {
 
         @Autowired
-        EntityManager entityManager;
+        SessionFactory sessionFactory;
 
         @Autowired
         OrderService orderService;
@@ -63,7 +61,7 @@ public class OrderServiceTest {
                                 "38301",
                                 "USA");
 
-                Customer customer = new Customer("johnd", "john@gmail.com", "m38rmF", "1-570-236-7033");
+                Customer customer = new Customer("johnd", "john@gmail.com", "m38rmF", "123456789");
 
                 OrderItem orderItem1 = new OrderItem(product1, 1);
                 OrderItem orderItem2 = new OrderItem(product2, 2);
@@ -72,7 +70,7 @@ public class OrderServiceTest {
                 orderItems.add(orderItem1);
                 orderItems.add(orderItem2);
 
-                currentSession = entityManager.unwrap(Session.class);
+                currentSession = sessionFactory.getCurrentSession();
                 currentSession.beginTransaction();
                 currentSession.save(product1);
                 currentSession.save(product2);
@@ -94,11 +92,11 @@ public class OrderServiceTest {
                                 shippingAddress,
                                 orderList);
 
-                Optional<Customer> optionalCustomer = customerService.getCustomerById(customerId);
+                customer = customerService.getCustomerById(customerId);
 
                 assertEquals(1, orderId);
 
-                assertEquals(1, optionalCustomer.get().getOrders().size());
+                assertEquals(1, customer.getOrders().size());
 
         }
 

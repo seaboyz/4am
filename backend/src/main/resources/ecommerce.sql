@@ -17,6 +17,12 @@ VALUES ('morrison@gmail.com','83r5^_', '1-570-236-7033', 'mor_2314');
 INSERT INTO products (email, password, phone_number, username)
 VALUES ('	kevin@gmail.com','kev02937@', '1-567-094-1345', 'kevinryan');
 
+DELETE FROM customers
+WHERE username = 'username';
+
+DELETE FROM customers
+WHERE id = 15;
+
 
 
 

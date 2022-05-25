@@ -1,87 +1,43 @@
 package com.webdev.dao;
 
 import java.util.List;
-import java.util.Optional;
 
-import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 
 import com.webdev.model.Product;
 
-import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProductDao {
     @Autowired
-    private EntityManager entityManager;
+    private SessionFactory sessionFactory;;
 
     public Product add(Product product) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-        currentSession.save(product);
-        currentSession.getTransaction().commit();
-        currentSession.close();
+        sessionFactory.getCurrentSession().save(product);
         return product;
     }
 
-    public Optional<Product> get(Integer id) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-        Optional<Product> product = Optional.ofNullable(currentSession.get(Product.class, id));
-        currentSession.getTransaction().commit();
-        currentSession.close();
-        return product;
+    public Product get(Integer id) throws EntityNotFoundException {
+        return sessionFactory.getCurrentSession().get(Product.class, id);
     }
 
     public List<Product> getAll() {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-        List<Product> products = currentSession.createQuery("from Product", Product.class).list();
-
-        currentSession.getTransaction().commit();
-        currentSession.close();
-
-        return products;
+        return sessionFactory.getCurrentSession().createQuery("from Product", Product.class).list();
     }
 
     public Product update(Product product) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-
-        Product productToUpdate = currentSession.get(Product.class, product.getId());
-
-        currentSession.evict(productToUpdate);
-
-        productToUpdate.setName(product.getName());
-        productToUpdate.setDescription(product.getDescription());
-        productToUpdate.setPrice(product.getPrice());
-        productToUpdate.setImage(product.getImage());
-        productToUpdate.setCategory(product.getCategory());
-
-        currentSession.merge(productToUpdate);
-
-        currentSession.getTransaction().commit();
-        currentSession.close();
-
-        return productToUpdate;
+        return (Product) sessionFactory.getCurrentSession().merge(product);
 
     }
 
     public void delete(Integer id) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-        Product productToDelete = currentSession.get(Product.class, id);
-        currentSession.delete(productToDelete);
-        currentSession.getTransaction().commit();
-        currentSession.close();
+        sessionFactory.getCurrentSession().delete(get(id));
     }
 
     public void delete(Product product) {
-        Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.beginTransaction();
-        currentSession.delete(product);
-        currentSession.getTransaction().commit();
-        currentSession.close();
+        sessionFactory.getCurrentSession().delete(product);
     }
 }

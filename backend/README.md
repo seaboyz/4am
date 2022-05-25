@@ -62,3 +62,6 @@ after frontend receive the json object with the order infomation from the backen
 * frontend will send a json object with email and password to backend
 * backend will check if the email and password match with the database
 * if match, backend will send a json object with user_id, email, password(transient), phone_number, username, jwt token to the frontend
+
+
+#### HibernateConf is the same as hibernate.cfg.xml to configure the Hibernate SessionFactory without using spirng-jpa
