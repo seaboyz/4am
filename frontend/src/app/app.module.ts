@@ -29,6 +29,9 @@ import { ProductsPageComponent } from './views/products-page/products-page.compo
 
 import { CartItemComponent } from "./components/cart-item/cart-item.component";
 import { CartPageComponent } from "./views/cart-page/cart-page.component";
+import { UserProfilePageComponent } from './views/user-profile-page/user-profile-page.component';
+import { RegisterPageComponent } from './views/register-page/register-page.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { CartPageComponent } from "./views/cart-page/cart-page.component";
     ProductsComponent,
     ProductComponent,
     CartItemComponent,
-    CartPageComponent
+    CartPageComponent,
+    UserProfilePageComponent,
+    RegisterPageComponent,
+    UserProfileComponent
   ],
   imports: [
     HttpClientModule,
@@ -76,11 +82,15 @@ import { CartPageComponent } from "./views/cart-page/cart-page.component";
       },
       {
         path: 'register',
-        component: RegisterComponent
+        component: RegisterPageComponent
       },
       {
         path: 'cart',
         component: CartPageComponent
+      },
+      {
+        path: 'profile',
+        component: UserProfilePageComponent
       }
 
     ])

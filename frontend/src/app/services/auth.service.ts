@@ -16,7 +16,7 @@ export class AuthService
 
   currentUser = new BehaviorSubject<User | undefined>(undefined);
 
-  baseUrl: string = "http://localhost:8080/users";
+  
 
   constructor(private http: HttpClient)
   {
@@ -67,7 +67,7 @@ export class AuthService
     };
 
     return this.http.post<User>(this.base_url + 'register', JSON.stringify({ username, email, password, phone }), httpOptions);
-    
+
   }
 
   signOut()
@@ -75,6 +75,8 @@ export class AuthService
     localStorage.setItem("user", JSON.stringify({}))
     this.currentUser.next(undefined)
   }
+
+  
 
 
 }

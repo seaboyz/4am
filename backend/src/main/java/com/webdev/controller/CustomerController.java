@@ -5,10 +5,12 @@ import com.webdev.model.Customer;
 import com.webdev.service.CustomerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -22,17 +24,30 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/customers/{id}")
-    @ResponseBody
-    public String getCustomersById(@PathVariable String id) {
-        Integer customerId = Integer.parseInt(id);
+    @CrossOrigin()
+    @PutMapping("/customers/{id}")
+    public ResponseEntity<String> updateUserProile(
+            @PathVariable("id") Integer id,
+            @RequestBody Customer customer) {
 
-        Customer customerFromDb = customerService.getCustomerById(customerId);
+        try {
 
-        Gson gson = new Gson();
+            Customer updatedCustomer = customerService.updateCustomer(id, customer);
 
-        return gson.toJson(customerFromDb, Customer.class);
+            updatedCustomer.setPassword(null);
+            updatedCustomer.setOrders(null);
+            updatedCustomer.setAddresses(null);
+            updatedCustomer.setCartItems(null);
 
+            Gson gson = new Gson();
+
+            return new ResponseEntity<String>(
+                    gson.toJson(updatedCustomer, Customer.class), HttpStatus.OK);
+        } catch (
+
+        IllegalArgumentException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

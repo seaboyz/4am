@@ -8,6 +8,7 @@ import javax.persistence.NoResultException;
 import com.webdev.model.Address;
 import com.webdev.model.Customer;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,12 +19,10 @@ public class CustomerDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-
     public Customer add(Customer customer) {
         sessionFactory.getCurrentSession().save(customer);
         return customer;
     }
-
 
     public Customer get(Integer id) throws EntityNotFoundException {
 
@@ -40,7 +39,6 @@ public class CustomerDao {
         return customerFromDb;
     }
 
-
     public List<Customer> getAll() {
 
         List<Customer> customers = sessionFactory.getCurrentSession().createQuery("from Customer", Customer.class)
@@ -48,21 +46,23 @@ public class CustomerDao {
         return customers;
     }
 
-    public Customer update(Customer customer) {
+    public Customer update(Integer id, Customer customer) {
 
-        Customer customerToUpdate = sessionFactory.getCurrentSession().get(Customer.class, customer.getId());
+        Session currentSession = sessionFactory.openSession();
+
+        currentSession.beginTransaction();
+
+        Customer customerToUpdate = currentSession.get(Customer.class, id);
 
         customerToUpdate.setUsername(customer.getUsername());
         customerToUpdate.setEmail(customer.getEmail());
         customerToUpdate.setPassword(customer.getPassword());
         customerToUpdate.setPhone(customer.getPhone());
-        if (customer.getAddresses().size() != customerToUpdate.getAddresses().size()) {
-            customerToUpdate.setAddresses(customer.getAddresses());
-        }
+
+        currentSession.getTransaction().commit();
 
         return customerToUpdate;
     }
-
 
     public void delete(Integer id) {
 
@@ -74,7 +74,6 @@ public class CustomerDao {
 
         sessionFactory.getCurrentSession().delete(customer);
     }
-
 
     public Customer addAddress(Customer customer, Address address) {
 

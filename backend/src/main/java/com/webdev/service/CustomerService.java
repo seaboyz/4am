@@ -34,6 +34,10 @@ public class CustomerService {
         return customerDao.getbyEmail(email);
     }
 
+    public Customer updateCustomer(Integer id,Customer customer) {
+        return customerDao.update(id,customer);
+    }
+
     public Customer addAddressToCustomer(
             Integer customerId,
             ShippingAddress shippingAddress)
