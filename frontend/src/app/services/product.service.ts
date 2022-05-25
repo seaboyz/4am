@@ -192,7 +192,11 @@ export class ProductService
 
   loadProducts()
   {
-    return this.productList;
+    return this.http.get<Product[]>(this.baseUrl, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
   }
 
 

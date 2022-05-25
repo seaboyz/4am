@@ -20,7 +20,7 @@ export class ProductsPageComponent implements OnInit
 
   ngOnInit(): void
   {
-    this.productList = this.productService.loadProducts()
+    this.productService.loadProducts().subscribe(productList => this.productList = productList)
   }
 
 
