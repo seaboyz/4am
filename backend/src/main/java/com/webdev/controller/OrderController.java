@@ -1,14 +1,21 @@
 package com.webdev.controller;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.webdev.model.Customer;
+import com.webdev.model.Order;
+import com.webdev.model.OrderItem;
 import com.webdev.model.ShippingAddress;
 import com.webdev.service.CustomerService;
 import com.webdev.service.OrderService;
 import com.webdev.service.ProductService;
+import com.webdev.utils.DoubleToIntDeserializer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,24 +45,41 @@ public class OrderController {
     @CrossOrigin()
     @PostMapping(value = "/orders")
     public ResponseEntity<String> createOrder(@RequestBody String orderJson) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
 
-        Gson gson = new Gson();
+        gsonBuilder.registerTypeAdapter(OrderItem.class, new DoubleToIntDeserializer());
+        Gson gson = gsonBuilder.create();
 
         JsonObject orderJsonObject = gson.fromJson(orderJson, JsonObject.class);
 
         Integer customerId = orderJsonObject.get("customerId").getAsInt();
 
+        Customer customer = customerService.getCustomerById(customerId);
+
         ShippingAddress shippingAddress = gson.fromJson(orderJsonObject.get("shippingAddress"), ShippingAddress.class);
 
-        @SuppressWarnings("unchecked")
-        List<HashMap<String, Integer>> orderItems = gson
-                .fromJson(orderJsonObject.get("orderItems"), List.class);
+        List<Map<String, Integer>> orderItemsList = gson
+                .fromJson(orderJsonObject.get("orderItems"), new TypeToken<List<Map<String, Integer>>>() {
+                }.getType());
 
-        System.out.println(customerId);
-        System.out.println(shippingAddress);
-        System.out.println(orderItems);
+        List<OrderItem> orderItems = new ArrayList<>();
 
-        return new ResponseEntity<String>("Order created", HttpStatus.OK);
+        for (Map<String, Integer> orderItem : orderItemsList) {
+
+            Integer productId = orderItem.get("productId");
+            Integer quantity = orderItem.get("quantity");
+
+            orderItems.add(new OrderItem(productService.getProductById(productId), quantity));
+
+        }
+
+        // System.out.println(customer);
+        // System.out.println(shippingAddress);
+        // System.out.println(orderItems);
+
+        Integer orderId = orderService.placeAOrder(new Order(customer, shippingAddress, orderItems));
+
+        return new ResponseEntity<String>("Order " + orderId + " is created.", HttpStatus.OK);
     }
 
 }

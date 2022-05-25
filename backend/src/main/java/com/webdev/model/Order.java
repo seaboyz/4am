@@ -1,6 +1,8 @@
 package com.webdev.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,7 +31,7 @@ public class Order {
 
     // once the order is saved, the order items are saved in the order_items table
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<OrderItem> orderItemList = new HashSet<OrderItem>();
+    private List<OrderItem> orderItemList = new ArrayList<OrderItem>();
 
     // shipping address
     @Embedded
@@ -44,7 +46,7 @@ public class Order {
     // there is no meaning to have an order without an order item
     // there is no meaning to have an order without a shipping address
     // total should be calculated from the order items
-    public Order(Customer customer, ShippingAddress shippingAddress, Set<OrderItem> orderItemList) {
+    public Order(Customer customer, ShippingAddress shippingAddress, List<OrderItem> orderItemList) {
         this.customer = customer;
         this.shippingAddress = shippingAddress;
         this.orderItemList = orderItemList;
@@ -60,7 +62,7 @@ public class Order {
         return customer;
     }
 
-    public Set<OrderItem> getOrderDetails() {
+    public List<OrderItem> getOrderDetails() {
         return orderItemList;
     }
 

@@ -31,7 +31,7 @@ public class OrderItem {
     }
 
     // subtotal should be calculated from the product price and quantity
-    public OrderItem(Product product, int quantity) {
+    public OrderItem(Product product, Integer quantity) {
         this.product = product;
         this.quantity = quantity;
         this.subtotal = product.getPrice() * quantity;

@@ -2,6 +2,7 @@ package com.webdev.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,7 +67,7 @@ public class OrderDaoTest {
 
         orderItem = new OrderItem(product, 1);
 
-        Set<OrderItem> orderItemList = new HashSet<>();
+        List<OrderItem> orderItemList = new ArrayList<>();
 
         orderItemList.add(orderItem);
 
@@ -130,7 +131,7 @@ public class OrderDaoTest {
         currentSession.getTransaction().commit();
         currentSession.close();
 
-        Set<OrderItem> orderItemList = new HashSet<>();
+        List<OrderItem> orderItemList = new ArrayList<>();
 
         orderItemList.add(orderItem);
 
