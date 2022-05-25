@@ -3,13 +3,14 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
-    display: block;
-    background-position: center;
+    display: flex;
+    align-items: center;
+    /* background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    overflow: hidden;
+    overflow: hidden; */
     /* background-color: #F1F1F1; */
+
 }
 
 mat-card {
