@@ -4,13 +4,14 @@
 html,
 body {
     height: 100%;
+    max-width: 100vw;
+    overflow: hidden;
 }
 
 body {
     margin: 0;
     // font-family: "Open Sans Condensed", sans-serif;
     font-family: 'Manrope', sans-serif;
-    padding: 20px 60px;
 
     a {
         text-decoration: none;
