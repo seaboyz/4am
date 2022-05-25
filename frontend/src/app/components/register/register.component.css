@@ -1,4 +1,4 @@
-.register-page {
+.register {
     top: 0;
     margin: 0;
     padding: 0;
@@ -49,7 +49,7 @@ mat-card-content {
     color: #F1F1F1;
 }
 
-.register-button:disabled{
+.register-button:disabled {
     background-color: #fbaf85;
     color: #F1F1F1;
 }

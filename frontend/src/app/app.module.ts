@@ -32,6 +32,8 @@ import { CartPageComponent } from "./views/cart-page/cart-page.component";
 import { UserProfilePageComponent } from './views/user-profile-page/user-profile-page.component';
 import { RegisterPageComponent } from './views/register-page/register-page.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { CheckoutPageComponent } from './views/checkout-page/checkout-page.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     CartPageComponent,
     UserProfilePageComponent,
     RegisterPageComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    CheckoutPageComponent,
+    CheckoutComponent
   ],
   imports: [
     HttpClientModule,
@@ -91,6 +95,10 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
       {
         path: 'profile',
         component: UserProfilePageComponent
+      },
+      {
+        path: 'checkout',
+        component: CheckoutPageComponent
       }
 
     ])

@@ -1,0 +1,56 @@
+<div class="checkout">
+    <mat-card class="mat-elevation-z12">
+        <mat-card-title>CHECKOUT</mat-card-title>
+        <mat-card-content>
+            <mat-card-subtitle>BILLING DETIALS</mat-card-subtitle>
+            <form action="">
+                <div class="group">
+                    <mat-form-field>
+                        <input
+                            matInput
+                            placeholder="First Name"
+                            required
+                            name="firstname"
+                            #firstname="ngModel"
+                            ngModel
+                        >
+                        <mat-error *ngIf="firstname.invalid">first name is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input
+                            matInput
+                            placeholder="First Name"
+                            required
+                            name="firstname"
+                            #firstname="ngModel"
+                            ngModel
+                        >
+                        <mat-error *ngIf="firstname.invalid">last name is required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input
+                            matInput
+                            placeholder="Phone Number"
+                            required
+                            name="phone"
+                            #phone="ngModel"
+                            ngModel
+                        >
+                        <mat-error *ngIf="firstname.invalid">phone number is required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <button
+                    [disabled]="firstname.errors "
+                    mat-raised-button
+                    color="primary"
+                    class="register-button "
+                    style="text-transform: uppercase;letter-spacing: 2px;"
+                    (click)="placeOrder()"
+                >
+                    Place your order
+                </button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
