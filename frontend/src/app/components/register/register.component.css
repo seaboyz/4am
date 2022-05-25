@@ -9,7 +9,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
-    background-color: #F1F1F1;
+    /* background-color: #F1F1F1; */
 }
 
 mat-card {
