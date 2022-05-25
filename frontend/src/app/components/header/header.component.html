@@ -13,13 +13,17 @@
         <a
             class="option"
             routerLink=""
-        >Shop</a>
+        >Home</a>
+        <a
+            *ngIf="user"
+            class="option"
+        >Welcome {{user?.username}}</a>
 
         <a
-            *ngIf="user?.username; else signin"
+            *ngIf="user; else signin"
             class="option"
             (click)="signOut()"
-        >Welcome {{user?.username}}</a>
+        >Sign Out</a>
         <ng-template
             #signin
             class="option"

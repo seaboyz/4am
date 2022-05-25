@@ -39,7 +39,7 @@ export class AuthService
 
   }
 
-  login(email: string, password: string): Observable<any>
+  login(email: string, password: string): Observable<User>
   {
     const base64Credential: string = btoa(email + ':' + password);
 
@@ -49,7 +49,15 @@ export class AuthService
       }
     }
 
-    return this.http.get<User>(this.base_url + 'login', httpOptions);
+    const user: Observable<User> = this.http.get<User>(this.base_url + 'login', httpOptions);
+
+    user.subscribe(user =>
+    {
+      this.currentUser.next(user);
+      localStorage.setItem("user", JSON.stringify(user))
+    });
+
+    return user;
   }
 
   register(username: string, email: string, password: string, phoneNumber: string): Observable<any>
