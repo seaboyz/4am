@@ -2,8 +2,6 @@ package com.webdev.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-
 import com.webdev.model.Customer;
 
 import org.hibernate.Session;
@@ -71,14 +69,14 @@ public class CustomerDaoTest {
 
     }
 
-    @Test
-    @Order(4)
-    void testUpdate() {
-        Customer customerToUpdate = currentSession.get(Customer.class, 1);
+    // @Test
+    // @Order(4)
+    // void testUpdate() {
+    //     Customer customerToUpdate = currentSession.get(Customer.class, 1);
 
-        customerToUpdate.setUsername("newUsername1");
+    //     customerToUpdate.setUsername("newUsername1");
 
-        assertEquals(customerToUpdate.getUsername(), customerDao.update(customerToUpdate).getUsername());
+    //     assertEquals(customerToUpdate.getUsername(), customerDao.update(customerToUpdate).getUsername());
 
-    }
+    // }
 }
