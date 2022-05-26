@@ -33,6 +33,11 @@ So our team never agreed on the definition of the cart.
 
 #### 5. conclustion
 ##### The freedom from the Agile is attractive, waterfall is the better fit. 
+No one Likes to Follow rules.
+Follow, and relax.
+Here wants to thank kyle again.
+
+
 
 
 
