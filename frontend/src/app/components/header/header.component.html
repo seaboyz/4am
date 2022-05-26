@@ -3,7 +3,6 @@
         class="logo-container"
         routerLink="/"
     >
-
         <a
             class="logo"
             routerLink=""
@@ -29,7 +28,7 @@
         </ng-template>
 
         <a
-            *ngIf="!user"
+            *ngIf="!user?.id"
             class="option"
             routerLink="register"
         >Sign Up</a>

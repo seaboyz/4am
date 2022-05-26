@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/services/auth.service";
 import { UserService } from "src/app/services/user.service";
@@ -18,9 +18,19 @@ export class UserProfileComponent implements OnInit
   #phone: string = "";
 
 
-  constructor(private userSerive: UserService, private router: Router)
+  constructor(
+    private userSerive: UserService,
+    private router: Router,
+    private authService: AuthService
+  )
   {
 
+    authService.currentUser.subscribe(user =>
+    {
+      if (!user)
+        return;
+
+    })
   }
 
   ngOnInit(): void
