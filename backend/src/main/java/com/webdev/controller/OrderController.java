@@ -12,7 +12,7 @@ import com.webdev.model.Customer;
 import com.webdev.model.Order;
 import com.webdev.model.OrderItem;
 import com.webdev.model.ShippingAddress;
-import com.webdev.service.CustomerService;
+import com.webdev.service.CustomerSerivice;
 import com.webdev.service.OrderService;
 import com.webdev.service.ProductService;
 import com.webdev.utils.DoubleToIntDeserializer;
@@ -29,14 +29,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OrderController {
 
-    private CustomerService customerService;
+    private CustomerSerivice customerService;
 
     private ProductService productService;
 
     private OrderService orderService;
 
     @Autowired
-    public OrderController(CustomerService customerService, ProductService productService, OrderService orderService) {
+    public OrderController(CustomerSerivice customerService, ProductService productService, OrderService orderService) {
         this.customerService = customerService;
         this.productService = productService;
         this.orderService = orderService;
@@ -45,7 +45,7 @@ public class OrderController {
     @CrossOrigin()
     @PostMapping(value = "/orders")
     public ResponseEntity<String> createOrder(@RequestBody String orderJson) {
-        System.out.println(orderJson);
+        // System.out.println(orderJson);
 
         GsonBuilder gsonBuilder = new GsonBuilder();
 

@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomerService {
+public class CustomerSerivice {
 
     private final CustomerDao customerDao;
 
     @Autowired
-    public CustomerService(CustomerDao customerDao) {
+    public CustomerSerivice(CustomerDao customerDao) {
         this.customerDao = customerDao;
     }
 
@@ -38,6 +38,10 @@ public class CustomerService {
         return customerDao.update(id, customer);
     }
 
+    public Customer updateCustomer(Customer customer) {
+        return customerDao.update(customer);
+    }
+
     public Customer addAddressToCustomer(
             Customer customer,
             ShippingAddress shippingAddress) {
@@ -46,7 +50,6 @@ public class CustomerService {
                 shippingAddress.getFirstName(),
                 shippingAddress.getLastName(),
                 shippingAddress.getStreet(),
-                // shippingAddress.getStreet2(),
                 shippingAddress.getCity(),
                 shippingAddress.getState(),
                 shippingAddress.getZip(),

@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 @Entity()
 @Table(name = "customers")
@@ -30,6 +29,8 @@ public class Customer {
 
     @Column(nullable = false)
     private String password;
+
+    private String token;
 
     @Column(name = "phone_number", nullable = false)
     private String phone;
@@ -98,6 +99,14 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getPhone() {

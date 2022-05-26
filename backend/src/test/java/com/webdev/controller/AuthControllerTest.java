@@ -9,7 +9,7 @@ import java.util.Base64;
 
 import com.google.gson.Gson;
 import com.webdev.model.Customer;
-import com.webdev.service.CustomerService;
+import com.webdev.service.CustomerSerivice;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(AuthController.class)
 public class AuthControllerTest {
         @MockBean
-        private CustomerService customerService;
+        private CustomerSerivice customerService;
         @Autowired
         private MockMvc mockMvc;
 

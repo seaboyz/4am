@@ -20,11 +20,11 @@ public class CustomerServiceTest {
     @Mock
     private CustomerDao customerDao;
 
-    private CustomerService customerService;
+    private CustomerSerivice customerService;
 
     @BeforeEach
     public void setUp() {
-        customerService = new CustomerService(customerDao);
+        customerService = new CustomerSerivice(customerDao);
 
     }
 

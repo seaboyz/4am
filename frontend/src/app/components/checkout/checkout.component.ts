@@ -55,8 +55,6 @@ export class CheckoutComponent implements OnInit
   placeOrder(address: Address, card: Card)
   {
 
-    console.log(card);
-
     const customerId: number | undefined = this.currentUser?.id;
 
     const shippingAddress = address;

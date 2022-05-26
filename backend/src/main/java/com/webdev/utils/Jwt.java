@@ -31,9 +31,8 @@ public class Jwt {
 
         // get jwt token
         Algorithm algorithm = Algorithm.HMAC256(SECRECT);
-        Builder builder = JWT.create().withIssuer("auth0").withClaim("username", user.getUsername()).withClaim("id",
+        Builder builder = JWT.create().withIssuer("auth0").withClaim("email", customer.getEmail()).withClaim("id",
                 customer.getId());
-
 
         return builder.sign(algorithm);
     }

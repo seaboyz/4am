@@ -32,9 +32,15 @@ public class CustomerDao {
 
     public Customer getbyEmail(String email) throws NoResultException {
 
-        Customer customerFromDb = sessionFactory.getCurrentSession()
-                .createQuery("from Customer where email = :email", Customer.class)
-                .setParameter("email", email).getSingleResult();
+        Customer customerFromDb;
+
+        try {
+            customerFromDb = sessionFactory.getCurrentSession()
+                    .createQuery("from Customer where email = :email", Customer.class)
+                    .setParameter("email", email).getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
 
         return customerFromDb;
     }
@@ -62,6 +68,10 @@ public class CustomerDao {
         currentSession.getTransaction().commit();
 
         return customerToUpdate;
+    }
+
+    public Customer update(Customer customer) {
+        return (Customer) sessionFactory.getCurrentSession().merge(customer);
     }
 
     public void delete(Integer id) {

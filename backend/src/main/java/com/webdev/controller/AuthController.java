@@ -3,12 +3,10 @@ package com.webdev.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.NoResultException;
-
 import com.google.gson.Gson;
 import com.webdev.model.Customer;
-import com.webdev.service.CustomerService;
+import com.webdev.service.AuthServiceWithJwt;
+import com.webdev.service.CustomerSerivice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,11 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class AuthController {
-    private CustomerService customerService;
+
+    private AuthServiceWithJwt authService;
 
     @Autowired
-    public AuthController(CustomerService customerService) {
-        this.customerService = customerService;
+    public AuthController(CustomerSerivice customerService, AuthServiceWithJwt authService) {
+
+        this.authService = authService;
     }
 
     @CrossOrigin()
@@ -42,18 +42,7 @@ public class AuthController {
             String email = credentialsArray[0];
             String password = credentialsArray[1];
 
-            Customer customer;
-            try {
-                customer = customerService.getCustomerByEmail(email);
-            } catch (EntityNotFoundException | NoResultException e) {
-                return new ResponseEntity<String>(email + ": NOT FOUND", HttpStatus.NON_AUTHORITATIVE_INFORMATION);
-            } catch (IllegalArgumentException e) {
-                return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-            }
-
-            if (!customer.getPassword().equals(password)) {
-                return new ResponseEntity<String>("Email and password not match", HttpStatus.UNAUTHORIZED);
-            }
+            Customer customer = authService.login(email, password);
 
             customer.setPassword(null);
             customer.setOrders(null);
@@ -74,9 +63,9 @@ public class AuthController {
     @PostMapping(value = "/auth/register")
     public ResponseEntity<String> register(
             @RequestBody Customer customer) {
-        System.out.println(customer);
+
         try {
-            Customer registeredCustomer = customerService.createCustomer(customer);
+            Customer registeredCustomer = authService.register(customer);
             registeredCustomer.setPassword(null);
             registeredCustomer.setOrders(null);
             registeredCustomer.setAddresses(null);

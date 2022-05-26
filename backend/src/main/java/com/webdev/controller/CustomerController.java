@@ -2,7 +2,7 @@ package com.webdev.controller;
 
 import com.google.gson.Gson;
 import com.webdev.model.Customer;
-import com.webdev.service.CustomerService;
+import com.webdev.service.CustomerSerivice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CustomerController {
 
-    private CustomerService customerService;
+    private CustomerSerivice customerService;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerSerivice customerService) {
         this.customerService = customerService;
     }
 
