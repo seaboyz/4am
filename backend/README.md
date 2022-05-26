@@ -1,5 +1,7 @@
-### ERD - Entity-Relationship Diagram
-#### V1(05/05/2022)
+### Pitfalls
+#### 1. Inadequate Planning
+* No solid database entity relationship diagram
+* #### V1(05/05/2022)
 ![](/images/database/ERD-Kenneth.png)
 #### V2(05/06/2022)
 ![](images/database/ERD-TEAM-V1.png)
@@ -7,10 +9,6 @@
 ![](images/database/ERD-Fatemeh.png)
 #### MINE
 ![](/images/database/ERD.png) 
-
-### Pitfalls
-#### 1. Inadequate Planning
-* No solid database entity relationship diagram
 #### 2. Poor Communication
 * Diffrent intepretations of the user story
 So our team never agreed on the definition of the cart.
@@ -32,6 +30,9 @@ So our team never agreed on the definition of the cart.
 * I as a foreigner, I learned those when i was in college 20 years ago, but when i came to the usa, I find out there are few people knows about it.industrial level.
 * american put out standards only for other countries.
 * Last but certainly not least, a lack of testing is our last pitfall of software development. Testing is critical to the success of any software project despite the fact that it is often sidelined due to time or budget constraints. Nonetheless, a lack of testing can lead to disastrous results.
+
+#### 5. conclustion
+##### The freedom from the Agile is attractive, waterfall is the better fit. 
 
 
 
