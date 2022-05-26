@@ -3,7 +3,7 @@
   src="https://dbdiagram.io/d/62733e857f945876b6bb6479"
   style="width:100%; height:100%;"
 ></iframe> -->
-![](/backend/images/database/Screen%20Shot%202022-05-15%20at%204.56.54%20AM.png)
+![](/images/database/Screen%20Shot%202022-05-26%20at%2012.29.26%20AM.png)
 
 ## NOTE
 Add `hibernate.cfg.xml` to `/backend/src/main/resources`
@@ -39,12 +39,12 @@ A much better approach is to limit the choices the customer can make to only tho
 * The two Tables are linked by the OrderID 
 * The Orders Table has a One-to-Many Relationship to the OrderDetails Table (one Order can have many OrderDetails)
 
-#### @Transactional
+<!-- #### @Transactional
 ![](/backend/images/spring/Screen%20Shot%202022-05-17%20at%203.36.48%20AM.png)
 
 #### Start Class
 ![](images/spring/Screen%20Shot%202022-05-17%20at%208.02.43%20AM.png)
-?? is this equivalent to SpringBootServletInitializer ??
+?? is this equivalent to SpringBootServletInitializer ?? -->
 
 | id  | email          | password       | phone_number | username |
 | --- | -------------- | -------------- | ------------ | -------- |
@@ -59,9 +59,7 @@ when backend receive the json object, it will create an order with customer_id, 
 after frontend receive the json object with the order infomation from the backend, it will clear the cart_item in the local storage/session storage/cookie storage * show the customer order received message
 
 #### login
-* frontend will send a json object with email and password to backend
+* frontend will use base64 encode email and password and send it to backend 
 * backend will check if the email and password match with the database
 * if match, backend will send a json object with user_id, email, password(transient), phone_number, username, jwt token to the frontend
 
-
-#### HibernateConf is the same as hibernate.cfg.xml to configure the Hibernate SessionFactory without using spirng-jpa
