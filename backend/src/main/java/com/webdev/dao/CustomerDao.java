@@ -79,9 +79,11 @@ public class CustomerDao {
 
         // sessionFactory.getCurrentSession().beginTransaction();
         // manually add address to database, so trun off the cascade in the customer entity
-        sessionFactory.getCurrentSession().save(address);
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.beginTransaction();
+        address.setCustomer(customer);
         customer.getAddresses().add(address);
-        sessionFactory.getCurrentSession().merge(customer);
+        currentSession.save(customer);
         sessionFactory.getCurrentSession().getTransaction().commit();
 
         return customer;

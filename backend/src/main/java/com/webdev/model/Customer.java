@@ -1,10 +1,9 @@
 package com.webdev.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,39 +23,23 @@ public class Customer {
     private Integer id;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Username is required")
     private String username;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Email is required")
     private String email;
 
     @Column(nullable = false)
-    @NotBlank(message = "Password is required")
     private String password;
 
     @Column(name = "phone_number", nullable = false)
     private String phone;
 
     // when save the customer, if there are any unsaved addresses, save them
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    private List<Address> addresses = new ArrayList<Address>();
-
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
-
-    // public void addAddress(Address address) {
-    // this.addresses.add(address);
-    // address.setCustomer(this);
-    // }
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Address> addresses;
 
     @OneToMany(mappedBy = "customer")
-    private Set<CartItem> cartItems = new HashSet<CartItem>();
+    private List<CartItem> cartItems = new ArrayList<CartItem>();
 
     public void addCartItem(CartItem cartItem) {
         this.cartItems.add(cartItem);
@@ -64,7 +47,7 @@ public class Customer {
     }
 
     @OneToMany(mappedBy = "customer")
-    private Set<Order> orders = new HashSet<Order>();
+    private List<Order> orders = new ArrayList<Order>();
 
     public Customer() {
     }
@@ -74,6 +57,15 @@ public class Customer {
         this.email = email;
         this.password = password;
         this.phone = phone;
+        this.addresses = new ArrayList<Address>();
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 
     public Integer getId() {
@@ -116,19 +108,19 @@ public class Customer {
         this.phone = phoneNumber;
     }
 
-    public Set<CartItem> getCartItems() {
+    public List<CartItem> getCartItems() {
         return cartItems;
     }
 
-    public void setCartItems(Set<CartItem> cartItems) {
+    public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
     }
 
-    public Set<Order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(Set<Order> orders) {
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
 

@@ -33,7 +33,7 @@ public class AddressDao {
         addressToUpdate.setFirstName(address.getFirstName());
         addressToUpdate.setLastName(address.getLastName());
         addressToUpdate.setStreet(address.getStreet());
-        addressToUpdate.setStreet2(address.getStreet2());
+        // addressToUpdate.setStreet2(address.getStreet2());
         addressToUpdate.setCity(address.getCity());
         addressToUpdate.setState(address.getState());
         addressToUpdate.setZip(address.getZip());

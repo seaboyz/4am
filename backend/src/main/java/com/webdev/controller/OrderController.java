@@ -72,7 +72,6 @@ public class OrderController {
             Integer quantity = orderItem.get("quantity");
 
             orderItems.add(new OrderItem(productService.getProductById(productId), quantity));
-
         }
 
         // System.out.println(customer);
@@ -80,6 +79,10 @@ public class OrderController {
         // System.out.println(orderItems);
 
         Integer orderId = orderService.placeAOrder(new Order(customer, shippingAddress, orderItems));
+
+        Customer updatedCustomer = customerService.addAddressToCustomer(customer, shippingAddress);
+
+        System.out.println(updatedCustomer);
 
         return new ResponseEntity<String>("Order " + orderId + " is created.", HttpStatus.OK);
     }

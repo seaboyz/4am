@@ -34,22 +34,19 @@ public class CustomerService {
         return customerDao.getbyEmail(email);
     }
 
-    public Customer updateCustomer(Integer id,Customer customer) {
-        return customerDao.update(id,customer);
+    public Customer updateCustomer(Integer id, Customer customer) {
+        return customerDao.update(id, customer);
     }
 
     public Customer addAddressToCustomer(
-            Integer customerId,
-            ShippingAddress shippingAddress)
-            throws EntityNotFoundException {
-
-        Customer customer = customerDao.get(customerId);
+            Customer customer,
+            ShippingAddress shippingAddress) {
 
         Address address = new Address(
                 shippingAddress.getFirstName(),
                 shippingAddress.getLastName(),
                 shippingAddress.getStreet(),
-                shippingAddress.getStreet2(),
+                // shippingAddress.getStreet2(),
                 shippingAddress.getCity(),
                 shippingAddress.getState(),
                 shippingAddress.getZip(),

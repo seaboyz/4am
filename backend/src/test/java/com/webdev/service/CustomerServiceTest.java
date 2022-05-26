@@ -88,7 +88,8 @@ public class CustomerServiceTest {
 
         when(customerDao.addAddress(customer, address)).thenReturn(customer);
 
-        assertEquals(customer.getAddresses(), customerService.addAddressToCustomer(1, shippingAddress).getAddresses());
+        assertEquals(customer.getAddresses(),
+                customerService.addAddressToCustomer(customer, shippingAddress).getAddresses());
 
     }
 

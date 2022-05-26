@@ -14,8 +14,8 @@ public class ShippingAddress {
     @Column(name = "first_street_line")
     private String street;
 
-    @Column(name = "second_street_line")
-    private String street2;
+    // @Column(name = "second_street_line")
+    // private String street2;
 
     private String city;
 
@@ -33,7 +33,7 @@ public class ShippingAddress {
         this.firstName = firstName;
         this.lastName = lastName;
         this.street = street;
-        this.street2 = street2;
+        // this.street2 = street2;
         this.city = city;
         this.state = state;
         this.zip = zip;
@@ -56,9 +56,9 @@ public class ShippingAddress {
         this.street = street;
     }
 
-    public String getStreet2() {
-        return street2;
-    }
+    // public String getStreet2() {
+    //     return street2;
+    // }
 
     public String getCity() {
         return city;
@@ -76,9 +76,9 @@ public class ShippingAddress {
         return country;
     }
 
-    @Override
-    public String toString() {
-        return "Address [street=" + street + ", street2=" + street2 + ", city=" + city + ", state="
-                + state + ", zip=" + zip + ", country=" + country + "]";
-    }
+    // @Override
+    // public String toString() {
+    //     return "Address [street=" + street + ", street2=" + street2 + ", city=" + city + ", state="
+    //             + state + ", zip=" + zip + ", country=" + country + "]";
+    // }
 }

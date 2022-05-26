@@ -27,11 +27,8 @@ public class Address {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "first_street_line", nullable = false)
+    @Column(nullable = false)
     private String street;
-
-    @Column(name = "second_street_line", nullable = false)
-    private String street2;
 
     @Column(name = "city", nullable = false)
     private String city;
@@ -48,12 +45,11 @@ public class Address {
     public Address() {
     }
 
-    public Address(String firstName, String lastName, String street, String street2, String city, String state,
+    public Address(String firstName, String lastName, String street, String city, String state,
             String zip, String country) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.street = street;
-        this.street2 = street2;
         this.city = city;
         this.state = state;
         this.zip = zip;
@@ -92,14 +88,6 @@ public class Address {
         this.street = street;
     }
 
-    public String getStreet2() {
-        return street2;
-    }
-
-    public void setStreet2(String street2) {
-        this.street2 = street2;
-    }
-
     public String getCity() {
         return city;
     }
@@ -134,7 +122,7 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address [id=" + id + ", street=" + street + ", street2=" + street2 + ", city=" + city + ", state="
+        return "Address [id=" + id + ", street=" + street + ", city=" + city + ", state="
                 + state + ", zip=" + zip + ", country=" + country + "]";
     }
 
