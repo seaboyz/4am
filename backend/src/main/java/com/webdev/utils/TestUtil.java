@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import com.google.gson.Gson;
 import com.webdev.model.Address;
-import com.webdev.model.CartItem;
+// import com.webdev.model.CartItem;
 import com.webdev.model.Customer;
 import com.webdev.model.Order;
 import com.webdev.model.OrderItem;
@@ -36,7 +36,7 @@ public class TestUtil {
             configuration.addAnnotatedClass(Order.class);
             configuration.addAnnotatedClass(Product.class);
             configuration.addAnnotatedClass(OrderItem.class);
-            configuration.addAnnotatedClass(CartItem.class);
+            // configuration.addAnnotatedClass(CartItem.class);
 
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();

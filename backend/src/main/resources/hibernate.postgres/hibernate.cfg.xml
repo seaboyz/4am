@@ -13,7 +13,7 @@
         <mapping class="com.webdev.model.Address" />
         <mapping class="com.webdev.model.Product" />
         <mapping class="com.webdev.model.OrderItem" />
-        <mapping class="com.webdev.model.CartItem" />
+        <!-- <mapping class="com.webdev.model.CartItem" /> -->
         <mapping class="com.webdev.model.Order" />
 
     </session-factory>

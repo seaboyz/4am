@@ -47,7 +47,7 @@ public class AuthController {
             customer.setPassword(null);
             customer.setOrders(null);
             customer.setAddresses(null);
-            customer.setCartItems(null);
+            // customer.setCartItems(null);
             Gson gson = new Gson();
             String json = gson.toJson(customer, Customer.class);
 
@@ -69,7 +69,7 @@ public class AuthController {
             registeredCustomer.setPassword(null);
             registeredCustomer.setOrders(null);
             registeredCustomer.setAddresses(null);
-            registeredCustomer.setCartItems(null);
+            // registeredCustomer.setCartItems(null);
 
             Gson gson = new Gson();
             String json = gson.toJson(registeredCustomer, Customer.class);

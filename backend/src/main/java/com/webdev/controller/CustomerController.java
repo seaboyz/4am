@@ -37,7 +37,7 @@ public class CustomerController {
             updatedCustomer.setPassword(null);
             updatedCustomer.setOrders(null);
             updatedCustomer.setAddresses(null);
-            updatedCustomer.setCartItems(null);
+            // updatedCustomer.setCartItems(null);
 
             Gson gson = new Gson();
 

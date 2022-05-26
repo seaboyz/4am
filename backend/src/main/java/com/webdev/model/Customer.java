@@ -39,13 +39,13 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Address> addresses;
 
-    @OneToMany(mappedBy = "customer")
-    private List<CartItem> cartItems = new ArrayList<CartItem>();
+    // @OneToMany(mappedBy = "customer")
+    // private List<CartItem> cartItems = new ArrayList<CartItem>();
 
-    public void addCartItem(CartItem cartItem) {
-        this.cartItems.add(cartItem);
-        cartItem.setCustomer(this);
-    }
+    // public void addCartItem(CartItem cartItem) {
+    //     this.cartItems.add(cartItem);
+    //     cartItem.setCustomer(this);
+    // }
 
     @OneToMany(mappedBy = "customer")
     private List<Order> orders = new ArrayList<Order>();
@@ -117,13 +117,13 @@ public class Customer {
         this.phone = phoneNumber;
     }
 
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
+    // public List<CartItem> getCartItems() {
+    //     return cartItems;
+    // }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
+    // public void setCartItems(List<CartItem> cartItems) {
+    //     this.cartItems = cartItems;
+    // }
 
     public List<Order> getOrders() {
         return orders;

@@ -1,14 +1,30 @@
 ### ERD - Entity-Relationship Diagram
-<!-- <iframe
-  src="https://dbdiagram.io/d/62733e857f945876b6bb6479"
-  style="width:100%; height:100%;"
-></iframe> -->
-![](/images/database/Screen%20Shot%202022-05-26%20at%2012.29.26%20AM.png)
+#### V1(05/05/2022)
+![](/images/database/ERD-Kenneth.png)
+#### V2(05/06/2022)
+![](images/database/ERD-TEAM-V1.png)
+#### TEAM V3(05/09/2022)
+![](images/database/ERD-Fatemeh.png)
+#### MINE
+![](/images/database/ERD.png) 
 
-## NOTE
+### Pitfalls
+#### 1. Inadequate Planning
+* No solid database entity relationship diagram
+#### 2. Poor Communication
+* Diffrent intepretations of the user story
+So our team never agreed on the definition of the cart.
+* Is cart a unpaid order?
+* Should cartItems persist in memory/front-end browser/database? Or don't persist at all?
+* How a about logined user?
+* Should users persist in memory/front-end browser/database? Or don't persist at all?
+#### 3. Lack of git workflow
+
+
+<!-- ## NOTE
 Add `hibernate.cfg.xml` to `/backend/src/main/resources`
 [A Note About P2](https://github.com/220328-Java-Full-Stack-AWS/Curriculum-Notes/blob/main/P2.md)
-![](./images/database/Screen%20Shot%202022-05-04%20at%209.14.08%20PM.png)
+![](./images/database/Screen%20Shot%202022-05-04%20at%209.14.08%20PM.png) -->
 
 ### Basic Design Principles
 * build your application code and business logic into your database rather than into the client Web page.
