@@ -18,7 +18,23 @@ So our team never agreed on the definition of the cart.
 * Should cartItems persist in memory/front-end browser/database? Or don't persist at all?
 * How a about logined user?
 * Should users persist in memory/front-end browser/database? Or don't persist at all?
-#### 3. Lack of git workflow
+#### 3. Lack of git best practices
+##### Good
+* FEATURE BRANCHES 
+  The advantage of a feature branch separate from master is that you are not breaking anything, you can commit often, merge in the checked-in code of others and push your code to your branch thus keeping it safe and reducing the risk of losing your work.
+
+##### Bad
+* NO FEATURE BRANCHES
+#### 4. lack of testing
+##### six sigmas
+* three errors of 1 million.
+* it was introduced by American engineer Bill Smith while working at Motorola in 1986
+* I as a foreigner, I learned those when i was in college 20 years ago, but when i came to the usa, I find out there are few people knows about it.industrial level.
+* american put out standards only for other countries.
+* Last but certainly not least, a lack of testing is our last pitfall of software development. Testing is critical to the success of any software project despite the fact that it is often sidelined due to time or budget constraints. Nonetheless, a lack of testing can lead to disastrous results.
+
+
+
 
 
 <!-- ## NOTE
