@@ -1,7 +1,7 @@
 # E-Commerce SPA
 - [E-Commerce SPA](#e-commerce-spa)
-  - [Executive Summary](#executive-summary)
-  - [Tech Stack](#tech-stack)
+  - [Summary](#summary)
+      - [Strory behind the ***4am***](#strory-behind-the-4am)
   - [Achievements](#achievements)
     - [Front-end:](#front-end)
       - [UI/UX](#uiux)
@@ -44,22 +44,18 @@
         - [Backend](#backend-3)
         - [Back to Frontend](#back-to-frontend-3)
     - [Funture Goals](#funture-goals)
-## Executive Summary
-The E-Commerce Single-Page Application will allow consumers to browse, search, and buy products. Users will be able to browse our catelog of products, or search for a specific item, and add these to a cart. Users can register accounts which includes a profile. There are a number of stretch goals to choose from. Please update this text to summarize additional features. This text is fairly generic, your project will be unique, this text should be re-written to reflect your final deliverable.
-## Tech Stack
- - Languages
-   - Java
-   - JavaScript
-   - TypeScript
- - Data Persistence
-   - PostgreSQL
-   - Hibernate
- - AWS
-   - RDS
- - Spring Framework
-   - Spring Boot
-   - Spring MVC
- - Angular
+## Summary
+The ***4am***, a online shopping cart app. Makes it possible for customers to select products and buy them online consumers to browse, search, and buy products.
+A new user can register and login to the site to become a customer.A customer could browse the products and add them to the cart, increase or decrease the quantity of the product, or remove the product from the cart.
+Then the customer could checkout the products in the cart and pay for them.
+* Frontend is built with Angular.
+* Backend is built with Spring boot, Spring web, and Hibernate.
+* Database is built with PostgreSQL and hosted on AWS RDS.
+* Authentication is built with Spring security.
+* Hosting is built with Heroku.
+
+#### Strory behind the ***4am***
+The developer of this app during the development, got up at ***4am*** very morning and started working on the app, that is why the app is called ***4am***.
 
 
 ## Achievements
