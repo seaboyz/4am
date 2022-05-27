@@ -19,7 +19,7 @@ public class OrderService {
         this.orderDao = orderDao;
     }
 
-    public Integer placeAOrder(
+    public Order placeAOrder(
             Order order) {
 
         return orderDao.add(order);

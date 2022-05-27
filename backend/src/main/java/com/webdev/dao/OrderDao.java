@@ -15,8 +15,9 @@ public class OrderDao {
 
     // add a new order
 
-    public Integer add(Order order) {
-        return (Integer) sessionFactory.getCurrentSession().save(order);
+    public Order add(Order order) {
+        sessionFactory.getCurrentSession().save(order);
+        return order;
 
     }
 

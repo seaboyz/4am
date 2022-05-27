@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 
 import { AuthService } from "src/app/services/auth.service";
 import { CartService } from "src/app/services/cart.service";
@@ -38,7 +39,8 @@ export class CheckoutComponent implements OnInit
   constructor(
     private authService: AuthService,
     private cartService: CartService,
-    private orderService: OrderService)
+    private orderService: OrderService,
+    private router: Router)
   {
 
     this.authService.currentUser.subscribe(user => this.currentUser = user);
@@ -68,14 +70,26 @@ export class CheckoutComponent implements OnInit
       customerId, shippingAddress, orderItems
     }
 
-    this.orderService.placeOrder(order).subscribe(orderId =>
+    // this.orderService.placeOrder(order).subscribe(orderId =>
+    // {
+    //   if (orderId) {
+    //     alert("Thank you for your payment.")
+    //   } else {
+    //     alert("Somthing went wrong, please try again later.")
+    //   }
+    // })
+
+    this.orderService.placeOrder(order).subscribe(order =>
     {
-      if (orderId) {
-        alert("Thank you for your payment.")
-      } else {
-        alert("Somthing went wrong, please try again later.")
+      if (order.orderId) {
+        alert("Thank you for shopping.")
+        this.cartService.clear();
+        this.router.navigateByUrl('');
+      }else{
+        alert("somthing went wrong, try again later");
+
       }
-    })
+    });
 
   }
 

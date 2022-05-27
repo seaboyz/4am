@@ -78,13 +78,24 @@ public class OrderController {
         // System.out.println(shippingAddress);
         // System.out.println(orderItems);
 
-        Integer orderId = orderService.placeAOrder(new Order(customer, shippingAddress, orderItems));
+        Order order = orderService.placeAOrder(new Order(customer, shippingAddress, orderItems));
 
         Customer updatedCustomer = customerService.addAddressToCustomer(customer, shippingAddress);
 
         System.out.println(updatedCustomer);
 
-        return new ResponseEntity<String>("Order " + orderId + " is created.", HttpStatus.OK);
+        gson = new Gson();
+
+        JsonObject jsonObject = new JsonObject();
+
+        jsonObject.addProperty("orderId", order.getId());
+
+        String json = gson.toJson(jsonObject);
+
+        System.out.println(json);
+
+        return new ResponseEntity<String>(json, HttpStatus.OK);
+
     }
 
 }

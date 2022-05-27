@@ -91,6 +91,12 @@ export class CartService implements OnInit
 
   }
 
+  clear()
+  {
+    this.cartItems.next([]);
+    this.setLocalstorage([]);
+  }
+
   setLocalstorage(data: CartItem[])
   {
     localStorage.setItem("cart", JSON.stringify(data))
