@@ -38,11 +38,6 @@ Follow, and relax.
 Here wants to thank kyle again.
 
 
-
-
-
-
-
 <!-- ## NOTE
 Add `hibernate.cfg.xml` to `/backend/src/main/resources`
 [A Note About P2](https://github.com/220328-Java-Full-Stack-AWS/Curriculum-Notes/blob/main/P2.md)

@@ -10,4 +10,4 @@ all the cart_item(product_id, quantity) will be saved in the frontend local stor
 * after frontend receive the json object with the order infomation from the backend, it will clear the cart_item in the local storage/session storage/cookie storage * show the customer order received message
 
 
-![](images/angular-12-jwt-authentication-flow.png)
+
