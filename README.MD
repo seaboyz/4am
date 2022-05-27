@@ -63,6 +63,49 @@ The E-Commerce Single-Page Application will allow consumers to browse, search, a
 ### Checkout process diagram
  ![](backend/images/diagram/check-out-process.png)
 
+### Authentication diagram
+ ![](/frontend/images/angular-12-jwt-authentication-flow.png)
+
+#### Login
+##### Frond-end
+* When customer login, the frontend 'auth.service.ts' will send a json object with username and password to the backend.
+##### Backend
+* When `AuthController` receive the json object, it will use `AuthService` to check if the user is valid.
+* After `AuthService` check if the user is valid, `AuthService` will create a json object with user information and token.
+* `AuthController` will send a json object with user information and token to the frontend.
+##### Back to Frontend
+* After frontend `auth.service.ts` receive the json object with the user infomation and token from the backend, `auth.service.ts` will save the user infomation and token in the local storage.
+
+#### Logout
+##### Frond-end
+* When customer logout, the frontend 'auth.service.ts' will clear the user infomation and token in the local storage.
+
+#### Register
+##### Frond-end
+* When customer register, the frontend 'auth.service.ts' will send a json object with username, email, phone to backend.
+##### Backend
+* When `AuthController` receive the json object, it will use `CustomerSerive` to check if the username and email are unique, if not, it will return an error message.
+* if the username and email are unique, `CustomerService` will create a new customer with the username, email and phone.
+* `AuthController` will send a json object with the new customer infomation to the frontend.
+##### Back to Frontend
+* After frontend `auth.service.ts` receive the json object with the new customer infomation from the backend, `auth.service.ts` will redirect to login page to let user login to update the localstorage with the updated user info.
+
+#### Update Profile
+##### Frond-end
+* When customer update profile, the frontend 'user.service.ts' will send a json object with username, email, phone to backend.
+##### Backend
+* When `UserController` receive the json object, it will use `UserService` to update the user infomation.
+* `UserController` will send a json object with the updated user infomation to the frontend.
+##### Back to Frontend
+* After frontend `user.service.ts` receive the json object with the updated user infomation from the backend, `user.service.ts` will redirect to login page to let user login to update the localstorage with the updated user info.
+
+#### Cart  
+##### Frond-end
+* When customer add to cart, the frontend 'cart.service.ts' will update the cart_item in the local storage.
+* When customer remove from cart, the frontend 'cart.service.ts' will update the cart_item in the local storage.
+* When customer increase the quantity of an item in the cart, the frontend 'cart.service.ts' will update the cart_item in the local storage.
+* When customer decrease the quantity of an item in the cart, the frontend 'cart.service.ts' will update the cart_item in the local storage.
+
 #### Place an order
 ##### Frond-end
 * when customer buy a product, `order.service.ts `will create a cart
@@ -83,29 +126,8 @@ then customer can add product to cart, then the frontend will create a cart item
 ##### Back to Frontend
 * After frontend `order.service.ts` receive the json object with the order infomation from the backend, `cart.service.ts` will clear the cart_item in the local storage
 * Show the customer order received message
+* Redirect to the Home page
 
-
-
-### Authentication diagram
- ![](/frontend/images/angular-12-jwt-authentication-flow.png)
-
-#### Login
-##### Frond-end
-* When customer login, the frontend 'auth.service.ts' will send a json object with username and password to the backend.
-##### Backend
-* When `AuthController` receive the json object, it will use `AuthService` to check if the user is valid.
-* After `AuthService` check if the user is valid, `AuthService` will create a json object with user information and token.
-* `AuthController` will send a json object with user information and token to the frontend.
-##### Back to Frontend
-* After frontend `auth.service.ts` receive the json object with the user infomation and token from the backend, `auth.service.ts` will save the user infomation and token in the local storage.
-
-#### Logout
-##### Frond-end
-* When customer logout, the frontend 'auth.service.ts' will clear the user infomation and token in the local storage.
-
-#### Register
-##### Frond-end
-* When customer register, the frontend 'auth.service.ts' will send a json object with username, email, phone, backend.
   
 
 
@@ -113,5 +135,14 @@ then customer can add product to cart, then the frontend will create a cart item
 - As a User, I should be able to search the product list to better find the item(s) I am interested in.
 - As a User, I should receive notifications when a transaction has occurred or a transfer has been completed.
 -  As a User, I should be able to change the color scheme from the normal mode to a dark mode option.
+-  As a User, I should be able check the status of my order.
+-  As a User, I should be able to view the history of my order.
+-  As a User, I should be able to view the list of shipping address.
+-  Integrate the payment gateway.for example, paypal, stripe, paytm, etc.
+-  Integrate the shipping service.for example, UPS, USPS, Fedex, etc.
+-  Add order management system.
+-  Add the ability to add a product to the wishlist.
+-  Add cutomer management system.
+- Sync cart and wishlist with the backend.
 
 
