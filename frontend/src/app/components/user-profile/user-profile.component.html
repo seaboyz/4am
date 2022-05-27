@@ -8,11 +8,9 @@
                         placeholder="User Name"
                         required
                         name="username"
-                        #username="ngModel"
-                        ngModel
-                        
+                        [value]="username||''"
+                        (input)="username=getValue($event)"
                     >
-                    <mat-error *ngIf="username.invalid">User name is required</mat-error>
                     <mat-icon matSuffix>perm_identity</mat-icon>
                 </mat-form-field>
                 <mat-form-field>
@@ -22,10 +20,9 @@
                         type="email"
                         required
                         name="email"
-                        ngModel
-                        #email="ngModel"
+                        [value]="email||''"
+                        (input)="email=getValue($event)"
                     >
-                    <mat-error *ngIf="email.invalid">Email is required</mat-error>
                     <mat-icon matSuffix>email</mat-icon>
                 </mat-form-field>
                 <mat-form-field>
@@ -33,18 +30,13 @@
                         matInput
                         placeholder="Password"
                         type="password"
-                        required
                         minlength="6"
+                        required
                         name="password"
-                        ngModel
-                        #password="ngModel"
+                        [value]="password||''"
+                        (input)="password=getValue($event)"
                     >
-                    <mat-error *ngIf="password.errors && password.errors['required']">
-                        Password is required
-                    </mat-error>
-                    <mat-error *ngIf="password.errors && password.errors['minlength']">
-                        Password must be of length 6
-                    </mat-error>
+
                     <mat-icon matSuffix>lock</mat-icon>
 
                 </mat-form-field>
@@ -53,40 +45,35 @@
                         matInput
                         placeholder="Re-Enter Password"
                         type="password"
-                        required
                         minlength="6"
+                        required
                         name="repassword"
-                        ngModel
-                        #repassword="ngModel"
+                        [value]="repassword||''"
+                        (input)="repassword=getValue($event)"
                     >
-                    <mat-error *ngIf="repassword.errors && repassword.errors['required']">
-                        Re-Enter Password is required
-                    </mat-error>
+
                     <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
                 <mat-form-field>
                     <input
                         matInput
                         placeholder="Phone Number"
-                        type="number"
-                        required
+                        type="text"
                         minlength="10"
+                        required
                         name="phone"
-                        ngModel
-                        #phone="ngModel"
+                        [value]="phone"
+                        (input)="phone=getValue($event)"
                     >
-                    <mat-error *ngIf="phone.invalid">
-                        Re-Enter Password is required
-                    </mat-error>
-                    <mat-icon matSuffix>lock</mat-icon>
+                    <mat-icon matSuffix>phone</mat-icon>
                 </mat-form-field>
                 <button
-                    [disabled]="username.errors || email.errors ||password.errors && repassword.errors"
+                    [disabled]=""
                     mat-raised-button
                     color="primary"
                     class="register-button "
                     style="text-transform: uppercase;letter-spacing: 2px;"
-                    (click)="updateProfile(username.value,email.value,password.value, phone.value)"
+                    (click)="updateProfile(username!,email!,password!, phone!)"
                 >
                     Update Your proile
                 </button>

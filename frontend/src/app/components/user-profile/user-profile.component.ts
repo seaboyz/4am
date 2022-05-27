@@ -11,11 +11,11 @@ import { UserService } from "src/app/services/user.service";
 export class UserProfileComponent implements OnInit
 {
 
-  #username: string = "";
-  #email: string = "";
-  #password: string = "";
-  #repassword: string = "";
-  #phone: string = "";
+  username: string | undefined = undefined;
+  email: string | undefined = undefined;
+  password: string | undefined = undefined;
+  repassword: string | undefined = undefined;
+  phone: string | undefined = undefined;
 
 
   constructor(
@@ -30,6 +30,10 @@ export class UserProfileComponent implements OnInit
       if (!user)
         return;
 
+      this.username = user.username;
+      this.email = user.email;
+      this.phone = user.phone;
+
     })
   }
 
@@ -37,14 +41,25 @@ export class UserProfileComponent implements OnInit
   {
   }
 
+  getValue(event: Event): string
+  {
+    return (event.target as HTMLInputElement).value
+  }
+
 
 
   updateProfile(username: string, email: string, password: string, phone: string): void
   {
 
+    console.log(username, email, password, phone)
+
+
     this.userSerive.updateProile(username, email, password, phone).subscribe(
       user =>
       {
+        if (!user)
+          return;
+
         alert(`Update successfull ${user.username}, please login use you email and password.`);
         this.router.navigateByUrl("login")
       }
