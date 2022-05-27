@@ -89,15 +89,12 @@ The E-Commerce Single-Page Application will allow consumers to browse, search, a
 ![](/backend/images/database/ERD.png) 
 * Customer, Product, and Order data is stored in a relational database.
 * All CRUD functionality accessible via RESTful API
-* Use angular to build a Single page web UI to consume RESTful API.
-* Workflows to complete all user stories
 * Validate all user input
 * Unit test coverage for service-layer classes
 * The persistence layer  use Hibernate ORM to translate between the database and the application server. 
 * The API layer abstract away the low-level servlets with Spring Web MVC. 
-* The frontend  use Angular to produce an SPA which is styled to be functional and readable. 
 * The server follow a  controller-service-repository architecture.
-* The client and server  communicate in a RESTful manner.
+* The client and server communicate in a RESTful manner.
 * The server is stateless. 
 
 #### Restful API
