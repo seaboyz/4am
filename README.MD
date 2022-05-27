@@ -45,7 +45,7 @@
         - [Back to Frontend](#back-to-frontend-3)
     - [Funture Goals](#funture-goals)
 ## Summary
-The ***4am***, a online shopping cart app. Makes it possible for customers to select products and buy them online. Consumers to browse, search, and buy products.
+The ***4am***, an online shopping cart app. Makes it possible for customers to select products and buy them online. Consumers to browse, search, and buy products.
 A new user can register to the site to become a customer. The login customer could browse the products and add them to the cart, increase or decrease the quantity of the product, or remove the product from the cart.
 Then the customer could checkout the products in the cart and pay for them.
 * Frontend is built with Angular.
