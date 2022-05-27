@@ -1,12 +1,51 @@
-# Project 2 - E-Commerce SPA
-[A Note About P2](https://github.com/220328-Java-Full-Stack-AWS/Curriculum-Notes/blob/main/P2.md)
+# E-Commerce SPA
+- [E-Commerce SPA](#e-commerce-spa)
+  - [Executive Summary](#executive-summary)
+  - [Tech Stack](#tech-stack)
+  - [Achievements](#achievements)
+    - [Front-end:](#front-end)
+      - [UI/UX](#uiux)
+        - [Homepage](#homepage)
+        - [login page](#login-page)
+        - [register page](#register-page)
+        - [profile page](#profile-page)
+        - [cart page](#cart-page)
+        - [checkout page](#checkout-page)
+    - [Back-end:](#back-end)
+      - [Architecture and Entity-Relationship Diagram](#architecture-and-entity-relationship-diagram)
+      - [Restful API](#restful-api)
+        - [Customer](#customer)
+        - [Product](#product)
+        - [Order](#order)
+        - [Authentication](#authentication)
+  - [User Stories](#user-stories)
+      - [Guest](#guest)
+      - [User:](#user)
+    - [Checkout process diagram](#checkout-process-diagram)
+    - [Authentication diagram](#authentication-diagram)
+      - [Login](#login)
+        - [Frond-end](#frond-end)
+        - [Backend](#backend)
+        - [Back to Frontend](#back-to-frontend)
+      - [Logout](#logout)
+        - [Frond-end](#frond-end-1)
+      - [Register](#register)
+        - [Frond-end](#frond-end-2)
+        - [Backend](#backend-1)
+        - [Back to Frontend](#back-to-frontend-1)
+      - [Update Profile](#update-profile)
+        - [Frond-end](#frond-end-3)
+        - [Backend](#backend-2)
+        - [Back to Frontend](#back-to-frontend-2)
+      - [Cart](#cart)
+        - [Frond-end](#frond-end-4)
+      - [Place an order](#place-an-order)
+        - [Frond-end](#frond-end-5)
+        - [Backend](#backend-3)
+        - [Back to Frontend](#back-to-frontend-3)
+    - [Funture Goals](#funture-goals)
 ## Executive Summary
 The E-Commerce Single-Page Application will allow consumers to browse, search, and buy products. Users will be able to browse our catelog of products, or search for a specific item, and add these to a cart. Users can register accounts which includes a profile. There are a number of stretch goals to choose from. Please update this text to summarize additional features. This text is fairly generic, your project will be unique, this text should be re-written to reflect your final deliverable.
-
-### ERD - Entity-Relationship Diagram
-
-![](/backend/images/database/ERD.png) 
-
 ## Tech Stack
  - Languages
    - Java
@@ -17,21 +56,40 @@ The E-Commerce Single-Page Application will allow consumers to browse, search, a
    - Hibernate
  - AWS
    - RDS
-   - S3
-   - CodeBuild & CodePipeline
-   - ElasticBeanstalk
  - Spring Framework
    - Spring Boot
    - Spring MVC
  - Angular
 
 
-
 ## Achievements
 
-* Domain objects persisted in relational database via ORM
+### Front-end:
+#### UI/UX
+##### Homepage
+![](frontend/images/UI/home-page.png)
+##### login page
+![](frontend/images/UI/login-page.png)
+##### register page
+![](frontend/images/UI/signup-page.png)
+##### profile page
+![](frontend/images/UI/profile-page.png)
+##### cart page
+![](frontend/images/UI/cart-page.png)
+##### checkout page
+![](frontend/images/UI/check-out-page.png)
+* Use Angular to build the front-end of the application.
+* User info and cart are stored in the browser's local storage.
+* User can keep their session active by logging in.
+
+### Back-end:
+
+#### Architecture and Entity-Relationship Diagram
+![](backend/images/diagram/RepositoryPattern.png)
+![](/backend/images/database/ERD.png) 
+* Customer, Product, and Order data is stored in a relational database.
 * All CRUD functionality accessible via RESTful API
-* Single page web UI to consume RESTful API
+* Use angular to build a Single page web UI to consume RESTful API.
 * Workflows to complete all user stories
 * Validate all user input
 * Unit test coverage for service-layer classes
@@ -41,6 +99,28 @@ The E-Commerce Single-Page Application will allow consumers to browse, search, a
 * The server follow a  controller-service-repository architecture.
 * The client and server  communicate in a RESTful manner.
 * The server is stateless. 
+
+#### Restful API
+##### Customer
+* GET /customers
+* POST /customers
+* PUT /customers/{id}
+* GET /customers/{id}
+
+##### Product
+* GET /products
+* GET /products/{id}
+* GET /products/categories/{category}
+* POST /products
+* PUT /products/{id}
+
+##### Order
+* GET /orders
+* GET /orders/{id}
+
+##### Authentication
+* POST /Auth/login
+* POST /Auth/register
 
 
 ## User Stories
@@ -144,5 +224,5 @@ then customer can add product to cart, then the frontend will create a cart item
 -  Add the ability to add a product to the wishlist.
 -  Add cutomer management system.
 - Sync cart and wishlist with the backend.
-
+- Apply jwt authentication to the frontend.
 
